@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farès Benamar — Communication & Gestion de Projet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:         #efeae0;
+  --surface:    #faf6ee;
+  --surface-2:  #f3ede2;
+  --surface-3:  #ebe4d6;
+  --text:       #2a2520;
+  --text-dim:   #4a4540;
+  --text-muted: #8a8278;
+  --accent:     oklch(70% 0.14 52);
+  --accent-dim: oklch(70% 0.14 52 / 0.10);
+  --accent-2:   oklch(60% 0.10 85);
+  --border:     rgba(155,135,105,0.18);
+  --border-2:   rgba(155,135,105,0.32);
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'Space Grotesk', system-ui, sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, rgba(120,100,70,0.25) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+body {
+  background: transparent;
+  color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+#dot-grid { display: none; }
+#root { min-height: 100vh; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); }
+
+#tweaks-panel {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--text); color: var(--bg);
+  border-radius: 14px; padding: 22px 26px;
+  z-index: 9999; width: 270px;
+  font-family: var(--sans); font-size: 13px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  display: none;
+}
+#tweaks-panel.visible { display: block; }
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+#tweaks-panel h4 { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; opacity: 0.4; font-weight: 500; }
+.tweak-row { margin-bottom: 14px; }
+.tweak-row label { display: block; font-size: 12px; opacity: 0.6; margin-bottom: 6px; }
+.tweak-row select { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: inherit; border-radius: 6px; padding: 7px 10px; font-size: 12px; font-family: var(--sans); cursor: pointer; outline: none; }
+.tweak-toggle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.tweak-toggle label { font-size: 12px; opacity: 0.6; }
+.tweak-toggle input { cursor: pointer; accent-color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="dot-grid"></div>
+<div id="root"></div>
+<div id="tweaks-panel">
+  <h4>Tweaks</h4>
+  <div class="tweak-row">
+    <label>Couleur d'accent</label>
+    <select id="tw-theme">
+      <option value="cognac">Cognac (défaut)</option>
+      <option value="blue">Bleu ardoise</option>
+      <option value="sage">Vert sauge</option>
+      <option value="rose">Rose poudré</option>
+    </select>
+  </div>
+  <div class="tweak-row">
+    <label>Fond</label>
+    <select id="tw-bg">
+      <option value="light">Ivoire clair</option>
+      <option value="dark">Noir éditorial</option>
+    </select>
+  </div>
+  <div class="tweak-toggle">
+    <label>Grille compacte</label>
+    <input type="checkbox" id="tw-compact"/>
+  </div>
+</div>
+
+<script type="text/babel">
+
+
+
+const { useState, useEffect } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "cognac",
+  "bg": "light",
+  "compact": false
+}/*EDITMODE-END*/;
+
+const THEMES = {
+  cognac: { accent: 'oklch(70% 0.14 52)', accentDim: 'oklch(70% 0.14 52 / 0.10)' },
+  blue: { accent: 'oklch(52% 0.13 238)', accentDim: 'oklch(52% 0.13 238 / 0.10)' },
+  sage: { accent: 'oklch(52% 0.11 155)', accentDim: 'oklch(52% 0.11 155 / 0.10)' },
+  rose: { accent: 'oklch(58% 0.12 10)', accentDim: 'oklch(58% 0.12 10 / 0.10)' }
+};
+
+const PROJECTS = [
+{
+  id: 1, tag: 'Audiovisuel · Patrimonial',
+  image: 'uploads/archives orales.png', logoOnly: false,
+  title: 'Série d\u2019entretiens institutionnels INRIA',
+  desc: "Co-pilotage d'une série d'entretiens filmés retraçant l'histoire d'INRIA à travers ses figures emblématiques, en coordination avec un prestataire externe et plusieurs directions internes.",
+  year: '2024–2025', client: 'INRIA – DCOM · DGD-S', budget: '30 000 €', role: 'Co-Chef de projet',
+  bullets: [
+  'Définition de la stratégie éditoriale et du fil narratif de la série',
+  'Coordination des plannings entre interviewés, directions et équipes techniques',
+  'Pilotage du prestataire audiovisuel externe et suivi des livrables'],
+
+  impact: "Une série patrimoniale pérenne, livrée dans les délais, intégrée aux archives institutionnelles d’INRIA.",
+  status: 'Mission livrée'
+},
+{
+  id: 2, tag: 'Événementiel · Institutionnel',
+  title: "Pilotage événementiel du siège",
+  image: 'uploads/inria expo bloche.jpg',
+  desc: "Coordination logistique et éditoriale d'événements institutionnels majeurs : conférences scientifiques, journée siège, expositions internes avec des publics variés allant des chercheurs aux partenaires institutionnels.",
+  year: '2024–2025', client: 'INRIA siège', role: 'Chef de projet événementiel',
+  bullets: [
+  'Gestion des intervenants, salles et supports de communication événementielle',
+  'Direction artistique des supports événementiels (kakémonos, programmes, signalétique)',
+  "Coordination avec la DCOM pour l’alignement éditorial et la couverture interne"],
+
+  impact: 'Des événements livrés en délais et budgets, salués pour leur tenue éditoriale par les directions partenaires.',
+  status: 'Mission livrée'
+},
+{
+  id: 3, tag: 'Communication interne',
+  title: "Stratégie de communication interne du siège",
+  image: 'uploads/inria siege.jpeg',
+  desc: "Contribution active à la stratégie de communication interne du siège (Inria.fr, intranet Numin, newsletters, écrans dynamiques), en interface entre le responsable du siège, la DCOM, les Services Généraux et les RH.",
+  year: '2024–2025', client: 'INRIA siège', role: 'Contributeur stratégie',
+  bullets: [
+  'Contribution à la définition de la charte éditoriale interne du siège',
+  "Appui à l’arbitrage des priorités multi-directions",
+  'Participation au pilotage du calendrier éditorial transverse'],
+
+  impact: "Une circulation de l’information plus fluide entre directions, soutenue par un calendrier éditorial structuré.",
+  status: 'Mission livrée'
+},
+{
+  id: 7, tag: 'Diplomatie culturelle · International',
+  title: "Exposition itinérante à l’Ambassade française de Séoul",  image: 'uploads/ambassade francaise seoul.jpg',
+  desc: "Coordination avec la chargée culturelle de l'Ambassade de France en Corée du Sud pour l'installation d'un kakémono dans le hall de l'ambassade, valorisant INRIA à l'international sous forme d'exposition itinérante.",
+  year: '2024–2025', client: 'INRIA · Ambassade de France — Séoul', role: 'Chargé de communication',
+  bullets: [
+  "Participation aux réunions de cadrage avec la chargée culturelle de l’ambassade",
+  'Conception éditoriale et graphique du kakémono en lien avec la DCOM (contenu, format, hiérarchie)',
+  'Suivi de la production et validation finale par le directeur du siège pour installation diplomatique'],
+
+  impact: 'INRIA représenté dans un espace diplomatique de premier plan, renforçant sa visibilité internationale.',
+  status: 'Mission livrée'
+},
+{
+  id: 9, tag: 'Branding · Identité visuelle',
+  title: "Co-création d’une identité de marque : Glow Center",
+  desc: "Création de l’identité visuelle complète d’un centre esthétique en lancement, du logotype aux supports opérationnels de lancement.",
+  year: '2026', client: 'Glow Center', budget: '20 000 €', role: 'Directeur artistique & créatif',
+  bullets: [
+  'Définition du positionnement visuel et du territoire de marque',
+  'Direction artistique : logotype, palette chromatique, système typographique',
+  'Déclinaison opérationnelle : charte graphique, supports print et digital'],
+
+  impact: "Une identité cohérente et premium, opérationnelle dès l’ouverture du centre.",
+  status: 'Mission livrée'
+},
+{
+  id: 10, tag: 'Entrepreneuriat · SaaS',
+  title: "VigySafety : Co-création & Développement commercial",
+  image: 'uploads/favicon-192.png', logoOnly: true,
+  desc: "Co-création d'un SaaS (vigysafety.fr) et pilotage du développement commercial en phase de lancement : structuration de l'offre, prospection intensive et gestion d'un portefeuille client actif.",
+  year: '2025–2026', client: 'VigySafety', role: 'Co-fondateur & Responsable commercial',
+  bullets: [
+  'Prospection de ~1 000 contacts et qualification des leads entrants',
+  "Acquisition et fidélisation d’un portefeuille de 60 clients actifs à 49,99 €/mois",
+  'Contribution à la définition du positionnement produit et aux supports marketing'],
+
+  impact: '60 clients actifs en quelques mois, validant la pertinence commerciale du produit.',
+  status: 'En cours · 2025–2026'
+}];
+
+
+
+const SKILLS = [
+{ cat: 'Communication & Stratégie', items: ['Stratégie éditoriale', 'Communication visuelle', 'Relations presse', 'Animation réseaux sociaux', "Organisation d'événements"] },
+{ cat: 'Gestion de Projet', items: ['Coordination multi-équipes', 'Pilotage événementiel', 'Management prestataires', 'Planification logistique', 'Optimisation process', 'Arbitrage opérationnel'] },
+{ cat: 'Outils & Création', items: ['Adobe Premiere Pro', 'Adobe Photoshop', 'InDesign', 'Suite Office', 'WordPress / CMS', 'Notion / Trello', 'Bases en développement web (Next.js, bases de données)'] },
+{ cat: 'Langues', items: ['Français — natif', 'Anglais — B2 avancé', 'Allemand — A2'] }];
+
+
+const TIMELINE = [
+{ year: '2024–2025', title: 'Chargé de Communication', sub: 'INRIA, Le Chesnay-Rocquencourt — Alternance 12 mois', desc: 'Communication institutionnelle, gestion de projets transverses, production audiovisuelle patrimoniale (30k€).' },
+{ year: '2023–2025', title: 'Master 2 — Mention Bien', sub: 'UVSQ / Université Paris-Saclay', desc: 'Management et Communication des Organisations. Mémoire de recherche soutenu avec mention bien.', isEdu: true },
+{ year: '2024', title: 'Coordinateur Administratif', sub: 'Centre Médical Maréchal Juin — Stage 4 mois', desc: 'Coordination de 15+ professionnels de santé, optimisation des process et événements institutionnels.' },
+{ year: '2023', title: 'Chargé de Projet Com. & AV', sub: 'Propulsion Studio, Arcueil — Stage 3 mois', desc: 'Identité visuelle, contenus multimédias, relations presse, production audiovisuelle.' },
+{ year: '2020–2023', title: 'Licence Production & Audiovisuel — Mention Bien', sub: 'ESRA Paris', desc: 'Formation technique et artistique en production audiovisuelle.', isEdu: true },
+{ year: '2022', title: 'Assistant de Production', sub: 'DMANCIEL Production, Drancy — Stage 3 mois', desc: 'Coordination de productions audiovisuelles, suivi logistique et gestion des ressources.' }];
+
+
+/* NAV */
+function Nav({ active, scrolled }) {
+  const links = [['Projets', 'projets'], ['À propos', 'apropos'], ['Compétences', 'competences'], ['Parcours', 'parcours'], ['Contact', 'contact']];
+  return (
+    <nav style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+      height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 56px',
+      background: scrolled ? 'rgba(239,234,224,0.93)' : 'transparent',
+      backdropFilter: scrolled ? 'blur(16px)' : 'none',
+      borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+      transition: 'background 0.4s, border-color 0.4s'
+    }}>
+      <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, letterSpacing: '0.01em' }}>
+        Farès <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Benamar</em>
+      </span>
+      <div style={{ display: 'flex', gap: 36 }}>
+        {links.map(([l, id]) =>
+        <a key={id} href={`#${id}`} style={{
+          fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400,
+          color: active === id ? 'var(--accent)' : 'var(--text-muted)',
+          textDecoration: 'none', letterSpacing: '0.02em', transition: 'color 0.2s'
+        }}
+        onMouseEnter={(e) => e.target.style.color = 'var(--text)'}
+        onMouseLeave={(e) => e.target.style.color = active === id ? 'var(--accent)' : 'var(--text-muted)'}>
+          {l}</a>
+        )}
+      </div>
+      <a href="mailto:contact.pro.faresb@gmail.com" style={{
+        fontFamily: 'var(--sans)', fontSize: 12, fontWeight: 600,
+        color: 'white', background: 'var(--accent)',
+        padding: '8px 22px', borderRadius: 6, textDecoration: 'none',
+        letterSpacing: '0.04em', transition: 'opacity 0.2s'
+      }}
+      onMouseEnter={(e) => e.currentTarget.style.opacity = '0.82'}
+      onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+        Me contacter</a>
+    </nav>);
+
+}
+
+/* HERO */
+function Hero() {
+  const titleSize = 'clamp(52px, 7vw, 108px)';
+  return (
+    <section id="hero" data-screen-label="01 Hero" style={{
+      minHeight: '100vh', position: 'relative', overflow: 'hidden',
+      display: 'flex', flexDirection: 'column', justifyContent: 'center',
+      padding: '80px 56px 60px',
+      background: 'transparent'
+    }}>
+      <style>{`
+        @media (max-width: 860px) {
+          .hero-inner { flex-direction: column !important; align-items: flex-start !important; gap: 40px !important; }
+          .hero-photo { width: 60vw !important; max-width: 280px !important; align-self: flex-end !important; }
+          .hero-title { font-size: clamp(44px, 11vw, 72px) !important; }
+          .hero-stats { gap: 28px !important; flex-wrap: wrap; }
+          #hero { padding: 100px 28px 120px !important; }
+        }
+      `}</style>
+
+      {/* Main asymmetric layout */}
+      <div className="hero-inner" style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        gap: 48, width: '100%', maxWidth: 1300, margin: '0 auto',
+        position: 'relative', zIndex: 2
+      }}>
+
+        {/* LEFT — text column */}
+        <div style={{ flex: '1 1 0', minWidth: 0 }}>
+
+          {/* Greeting */}
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300,
+            color: 'var(--text-dim)', marginBottom: 24, letterSpacing: '0.01em'
+          }}>
+            👋 Bonjour, je suis <strong style={{ fontWeight: 500 }}>Farès Benamar</strong>
+          </p>
+
+          {/* Title block */}
+          <div style={{ marginBottom: 28 }}>
+            <div className="hero-title" style={{
+              fontFamily: 'var(--sans)', fontWeight: 700,
+              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
+              color: 'var(--text)', userSelect: 'none'
+            }}>Communication,</div>
+            <div className="hero-title" style={{
+              fontFamily: 'var(--sans)', fontWeight: 700,
+              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
+              color: 'var(--text)', userSelect: 'none'
+            }}>Management</div>
+            <div className="hero-title" style={{
+              fontFamily: 'var(--sans)', fontWeight: 700,
+              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
+              color: 'transparent',
+              WebkitTextStroke: '1.5px var(--text)',
+              userSelect: 'none'
+            }}>&amp; Gestion de Projet.</div>
+          </div>
+
+          {/* Accroche serif */}
+          <p style={{
+            fontFamily: 'var(--serif)', fontStyle: 'italic',
+            fontSize: 'clamp(16px, 1.4vw, 20px)', fontWeight: 300,
+            color: 'var(--text)', lineHeight: 1.6,
+            maxWidth: 520, marginBottom: 32
+          }}>
+            Je conçois des marques et pilote des projets de communication,
+            à l'intersection de l'institutionnel et de l'entrepreneuriat.
+          </p>
+
+          {/* Location + status */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
+            <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-muted)' }}>
+              basé à Paris, Île-de-France.
+            </span>
+            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--text-muted)', display: 'inline-block', flexShrink: 0 }} />
+            <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--accent)', fontWeight: 500 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block' }} />
+              Ouvert aux opportunités
+            </span>
+          </div>
+
+          {/* CTAs */}
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <a href="#projets" style={{
+              fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600,
+              color: 'white', background: 'var(--text)',
+              padding: '14px 32px', borderRadius: 8, textDecoration: 'none',
+              letterSpacing: '0.02em', transition: 'opacity 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+              Voir mes projets</a>
+            <a href="#contact" style={{
+              fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 500,
+              color: 'var(--text)', background: 'transparent',
+              padding: '14px 32px', borderRadius: 8, textDecoration: 'none',
+              letterSpacing: '0.02em', border: '2px solid var(--border-2)',
+              transition: 'border-color 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--text)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-2)'}>
+              Me contacter</a>
+          </div>
+        </div>
+
+        {/* RIGHT — photo */}
+        <div className="hero-photo" style={{
+          flexShrink: 0, width: 'clamp(320px, 33vw, 460px)', marginLeft: 104,
+          pointerEvents: 'none'
+        }}>
+          <div style={{
+            borderRadius: '50%',
+            overflow: 'hidden',
+            aspectRatio: '1/1',
+            boxShadow: '0 20px 60px rgba(42,37,32,0.08)',
+            background: 'var(--surface)'
+          }}>
+            <img
+              src="uploads/Design sans titre (3)-aaf910c8.png"
+              alt="Farès Benamar"
+              style={{
+                width: '100%', height: '100%',
+                objectFit: 'cover', objectPosition: '50% 20%',
+                display: 'block',
+                mixBlendMode: 'multiply',
+                filter: 'contrast(1.04) brightness(0.97)'
+              }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Stats bar */}
+      <div className="hero-stats" style={{
+        display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 64,
+        borderTop: '1px solid var(--border)', paddingTop: 32, marginTop: 56,
+        position: 'relative', zIndex: 3
+      }}>
+        {[['3 ans', "d'expérience"], ['4 secteurs', 'public · BTP · médical · AV'], ['50 K€+', 'de budgets pilotés']].map(([n, l]) =>
+        <div key={n} style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
+          <span style={{ fontFamily: 'var(--serif)', fontSize: 32, fontWeight: 400, color: 'var(--accent)', lineHeight: 1 }}>{n}</span>
+          <span style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>{l}</span>
+        </div>
+        )}
+      </div>
+
+
+
+
+    </section>);
+
+}
+
+/* PROJECT CARD — horizontal full-width, no click affordance */
+function ProjectCard({ p, index }) {
+  const num = String(index + 1).padStart(2, '0');
+  return (
+    <article
+      className="project-card-grid"
+      data-screen-label={`Projet ${num} — ${p.title}`}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 2fr',
+        background: 'var(--surface)',
+        border: '1px solid var(--border)',
+        borderRadius: 14,
+        overflow: 'hidden',
+        cursor: 'default',
+        position: 'relative',
+        boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)'
+      }}>
+
+      {/* ── Left: image / placeholder ── */}
+      <div style={{
+        position: 'relative',
+        minHeight: 340,
+        background: 'var(--surface-2)',
+        overflow: 'hidden'
+      }}>
+        {p.image ?
+        <img src={p.image} alt="" role="presentation" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: p.logoOnly ? 'contain' : 'cover', objectPosition: 'center', padding: p.logoOnly ? '32px' : 0, filter: 'saturate(0.85) sepia(0.06) brightness(0.98)' }} /> :
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `repeating-linear-gradient(45deg, rgba(0,0,0,0.025) 0, rgba(0,0,0,0.025) 1px, transparent 1px, transparent 28px)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+              <span style={{ fontFamily: 'var(--serif)', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.06em', fontStyle: 'italic', textAlign: 'center', padding: '0 24px', lineHeight: 1.7 }}>
+                visuel confidentiel,<br />lancement été 2026
+              </span>
+            </div>
+        }
+
+        {/* Watermark number */}
+        <div style={{
+          position: 'absolute', bottom: 16, left: 20,
+          fontFamily: 'var(--serif)', fontStyle: 'italic',
+          fontSize: 72, fontWeight: 300, lineHeight: 1,
+          color: 'rgba(255,255,255,0.45)', userSelect: 'none',
+          letterSpacing: '-0.04em', mixBlendMode: 'overlay'
+        }}>{num}</div>
+      </div>
+
+      {/* ── Right: content ── */}
+      <div style={{ padding: '44px 52px 40px 44px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+
+        {/* Tag */}
+        <div style={{ marginBottom: 16 }}>
+          <span style={{
+            fontFamily: 'var(--sans)', fontSize: 10, fontWeight: 600,
+            letterSpacing: '0.16em', textTransform: 'uppercase',
+            color: 'var(--accent)'
+          }}>{p.tag}</span>
+        </div>
+
+        {/* Title */}
+        <h3 style={{
+          fontFamily: 'var(--serif)', fontSize: 'clamp(22px, 2.2vw, 32px)',
+          fontWeight: 400, lineHeight: 1.15, color: 'var(--text)',
+          marginBottom: 16
+        }}>{p.title}</h3>
+
+        {/* Meta line */}
+        <div style={{
+          display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap',
+          fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)',
+          marginBottom: 24, letterSpacing: '0.01em'
+        }}>
+          <span style={{ fontWeight: 500, color: 'var(--text-dim)' }}>{p.client}</span>
+          <span style={{ opacity: 0.35 }}>·</span>
+          <span>{p.year}</span>
+          {p.budget && <><span style={{ opacity: 0.35 }}>·</span><span style={{ color: 'var(--accent)', fontWeight: 500 }}>{p.budget}</span></>}
+        </div>
+
+        {/* Description */}
+        <p style={{
+          fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300,
+          color: 'var(--text-dim)', lineHeight: 1.75, marginBottom: 24
+        }}>{p.desc}</p>
+
+        {/* Bullets */}
+        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {p.bullets.map((b, i) =>
+          <li key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+              <span style={{ flexShrink: 0, marginTop: 7, width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', opacity: 0.7 }} />
+              <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.65 }}>{b}</span>
+            </li>
+          )}
+        </ul>
+
+        {/* Impact */}
+        <p style={{
+          fontFamily: 'var(--serif)', fontStyle: 'italic',
+          fontSize: 'clamp(15px, 1.4vw, 18px)', fontWeight: 300,
+          color: 'var(--text)', lineHeight: 1.55, marginBottom: 28,
+          borderLeft: '2px solid var(--accent)', paddingLeft: 18
+        }}>{p.impact}</p>
+
+        {/* Footer rule */}
+        <div style={{ borderTop: '1px solid var(--border)', paddingTop: 18, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{
+            fontFamily: 'var(--sans)', fontSize: 10, fontWeight: 500,
+            letterSpacing: '0.14em', textTransform: 'uppercase',
+            color: 'var(--text-muted)'
+          }}>{p.status}</span>
+          <span style={{
+            fontFamily: 'var(--sans)', fontSize: 10,
+            color: 'var(--text-muted)', opacity: 0.5
+          }}>{p.role}</span>
+        </div>
+      </div>
+    </article>);
+
+}
+
+/* PROJECTS */
+function Projects() {
+  return (
+    <section id="projets" data-screen-label="02 Projets" style={{ padding: '60px 56px', background: 'transparent' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .project-card-grid { grid-template-columns: 1fr !important; }
+          .project-card-grid > div:first-child { min-height: 220px !important; }
+        }
+        @media (max-width: 860px) {
+          #projets { padding: 80px 24px !important; }
+          .project-header-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+        }
+      `}</style>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        {/* Section header */}
+        <div style={{ marginBottom: 36, paddingBottom: 24, borderBottom: '1px solid rgba(155,135,105,0.09)' }}>
+          <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 16 }}>Réalisations & missions</p>
+          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,58px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)' }}>
+            Une sélection<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>de projets</em>
+          </h2>
+        </div>
+        {/* Cards — one per row */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {PROJECTS.map((p, i) => <ProjectCard key={p.id} p={p} index={i} />)}
+        </div>
+      </div>
+    </section>);
+
+}
+
+/* ABOUT */
+function About() {
+  return (
+    <section id="apropos" data-screen-label="03 À propos" style={{ padding: '120px 56px', background: 'transparent' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>À propos</p>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '5fr 4fr', gap: 96, alignItems: 'start' }}>
+          <div>
+            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,64px)', fontWeight: 300, lineHeight: 1.0, marginBottom: 40, color: 'var(--text)' }}>
+              De la stratégie<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>au terrain.</em>
+            </h2>
+            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 24 }}>Chargé de communication et gestion de projet avec 3 ans d'expérience en communication institutionnelle, coordination d'événements et production audiovisuelle. 
+Diplômé d'un Master 2 en Management et Communication des Organisations (mention bien), j'ai développé une expertise en stratégie éditoriale, création de contenus multi-formats et coordination d'équipes pluridisciplinaires. Reconnu pour ma rigueur organisationnelle, mon sens du relationnel et ma capacité à piloter des projets transverses dans des environnements exigeants.
+            </p>
+            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 48 }}>
+              Dans mon expérience la plus récente chez INRIA, j'ai coordonné des projets transverses avec plusieurs directions simultanément, tout en produisant des contenus multi-formats et en co-pilotant un projet audiovisuel patrimonial de 30 000 €.
+            </p>
+          </div>
+          <div style={{ position: 'sticky', top: 80 }}>
+            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', height: "559.875px" }}>
+              <img src="uploads/Design sans titre (3)-aaf910c8.png" alt="Farès Benamar" style={{ width: '85%', display: 'block', mixBlendMode: 'multiply', filter: 'contrast(1.04) brightness(0.97)' }} />
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+function SkillRow({ s, last }) {
+  const [open, setOpen] = useState(true);
+  return (
+    <div style={{ borderTop: '1px solid var(--border)', borderBottom: last ? '1px solid var(--border)' : 'none' }}>
+      <div onClick={() => setOpen(!open)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0', cursor: 'pointer' }}>
+        <h3 style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: 'var(--text)' }}>{s.cat}</h3>
+        <span style={{ color: 'var(--accent)', fontSize: 22, transition: 'transform 0.2s', display: 'inline-block', transform: open ? 'rotate(45deg)' : 'none', lineHeight: 1 }}>+</span>
+      </div>
+      {open &&
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, paddingBottom: 24 }}>
+          {s.items.map((item) =>
+        <span key={item} style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-dim)', background: 'var(--surface-2)', border: '1px solid var(--border)', padding: '7px 16px', borderRadius: 100, transition: 'background 0.2s, color 0.2s', cursor: 'default' }}
+        onMouseEnter={(e) => {e.currentTarget.style.background = 'var(--accent)';e.currentTarget.style.color = 'white';e.currentTarget.style.borderColor = 'var(--accent)';}}
+        onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--surface-2)';e.currentTarget.style.color = 'var(--text-dim)';e.currentTarget.style.borderColor = 'var(--border)';}}>
+          {item}</span>
+        )}
+        </div>
+      }
+    </div>);
+
+}
+
+function Skills() {
+  return (
+    <section id="competences" data-screen-label="04 Compétences" style={{ padding: '120px 56px', background: 'transparent' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Compétences</p>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 80 }}>
+          <div>
+            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)' }}>
+              Expertise<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>& Outils</em>
+            </h2>
+          </div>
+          <div>
+            {SKILLS.map((s, i) => <SkillRow key={i} s={s} last={i === SKILLS.length - 1} />)}
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+/* TIMELINE */
+function Timeline() {
+  return (
+    <section id="parcours" data-screen-label="05 Parcours" style={{ padding: '120px 56px', background: 'transparent' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Parcours</p>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 80 }}>
+          <div>
+            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)', marginBottom: 32 }}>
+              Expériences<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>& Formations</em>
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[['2', 'Mentions Bien'], ['4', 'Expériences terrain'], ['3', 'Secteurs d\'activité']].map(([n, l]) =>
+              <div key={l} style={{ padding: '14px 18px', background: 'var(--surface-2)', borderRadius: 10, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <span style={{ fontFamily: 'var(--serif)', fontSize: 28, fontWeight: 400, color: 'var(--accent)', lineHeight: 1, minWidth: 32 }}>{n}</span>
+                  <span style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)' }}>{l}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div>
+            {TIMELINE.map((t, i) =>
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 32, paddingBottom: 36, marginBottom: 36, borderBottom: i < TIMELINE.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                <div style={{ paddingTop: 3 }}>
+                  <span style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>{t.year}</span>
+                  {t.isEdu && <div style={{ marginTop: 8, fontFamily: 'var(--sans)', fontSize: 9, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', padding: '3px 8px', background: 'var(--accent-dim)', borderRadius: 4, display: 'inline-block' }}>Formation</div>}
+                </div>
+                <div>
+                  <h3 style={{ fontFamily: 'var(--serif)', fontSize: 20, fontWeight: 500, color: 'var(--text)', marginBottom: 4, lineHeight: 1.2 }}>{t.title}</h3>
+                  <p style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--accent)', marginBottom: 8, fontWeight: 400 }}>{t.sub}</p>
+                  <p style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.65 }}>{t.desc}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+/* CONTACT */
+function Contact() {
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', msg: '' });
+  return (
+    <section id="contact" data-screen-label="06 Contact" style={{ padding: '120px 56px', background: 'transparent' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Contact</p>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
+          <div>
+            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,68px)', fontWeight: 300, lineHeight: 1.0, color: 'var(--text)', marginBottom: 32 }}>
+              Travaillons<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>ensemble.</em>
+            </h2>
+            <p style={{ fontFamily: 'var(--sans)', fontSize: 15, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 48, maxWidth: 420 }}>Disponible pour des opportunités en Île-de-France (ou ailleurs selon opportunité). N'hésitez pas à me contacter !
+
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {[['Email', 'contact.pro.faresb@gmail.com', 'mailto:contact.pro.faresb@gmail.com'], ['Téléphone', '06 38 03 66 15', 'tel:+33638036615'], ['LinkedIn', 'farès-benamar', 'https://linkedin.com/in/farès-benamar-721a4726a'], ['Localisation', 'Châtillon (92) · Paris & IDF', null]].map(([k, v, href]) =>
+              <div key={k} style={{ display: 'flex', gap: 24, alignItems: 'center', padding: '16px 0', borderTop: '1px solid var(--border)' }}>
+                  <span style={{ fontFamily: 'var(--sans)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', minWidth: 80 }}>{k}</span>
+                  {href ? <a href={href} style={{ fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300, color: 'var(--text-dim)', textDecoration: 'none' }} onMouseEnter={(e) => e.target.style.color = 'var(--text)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-dim)'}>{v}</a> :
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300, color: 'var(--text-dim)' }}>{v}</span>}
+                </div>
+              )}
+            </div>
+          </div>
+          <div style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 14, padding: 40, alignSelf: 'flex-start' }}>
+            {sent ?
+            <div style={{ textAlign: 'center', padding: '48px 0' }}>
+                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--accent-dim)', border: '1px solid var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
+                </div>
+                <p style={{ fontFamily: 'var(--serif)', fontSize: 24, color: 'var(--text)', fontWeight: 300, marginBottom: 8 }}>Message envoyé !</p>
+                <p style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--text-muted)', fontWeight: 300 }}>Je vous répondrai dans les plus brefs délais.</p>
+              </div> :
+
+            <form onSubmit={(e) => {e.preventDefault();setSent(true);}} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <h3 style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 400, color: 'var(--text)', marginBottom: 8 }}>Envoyer un message</h3>
+                {[['name', 'Votre nom', 'text'], ['email', 'Votre email', 'email']].map(([id, ph, type]) =>
+              <input key={id} type={type} placeholder={ph} required value={form[id]} onChange={(e) => setForm({ ...form, [id]: e.target.value })}
+              style={{ width: '100%', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 8, padding: '13px 16px', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text)', outline: 'none' }} />
+              )}
+                <textarea placeholder="Votre message" required rows={5} value={form.msg} onChange={(e) => setForm({ ...form, msg: e.target.value })}
+              style={{ width: '100%', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 8, padding: '13px 16px', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text)', outline: 'none', resize: 'vertical' }} />
+                <button type="submit" style={{ background: 'var(--accent)', color: 'white', border: 'none', borderRadius: 8, padding: '13px 28px', fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, cursor: 'pointer', letterSpacing: '0.04em', alignSelf: 'flex-start', transition: 'opacity 0.2s' }}
+              onMouseEnter={(e) => e.target.style.opacity = '0.8'} onMouseLeave={(e) => e.target.style.opacity = '1'}>Envoyer →</button>
+              </form>
+            }
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+/* FOOTER */
+function Footer() {
+  return (
+    <footer style={{ background: 'transparent', borderTop: '1px solid var(--border)', padding: '24px 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <span style={{ fontFamily: 'var(--serif)', fontSize: 15, color: 'var(--text-muted)', fontWeight: 300 }}>© 2026 Farès Benamar</span>
+      <span style={{ fontFamily: 'var(--sans)', fontSize: 11, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Communication · Paris & IDF</span>
+    </footer>);
+
+}
+
+/* APP */
+function App() {
+  const [active, setActive] = useState('hero');
+  const [scrolled, setScrolled] = useState(false);
+  const [tweaks, setTweaks] = useState(TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {if (e.isIntersecting) setActive(e.target.id);});
+    }, { threshold: 0.3 });
+    document.querySelectorAll('section[id]').forEach((s) => obs.observe(s));
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => {obs.disconnect();window.removeEventListener('scroll', onScroll);};
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const t = THEMES[tweaks.theme] || THEMES.cognac;
+    root.style.setProperty('--accent', t.accent);
+    root.style.setProperty('--accent-dim', t.accentDim);
+    if (tweaks.bg === 'dark') {
+      root.style.setProperty('--bg', '#0c0b09');
+      document.documentElement.style.backgroundColor = '#0c0b09';
+      root.style.setProperty('--surface', '#141210');
+      root.style.setProperty('--surface-2', '#1c1a16');root.style.setProperty('--surface-3', '#242119');
+      root.style.setProperty('--text', '#f0ede6');root.style.setProperty('--text-dim', '#b8b4ac');
+      root.style.setProperty('--text-muted', '#6e6b64');
+      root.style.setProperty('--border', 'rgba(255,255,255,0.07)');root.style.setProperty('--border-2', 'rgba(255,255,255,0.12)');
+    } else {
+      root.style.setProperty('--bg', '#efeae0');
+      document.documentElement.style.backgroundColor = '#efeae0';
+      root.style.setProperty('--surface', '#faf6ee');
+      root.style.setProperty('--surface-2', '#f3ede2');root.style.setProperty('--surface-3', '#ebe4d6');
+      root.style.setProperty('--text', '#2a2520');root.style.setProperty('--text-dim', '#4a4540');
+      root.style.setProperty('--text-muted', '#8a8278');
+      root.style.setProperty('--border', 'rgba(155,135,105,0.18)');root.style.setProperty('--border-2', 'rgba(155,135,105,0.32)');
+    }
+  }, [tweaks]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel').classList.add('visible');else
+      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('visible');
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  useEffect(() => {
+    const thEl = document.getElementById('tw-theme');
+    const bgEl = document.getElementById('tw-bg');
+    const cpEl = document.getElementById('tw-compact');
+    if (!thEl) return;
+    const apply = () => {
+      const next = { theme: thEl.value, bg: bgEl.value, compact: cpEl.checked };
+      setTweaks(next);
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+    };
+    thEl.value = tweaks.theme;bgEl.value = tweaks.bg;cpEl.checked = tweaks.compact;
+    [thEl, bgEl, cpEl].forEach((el) => el.addEventListener('change', apply));
+    return () => [thEl, bgEl, cpEl].forEach((el) => el.removeEventListener('change', apply));
+  }, [tweaks]);
+
+  return (
+    <>
+      <Nav active={active} scrolled={scrolled} />
+      <Hero />
+      <Projects />
+      <About />
+      <Skills />
+      <Timeline />
+      <Contact />
+      <Footer />
+    </>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+<script>
+(function() {
+  // Only on pointer:fine (non-touch) devices
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  var html = document.documentElement;
+  var ticking = false;
+  var lastY = 0;
+  function update() {
+    // Parallax: grid moves at 40% scroll speed via background-position
+    html.style.backgroundPositionY = (lastY * 0.4) + 'px';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    lastY = window.scrollY;
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
