@@ -43,6 +43,24 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface-3); }
 
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px !important; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  #hero    { padding-top: 90px !important; padding-bottom: 60px !important; }
+  #projets, #apropos, #contact { padding-top: 72px !important; padding-bottom: 72px !important; }
+  .surface-card { padding: 28px 20px !important; }
+  .about-grid   { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .about-photo-col  { position: static !important; }
+  .about-photo-wrap { aspect-ratio: 3/2 !important; max-height: 240px !important; }
+  .project-card-content { padding: 24px 20px 20px !important; }
+  .hero-stats { justify-content: flex-start !important; gap: 24px !important; flex-wrap: wrap !important; }
+  footer { flex-direction: column !important; gap: 6px !important; padding: 20px !important; text-align: center !important; }
+}
+@media (max-width: 480px) {
+  .hero-stats { flex-direction: column !important; gap: 14px !important; }
+}
+
 #tweaks-panel {
   position: fixed; bottom: 24px; right: 24px;
   background: var(--text); color: var(--bg);
@@ -198,26 +216,12 @@ const PROJECTS = [
 
 
 
-const SKILLS = [
-{ cat: 'Communication & Stratégie', items: ['Stratégie éditoriale', 'Communication visuelle', 'Relations presse', 'Animation réseaux sociaux', "Organisation d'événements"] },
-{ cat: 'Gestion de Projet', items: ['Coordination multi-équipes', 'Pilotage événementiel', 'Management prestataires', 'Planification logistique', 'Optimisation process', 'Arbitrage opérationnel'] },
-{ cat: 'Outils & Création', items: ['Adobe Premiere Pro', 'Adobe Photoshop', 'InDesign', 'Suite Office', 'WordPress / CMS', 'Notion / Trello', 'Bases en développement web (Next.js, bases de données)'] },
-{ cat: 'Langues', items: ['Français — natif', 'Anglais — B2 avancé', 'Allemand — A2'] }];
-
-
-const TIMELINE = [
-{ year: '2024–2025', title: 'Chargé de Communication', sub: 'INRIA, Le Chesnay-Rocquencourt — Alternance 12 mois', desc: 'Communication institutionnelle, gestion de projets transverses, production audiovisuelle patrimoniale (30k€).' },
-{ year: '2023–2025', title: 'Master 2 — Mention Bien', sub: 'UVSQ / Université Paris-Saclay', desc: 'Management et Communication des Organisations. Mémoire de recherche soutenu avec mention bien.', isEdu: true },
-{ year: '2024', title: 'Coordinateur Administratif', sub: 'Centre Médical Maréchal Juin — Stage 4 mois', desc: 'Coordination de 15+ professionnels de santé, optimisation des process et événements institutionnels.' },
-{ year: '2023', title: 'Chargé de Projet Com. & AV', sub: 'Propulsion Studio, Arcueil — Stage 3 mois', desc: 'Identité visuelle, contenus multimédias, relations presse, production audiovisuelle.' },
-{ year: '2020–2023', title: 'Licence Production & Audiovisuel — Mention Bien', sub: 'ESRA Paris', desc: 'Formation technique et artistique en production audiovisuelle.', isEdu: true },
-{ year: '2022', title: 'Assistant de Production', sub: 'DMANCIEL Production, Drancy — Stage 3 mois', desc: 'Coordination de productions audiovisuelles, suivi logistique et gestion des ressources.' }];
 
 
 /* NAV */
 function Nav({ active, scrolled }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const links = [['Projets', 'projets'], ['À propos', 'apropos'], ['Compétences', 'competences'], ['Parcours', 'parcours'], ['Contact', 'contact']];
+  const links = [['Projets', 'projets'], ['À propos', 'apropos'], ['Contact', 'contact']];
   const navBg = scrolled ? 'rgba(239,234,224,0.93)' : 'transparent';
   return (
     <>
@@ -508,7 +512,7 @@ function ProjectCard({ p, index }) {
       </div>
 
       {/* ── Right: content ── */}
-      <div style={{ padding: '44px 52px 40px 44px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+      <div className="project-card-content" style={{ padding: '44px 52px 40px 44px', display: 'flex', flexDirection: 'column', gap: 0 }}>
 
         {/* Tag */}
         <div style={{ marginBottom: 16 }}>
@@ -616,21 +620,21 @@ function About() {
     <section id="apropos" data-screen-label="03 À propos" style={{ padding: '120px 56px', background: 'transparent' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>À propos</p>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '5fr 4fr', gap: 96, alignItems: 'start' }}>
+        <div className="surface-card" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '5fr 4fr', gap: 96, alignItems: 'start' }}>
           <div>
             <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,64px)', fontWeight: 300, lineHeight: 1.0, marginBottom: 40, color: 'var(--text)' }}>
               De la stratégie<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>au terrain.</em>
             </h2>
-            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 24 }}>Chargé de communication et gestion de projet avec 3 ans d'expérience en communication institutionnelle, coordination d'événements et production audiovisuelle. 
+            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 24 }}>Chargé de communication et gestion de projet avec 3 ans d'expérience en communication institutionnelle, coordination d'événements et production audiovisuelle.
 Diplômé d'un Master 2 en Management et Communication des Organisations (mention bien), j'ai développé une expertise en stratégie éditoriale, création de contenus multi-formats et coordination d'équipes pluridisciplinaires. Reconnu pour ma rigueur organisationnelle, mon sens du relationnel et ma capacité à piloter des projets transverses dans des environnements exigeants.
             </p>
             <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 48 }}>
               Dans mon expérience la plus récente chez INRIA, j'ai coordonné des projets transverses avec plusieurs directions simultanément, tout en produisant des contenus multi-formats et en co-pilotant un projet audiovisuel patrimonial de 30 000 €.
             </p>
           </div>
-          <div style={{ position: 'sticky', top: 80 }}>
-            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <div className="about-photo-col" style={{ position: 'sticky', top: 80 }}>
+            <div className="about-photo-wrap" style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
               <img src="assets/profil.png" alt="Farès Benamar" style={{ width: '85%', display: 'block', mixBlendMode: 'multiply', filter: 'contrast(1.04) brightness(0.97)' }} />
             </div>
           </div>
@@ -641,92 +645,6 @@ Diplômé d'un Master 2 en Management et Communication des Organisations (mentio
 
 }
 
-function SkillRow({ s, last }) {
-  const [open, setOpen] = useState(true);
-  return (
-    <div style={{ borderTop: '1px solid var(--border)', borderBottom: last ? '1px solid var(--border)' : 'none' }}>
-      <div onClick={() => setOpen(!open)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0', cursor: 'pointer' }}>
-        <h3 style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 500, color: 'var(--text)' }}>{s.cat}</h3>
-        <span style={{ color: 'var(--accent)', fontSize: 22, transition: 'transform 0.2s', display: 'inline-block', transform: open ? 'rotate(45deg)' : 'none', lineHeight: 1 }}>+</span>
-      </div>
-      {open &&
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, paddingBottom: 24 }}>
-          {s.items.map((item) =>
-        <span key={item} style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-dim)', background: 'var(--surface-2)', border: '1px solid var(--border)', padding: '7px 16px', borderRadius: 100, transition: 'background 0.2s, color 0.2s', cursor: 'default' }}
-        onMouseEnter={(e) => {e.currentTarget.style.background = 'var(--accent)';e.currentTarget.style.color = 'white';e.currentTarget.style.borderColor = 'var(--accent)';}}
-        onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--surface-2)';e.currentTarget.style.color = 'var(--text-dim)';e.currentTarget.style.borderColor = 'var(--border)';}}>
-          {item}</span>
-        )}
-        </div>
-      }
-    </div>);
-
-}
-
-function Skills() {
-  return (
-    <section id="competences" data-screen-label="04 Compétences" style={{ padding: '120px 56px', background: 'transparent' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Compétences</p>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 80 }}>
-          <div>
-            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)' }}>
-              Expertise<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>& Outils</em>
-            </h2>
-          </div>
-          <div>
-            {SKILLS.map((s, i) => <SkillRow key={i} s={s} last={i === SKILLS.length - 1} />)}
-          </div>
-        </div>
-        </div>
-      </div>
-    </section>);
-
-}
-
-/* TIMELINE */
-function Timeline() {
-  return (
-    <section id="parcours" data-screen-label="05 Parcours" style={{ padding: '120px 56px', background: 'transparent' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Parcours</p>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 80 }}>
-          <div>
-            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)', marginBottom: 32 }}>
-              Expériences<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>& Formations</em>
-            </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[['2', 'Mentions Bien'], ['4', 'Expériences terrain'], ['4', 'Secteurs d\'activité']].map(([n, l]) =>
-              <div key={l} style={{ padding: '14px 18px', background: 'var(--surface-2)', borderRadius: 10, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <span style={{ fontFamily: 'var(--serif)', fontSize: 28, fontWeight: 400, color: 'var(--accent)', lineHeight: 1, minWidth: 32 }}>{n}</span>
-                  <span style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)' }}>{l}</span>
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            {TIMELINE.map((t, i) =>
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 32, paddingBottom: 36, marginBottom: 36, borderBottom: i < TIMELINE.length - 1 ? '1px solid var(--border)' : 'none' }}>
-                <div style={{ paddingTop: 3 }}>
-                  <span style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>{t.year}</span>
-                  {t.isEdu && <div style={{ marginTop: 8, fontFamily: 'var(--sans)', fontSize: 9, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', padding: '3px 8px', background: 'var(--accent-dim)', borderRadius: 4, display: 'inline-block' }}>Formation</div>}
-                </div>
-                <div>
-                  <h3 style={{ fontFamily: 'var(--serif)', fontSize: 20, fontWeight: 500, color: 'var(--text)', marginBottom: 4, lineHeight: 1.2 }}>{t.title}</h3>
-                  <p style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--accent)', marginBottom: 8, fontWeight: 400 }}>{t.sub}</p>
-                  <p style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.65 }}>{t.desc}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        </div>
-      </div>
-    </section>);
-
-}
 
 /* CONTACT */
 function Contact() {
@@ -734,7 +652,7 @@ function Contact() {
     <section id="contact" data-screen-label="06 Contact" style={{ padding: '120px 56px', background: 'transparent' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Contact</p>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
+        <div className="surface-card" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 80, maxWidth: 640 }}>
           <div>
             <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,68px)', fontWeight: 300, lineHeight: 1.0, color: 'var(--text)', marginBottom: 32 }}>
@@ -855,8 +773,6 @@ function App() {
       <Hero />
       <Projects />
       <About />
-      <Skills />
-      <Timeline />
       <Contact />
       <Footer />
     </>);
