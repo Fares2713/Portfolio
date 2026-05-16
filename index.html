@@ -216,43 +216,104 @@ const TIMELINE = [
 
 /* NAV */
 function Nav({ active, scrolled }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const links = [['Projets', 'projets'], ['À propos', 'apropos'], ['Compétences', 'competences'], ['Parcours', 'parcours'], ['Contact', 'contact']];
+  const navBg = scrolled ? 'rgba(239,234,224,0.93)' : 'transparent';
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-      height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '0 56px',
-      background: scrolled ? 'rgba(239,234,224,0.93)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-      transition: 'background 0.4s, border-color 0.4s'
-    }}>
-      <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, letterSpacing: '0.01em' }}>
-        Farès <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Benamar</em>
-      </span>
-      <div style={{ display: 'flex', gap: 36 }}>
-        {links.map(([l, id]) =>
-        <a key={id} href={`#${id}`} style={{
-          fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400,
-          color: active === id ? 'var(--accent)' : 'var(--text-muted)',
-          textDecoration: 'none', letterSpacing: '0.02em', transition: 'color 0.2s'
-        }}
-        onMouseEnter={(e) => e.target.style.color = 'var(--text)'}
-        onMouseLeave={(e) => e.target.style.color = active === id ? 'var(--accent)' : 'var(--text-muted)'}>
-          {l}</a>
-        )}
-      </div>
-      <a href="mailto:contact.pro.faresb@gmail.com" style={{
-        fontFamily: 'var(--sans)', fontSize: 12, fontWeight: 600,
-        color: 'white', background: 'var(--accent)',
-        padding: '8px 22px', borderRadius: 6, textDecoration: 'none',
-        letterSpacing: '0.04em', transition: 'opacity 0.2s'
-      }}
-      onMouseEnter={(e) => e.currentTarget.style.opacity = '0.82'}
-      onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-        Me contacter</a>
-    </nav>);
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-links { display: none !important; }
+          .nav-cta  { display: none !important; }
+          .nav-hamburger { display: flex !important; }
+        }
+        .nav-hamburger {
+          display: none;
+          background: none; border: none; cursor: pointer;
+          padding: 6px; color: var(--text);
+          flex-direction: column; gap: 5px; align-items: center; justify-content: center;
+        }
+        .nav-hamburger span {
+          display: block; width: 22px; height: 1.5px;
+          background: currentColor; border-radius: 2px;
+          transition: transform 0.25s, opacity 0.25s;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+        .nav-mobile-drawer {
+          display: none;
+          position: fixed; top: 60px; left: 0; right: 0; z-index: 199;
+          background: rgba(239,234,224,0.97);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid var(--border);
+          flex-direction: column; padding: 12px 28px 28px;
+        }
+        .nav-mobile-drawer.open { display: flex; }
+        .nav-mobile-drawer a {
+          fontFamily: var(--sans); font-size: 16px; font-weight: 400;
+          color: var(--text-muted); text-decoration: none;
+          padding: 14px 0; border-bottom: 1px solid var(--border);
+          transition: color 0.2s;
+        }
+        .nav-mobile-drawer a:last-child { border-bottom: none; margin-top: 16px; }
+      `}</style>
 
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+        height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 56px',
+        background: navBg,
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+        transition: 'background 0.4s, border-color 0.4s'
+      }}>
+        <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, letterSpacing: '0.01em' }}>
+          Farès <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Benamar</em>
+        </span>
+        <div className="nav-links" style={{ display: 'flex', gap: 36 }}>
+          {links.map(([l, id]) =>
+          <a key={id} href={`#${id}`} style={{
+            fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400,
+            color: active === id ? 'var(--accent)' : 'var(--text-muted)',
+            textDecoration: 'none', letterSpacing: '0.02em', transition: 'color 0.2s'
+          }}
+          onMouseEnter={(e) => e.target.style.color = 'var(--text)'}
+          onMouseLeave={(e) => e.target.style.color = active === id ? 'var(--accent)' : 'var(--text-muted)'}>
+            {l}</a>
+          )}
+        </div>
+        <a className="nav-cta" href="mailto:contact.pro.faresb@gmail.com" style={{
+          fontFamily: 'var(--sans)', fontSize: 12, fontWeight: 600,
+          color: 'white', background: 'var(--accent)',
+          padding: '8px 22px', borderRadius: 6, textDecoration: 'none',
+          letterSpacing: '0.04em', transition: 'opacity 0.2s'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.82'}
+        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+          Me contacter</a>
+        <button
+          className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>
+          <span/><span/><span/>
+        </button>
+      </nav>
+
+      <div className={`nav-mobile-drawer${menuOpen ? ' open' : ''}`}>
+        {links.map(([l, id]) =>
+          <a key={id} href={`#${id}`}
+            style={{ fontFamily: 'var(--sans)', fontSize: 16, color: active === id ? 'var(--accent)' : 'var(--text-muted)', textDecoration: 'none', padding: '14px 0', borderBottom: '1px solid var(--border)', display: 'block' }}
+            onClick={() => setMenuOpen(false)}>
+            {l}
+          </a>
+        )}
+        <a href="mailto:contact.pro.faresb@gmail.com"
+          style={{ display: 'inline-block', marginTop: 20, fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600, color: 'white', background: 'var(--accent)', padding: '12px 28px', borderRadius: 6, textDecoration: 'none', letterSpacing: '0.04em' }}>
+          Me contacter
+        </a>
+      </div>
+    </>);
 }
 
 /* HERO */
@@ -337,7 +398,7 @@ function Hero() {
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
               Voir mes projets</a>
-            <a href="#contact" style={{
+            <a href="assets/cv-fares-benamar.pdf" download style={{
               fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 500,
               color: 'var(--text)', background: 'transparent',
               padding: '14px 32px', borderRadius: 8, textDecoration: 'none',
@@ -346,7 +407,7 @@ function Hero() {
             }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--text)'}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-2)'}>
-              Me contacter</a>
+              Télécharger mon CV</a>
           </div>
         </div>
 
@@ -382,7 +443,7 @@ function Hero() {
         borderTop: '1px solid var(--border)', paddingTop: 32, marginTop: 56,
         position: 'relative', zIndex: 3
       }}>
-        {[['2 ans', "d'expérience"], ['4 secteurs', 'public · BTP · médical · AV'], ['50 K€+', 'de budgets pilotés']].map(([n, l]) =>
+        {[['3 ans', "d'expérience"], ['4 secteurs', 'public · BTP · médical · AV'], ['50 K€+', 'de budgets pilotés']].map(([n, l]) =>
         <div key={n} style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
           <span style={{ fontFamily: 'var(--serif)', fontSize: 32, fontWeight: 400, color: 'var(--accent)', lineHeight: 1 }}>{n}</span>
           <span style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>{l}</span>
@@ -569,7 +630,7 @@ Diplômé d'un Master 2 en Management et Communication des Organisations (mentio
             </p>
           </div>
           <div style={{ position: 'sticky', top: 80 }}>
-            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', height: "559.875px" }}>
+            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
               <img src="assets/profil.png" alt="Farès Benamar" style={{ width: '85%', display: 'block', mixBlendMode: 'multiply', filter: 'contrast(1.04) brightness(0.97)' }} />
             </div>
           </div>
@@ -637,7 +698,7 @@ function Timeline() {
               Expériences<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>& Formations</em>
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[['2', 'Mentions Bien'], ['4', 'Expériences terrain'], ['3', 'Secteurs d\'activité']].map(([n, l]) =>
+              {[['2', 'Mentions Bien'], ['4', 'Expériences terrain'], ['4', 'Secteurs d\'activité']].map(([n, l]) =>
               <div key={l} style={{ padding: '14px 18px', background: 'var(--surface-2)', borderRadius: 10, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 16 }}>
                   <span style={{ fontFamily: 'var(--serif)', fontSize: 28, fontWeight: 400, color: 'var(--accent)', lineHeight: 1, minWidth: 32 }}>{n}</span>
                   <span style={{ fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)' }}>{l}</span>
@@ -669,8 +730,6 @@ function Timeline() {
 
 /* CONTACT */
 function Contact() {
-  const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', msg: '' });
   return (
     <section id="contact" data-screen-label="06 Contact" style={{ padding: '120px 56px', background: 'transparent' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
