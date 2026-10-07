@@ -172,7 +172,7 @@ summary:hover{color:var(--blue)}
 .experience-row{display:grid;grid-template-columns:150px minmax(0,1fr) 220px;gap:34px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
 .experience-date{font-size:15px;font-weight:600;margin:0;color:var(--ink)}
 .experience-date>span{display:block;font-size:11px;font-weight:400;line-height:1.6;color:var(--muted);margin-top:6px}
-.experience-content h3{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0}
+.experience-content h4{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0}
 .experience-role{font-size:14px;color:var(--blue);font-weight:500;margin:7px 0 14px}
 .experience-content ul{padding-left:18px;margin:0;font-size:13px;color:var(--muted);line-height:1.7}
 .experience-content li+li{margin-top:5px}
@@ -192,4 +192,9 @@ summary:hover{color:var(--blue)}
 summary{font-size:13px}
 .project[id]{scroll-margin-top:108px}
 @media(max-width:1050px){.experience-row{grid-template-columns:120px minmax(0,1fr) 190px;gap:22px}}
-@media(max-width:760px){.experience-row{grid-template-columns:1fr;gap:14px;padding:24px 0}.experience-date{font-size:13px}.experience-date>span{display:inline;font-size:11px;margin-left:12px}.experience-content h3{font-size:23px}.experience-focus{padding:14px}.experience-role{font-size:13px}.experience-content ul{font-size:13px}.project-meta{font-size:11px}.project-subtitle{font-size:13px}}
+@media(max-width:760px){.experience-row{grid-template-columns:1fr;gap:14px;padding:24px 0}.experience-date{font-size:13px}.experience-date>span{display:inline;font-size:11px;margin-left:12px}.experience-content h4{font-size:23px}.experience-focus{padding:14px}.experience-role{font-size:13px}.experience-content ul{font-size:13px}.project-meta{font-size:11px}.project-subtitle{font-size:13px}}
+
+.experience-group-title{font-size:16px;font-weight:600;margin:30px 0 16px;color:var(--ink)}
+.experience-actions{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px}
+.experience-actions .text-link{margin:0}
+@media(max-width:760px){.experience-group-title{font-size:15px}.experience-actions{align-items:flex-start;flex-direction:column}.experience-focus strong{font-size:15px}}

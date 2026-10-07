@@ -22,7 +22,12 @@ try{
   page.on('pageerror',error=>errors.push(error.message));
   await page.goto(origin,{waitUntil:'networkidle'});
   assert.ok(!(await page.title()).includes('—'),'No em dash in tab title');
-  assert.equal(await page.locator('.experience-row').count(),3,'Three sourced experience summaries');
+  assert.equal(await page.locator('.experience-row').count(),6,'Four employments and two entrepreneurial projects');
+  assert.equal(await page.locator('a[download]').count(),3,'Three working CV access points');
+  const pdf=await context.request.get(origin+'/assets/cv-fares-benamar.pdf');
+  assert.equal(pdf.status(),200,'CV download');
+  assert.ok((await pdf.body()).subarray(0,5).toString()==='%PDF-','Actual PDF file');
+  assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.jpg','Updated portrait');
   assert.equal(await page.locator('.project-contribution').count(),6,'A visible role for each project');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
   assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760,'Menu only appears on mobile');
