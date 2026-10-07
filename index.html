@@ -1,891 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Farès Benamar — Chargé de communication 360°, digital & gestion de projet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:         #efeae0;
-  --surface:    #faf6ee;
-  --surface-2:  #f3ede2;
-  --surface-3:  #ebe4d6;
-  --text:       #2a2520;
-  --text-dim:   #4a4540;
-  --text-muted: #8a8278;
-  --accent:     oklch(70% 0.14 52);
-  --accent-dim: oklch(70% 0.14 52 / 0.10);
-  --accent-2:   oklch(60% 0.10 85);
-  --border:     rgba(155,135,105,0.18);
-  --border-2:   rgba(155,135,105,0.32);
-  --serif:      'Cormorant Garamond', Georgia, serif;
-  --sans:       'Space Grotesk', system-ui, sans-serif;
-}
-html {
-  scroll-behavior: smooth;
-  background-color: var(--bg);
-  background-image: radial-gradient(circle, rgba(120,100,70,0.25) 1.5px, transparent 1.5px);
-  background-size: 30px 30px;
-}
-body {
-  background: transparent;
-  color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased;
-}
-#dot-grid { display: none; }
-#root { min-height: 100vh; }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--surface-3); }
-
-/* ── Scroll reveal ── */
-@media (prefers-reduced-motion: no-preference) {
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-  }
-  .reveal.is-visible { opacity: 1; transform: none; }
-}
-
-/* ── Project card hover ── */
-.project-card-grid {
-  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
-              box-shadow 0.4s ease,
-              opacity 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.project-card-grid:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 22px 56px rgba(100,80,50,0.17), 0 4px 14px rgba(100,80,50,0.10) !important;
-}
-.project-card-grid img { transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
-.project-card-grid:hover img { transform: scale(1.045); }
-@media (prefers-reduced-motion: reduce) {
-  .project-card-grid:hover { transform: none; }
-  .project-card-grid:hover img { transform: none; }
-}
-
-/* ── Mobile responsive ── */
-@media (max-width: 768px) {
-  nav { padding: 0 20px !important; }
-  section { padding-left: 20px !important; padding-right: 20px !important; }
-  #hero    { padding-top: 90px !important; padding-bottom: 60px !important; }
-  #projets, #apropos, #contact { padding-top: 72px !important; padding-bottom: 72px !important; }
-  .surface-card { padding: 28px 20px !important; }
-  .about-grid   { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .about-photo-col  { position: static !important; }
-  .about-photo-wrap { aspect-ratio: 3/2 !important; max-height: 240px !important; }
-  .project-card-content { padding: 24px 20px 20px !important; }
-  .hero-stats { justify-content: flex-start !important; gap: 24px !important; flex-wrap: wrap !important; }
-  footer { flex-direction: column !important; gap: 6px !important; padding: 20px !important; text-align: center !important; }
-}
-@media (max-width: 480px) {
-  .hero-stats { flex-direction: column !important; gap: 14px !important; }
-}
-
-#tweaks-panel {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--text); color: var(--bg);
-  border-radius: 14px; padding: 22px 26px;
-  z-index: 9999; width: 270px;
-  font-family: var(--sans); font-size: 13px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  display: none;
-}
-#tweaks-panel.visible { display: block; }
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-#tweaks-panel h4 { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; opacity: 0.4; font-weight: 500; }
-.tweak-row { margin-bottom: 14px; }
-.tweak-row label { display: block; font-size: 12px; opacity: 0.6; margin-bottom: 6px; }
-.tweak-row select { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: inherit; border-radius: 6px; padding: 7px 10px; font-size: 12px; font-family: var(--sans); cursor: pointer; outline: none; }
-.tweak-toggle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.tweak-toggle label { font-size: 12px; opacity: 0.6; }
-.tweak-toggle input { cursor: pointer; accent-color: var(--accent); }
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#163fce">
+<title>Farès Benamar — Communication, création & gestion de projet</title>
+<meta name="description" content="Farès Benamar, chargé de communication à Châtillon : stratégie éditoriale, création de contenus, événementiel et gestion de projet. Découvrez ses réalisations chez Inria et ses projets entrepreneuriaux.">
+<link rel="canonical" href="https://portfolio-fares-benamar.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Farès Benamar — Des idées claires. Des projets concrets.">
+<meta property="og:description" content="Communication, création et gestion de projet. Découvrez une sélection de réalisations et échangeons sur votre prochain projet.">
+<meta property="og:url" content="https://portfolio-fares-benamar.vercel.app/">
+<meta property="og:image" content="https://portfolio-fares-benamar.vercel.app/assets/profil.png">
+<meta property="og:image:alt" content="Portrait de Farès Benamar">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/monogram.svg" type="image/svg+xml">
+<link rel="preload" href="assets/profil.png" as="image">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
 </head>
 <body>
-<div id="dot-grid"></div>
-<div id="root"></div>
-<div id="tweaks-panel">
-  <h4>Tweaks</h4>
-  <div class="tweak-row">
-    <label>Couleur d'accent</label>
-    <select id="tw-theme">
-      <option value="cognac">Cognac (défaut)</option>
-      <option value="blue">Bleu ardoise</option>
-      <option value="sage">Vert sauge</option>
-      <option value="rose">Rose poudré</option>
-    </select>
-  </div>
-  <div class="tweak-row">
-    <label>Fond</label>
-    <select id="tw-bg">
-      <option value="light">Ivoire clair</option>
-      <option value="dark">Noir éditorial</option>
-    </select>
-  </div>
-  <div class="tweak-toggle">
-    <label>Grille compacte</label>
-    <input type="checkbox" id="tw-compact"/>
-  </div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="container header-inner">
+<a class="wordmark" href="#accueil" aria-label="Farès Benamar, accueil"><span class="monogram" aria-hidden="true">fb.</span><span>Farès Benamar<span class="wordmark-sub">Communication & projets</span></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+<nav id="navigation" aria-label="Navigation principale"><a href="#projets">Réalisations</a><a href="#expertises">Expertises</a><a href="#apropos">À propos</a><a class="nav-contact" href="#contact">Échangeons <span aria-hidden="true">↗</span></a></nav>
 </div>
-
-<script type="text/babel">
-
-
-
-const { useState, useEffect } = React;
-
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "cognac",
-  "bg": "light",
-  "compact": false
-}/*EDITMODE-END*/;
-
-const THEMES = {
-  cognac: { accent: 'oklch(70% 0.14 52)', accentDim: 'oklch(70% 0.14 52 / 0.10)' },
-  blue: { accent: 'oklch(52% 0.13 238)', accentDim: 'oklch(52% 0.13 238 / 0.10)' },
-  sage: { accent: 'oklch(52% 0.11 155)', accentDim: 'oklch(52% 0.11 155 / 0.10)' },
-  rose: { accent: 'oklch(58% 0.12 10)', accentDim: 'oklch(58% 0.12 10 / 0.10)' }
-};
-
-const PROJECTS = [
-{
-  id: 1, tag: 'Audiovisuel · Patrimonial',
-  image: 'assets/archives-orales.png', logoOnly: false,
-  title: 'Série d\u2019entretiens institutionnels INRIA',
-  desc: "Co-pilotage d'une série d'entretiens filmés retraçant l'histoire d'INRIA à travers ses figures emblématiques, en coordination avec un prestataire externe et plusieurs directions internes.",
-  year: '2024–2025', client: 'INRIA – DCOM · DGD-S', budget: '30 000 €', role: 'Co-Chef de projet',
-  bullets: [
-  'Définition de la stratégie éditoriale et du fil narratif de la série',
-  'Coordination des plannings entre interviewés, directions et équipes techniques',
-  'Pilotage du prestataire audiovisuel externe et suivi des livrables'],
-
-  impact: "Une série patrimoniale pérenne, livrée dans les délais, intégrée aux archives institutionnelles d’INRIA.",
-  status: 'Mission livrée'
-},
-{
-  id: 2, tag: 'Événementiel · Institutionnel',
-  title: "Pilotage événementiel du siège",
-  image: 'assets/inria-expo-bloche.jpg',
-  desc: "Coordination logistique et éditoriale d'événements institutionnels majeurs : conférences scientifiques, journée siège, expositions internes avec des publics variés allant des chercheurs aux partenaires institutionnels.",
-  year: '2024–2025', client: 'INRIA siège', role: 'Chef de projet événementiel',
-  bullets: [
-  'Gestion des intervenants, salles et supports de communication événementielle',
-  'Direction artistique des supports événementiels (kakémonos, programmes, signalétique)',
-  "Coordination avec la DCOM pour l’alignement éditorial et la couverture interne"],
-
-  impact: 'Des événements livrés en délais et budgets, salués pour leur tenue éditoriale par les directions partenaires.',
-  status: 'Mission livrée'
-},
-{
-  id: 3, tag: 'Communication interne',
-  title: "Stratégie de communication interne du siège",
-  image: 'assets/inria-siege.jpeg',
-  desc: "Contribution active à la stratégie de communication interne du siège (Inria.fr, intranet Numin, newsletters, écrans dynamiques), en interface entre le responsable du siège, la DCOM, les Services Généraux et les RH.",
-  year: '2024–2025', client: 'INRIA siège', role: 'Contributeur stratégie',
-  bullets: [
-  'Contribution à la définition de la charte éditoriale interne du siège',
-  "Appui à l’arbitrage des priorités multi-directions",
-  'Participation au pilotage du calendrier éditorial transverse'],
-
-  impact: "Une circulation de l’information plus fluide entre directions, soutenue par un calendrier éditorial structuré.",
-  status: 'Mission livrée'
-},
-{
-  id: 7, tag: 'Diplomatie culturelle · International',
-  title: "Exposition itinérante à l’Ambassade française de Séoul",  image: 'assets/ambassade-seoul.jpg',
-  desc: "Coordination avec la chargée culturelle de l'Ambassade de France en Corée du Sud pour l'installation d'un kakémono dans le hall de l'ambassade, valorisant INRIA à l'international sous forme d'exposition itinérante.",
-  year: '2024–2025', client: 'INRIA · Ambassade de France — Séoul', role: 'Chargé de communication',
-  bullets: [
-  "Participation aux réunions de cadrage avec la chargée culturelle de l’ambassade",
-  'Conception éditoriale et graphique du kakémono en lien avec la DCOM (contenu, format, hiérarchie)',
-  'Suivi de la production et validation finale par le directeur du siège pour installation diplomatique'],
-
-  impact: 'INRIA représenté dans un espace diplomatique de premier plan, renforçant sa visibilité internationale.',
-  status: 'Mission livrée'
-},
-{
-  id: 9, tag: 'Branding · Identité visuelle',
-  title: "Co-création d’une identité de marque : Glow Center",
-  desc: "Création de l’identité visuelle complète d’un centre esthétique en lancement, du logotype aux supports opérationnels de lancement.",
-  year: '2026', client: 'Glow Center', budget: '20 000 €', role: 'Directeur artistique & créatif',
-  bullets: [
-  'Définition du positionnement visuel et du territoire de marque',
-  'Direction artistique : logotype, palette chromatique, système typographique',
-  'Déclinaison opérationnelle : charte graphique, supports print et digital'],
-
-  impact: "Une identité cohérente et premium, opérationnelle dès l’ouverture du centre.",
-  status: 'Mission livrée'
-},
-{
-  id: 10, tag: 'Entrepreneuriat · SaaS',
-  title: "VigySafety : Co-création & Développement commercial",
-  image: 'assets/favicon-192.png', logoOnly: true,
-  desc: "Co-création d'un SaaS (vigysafety.com) et pilotage du développement commercial en phase de lancement : structuration de l'offre, prospection intensive et gestion d'un portefeuille client actif.",
-  year: '2025–2026', client: 'VigySafety', role: 'Co-fondateur & Responsable commercial',
-  bullets: [
-  'Prospection de ~1 000 contacts et qualification des leads entrants',
-  "Acquisition et fidélisation d’un portefeuille de 60 clients actifs à 49,99 €/mois",
-  'Contribution à la définition du positionnement produit et aux supports marketing'],
-
-  impact: '60 clients actifs en quelques mois, validant la pertinence commerciale du produit.',
-  status: 'En cours · 2025–2026'
-}];
-
-
-
-
-
-/* COUNT-UP — animates the leading number of a stat string on first view */
-function CountUp({ value, style }) {
-  const ref = React.useRef(null);
-  const [display, setDisplay] = useState(value);
-  useEffect(() => {
-    const m = /^(\d+)(.*)$/.exec(value);
-    if (!m || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDisplay(value);
-      return;
-    }
-    const target = parseInt(m[1], 10);
-    const suffix = m[2];
-    setDisplay('0' + suffix);
-    const el = ref.current;
-    let started = false;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting && !started) {
-          started = true;
-          const dur = 1300, start = performance.now();
-          const tick = (now) => {
-            const t = Math.min(1, (now - start) / dur);
-            const eased = 1 - Math.pow(1 - t, 3);
-            setDisplay(Math.round(eased * target) + suffix);
-            if (t < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-          io.unobserve(el);
-        }
-      });
-    }, { threshold: 0.6 });
-    if (el) io.observe(el);
-    return () => io.disconnect();
-  }, [value]);
-  return <span ref={ref} style={style}>{display}</span>;
-}
-
-/* NAV */
-function Nav({ active, scrolled }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const links = [['Projets', 'projets'], ['À propos', 'apropos'], ['Contact', 'contact']];
-  const navBg = scrolled ? 'rgba(239,234,224,0.93)' : 'transparent';
-  return (
-    <>
-      <style>{`
-        @media (max-width: 768px) {
-          .nav-links { display: none !important; }
-          .nav-cta  { display: none !important; }
-          .nav-hamburger { display: flex !important; }
-        }
-        .nav-hamburger {
-          display: none;
-          background: none; border: none; cursor: pointer;
-          padding: 6px; color: var(--text);
-          flex-direction: column; gap: 5px; align-items: center; justify-content: center;
-        }
-        .nav-hamburger span {
-          display: block; width: 22px; height: 1.5px;
-          background: currentColor; border-radius: 2px;
-          transition: transform 0.25s, opacity 0.25s;
-        }
-        .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-        .nav-mobile-drawer {
-          display: none;
-          position: fixed; top: 60px; left: 0; right: 0; z-index: 199;
-          background: rgba(239,234,224,0.97);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid var(--border);
-          flex-direction: column; padding: 12px 28px 28px;
-        }
-        .nav-mobile-drawer.open { display: flex; }
-        .nav-mobile-drawer a {
-          fontFamily: var(--sans); font-size: 16px; font-weight: 400;
-          color: var(--text-muted); text-decoration: none;
-          padding: 14px 0; border-bottom: 1px solid var(--border);
-          transition: color 0.2s;
-        }
-        .nav-mobile-drawer a:last-child { border-bottom: none; margin-top: 16px; }
-      `}</style>
-
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-        height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 56px',
-        background: navBg,
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-        transition: 'background 0.4s, border-color 0.4s'
-      }}>
-        <span style={{ fontFamily: 'var(--serif)', fontSize: 17, fontWeight: 500, letterSpacing: '0.01em' }}>
-          Farès <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Benamar</em>
-        </span>
-        <div className="nav-links" style={{ display: 'flex', gap: 36 }}>
-          {links.map(([l, id]) =>
-          <a key={id} href={`#${id}`} style={{
-            fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 400,
-            color: active === id ? 'var(--accent)' : 'var(--text-muted)',
-            textDecoration: 'none', letterSpacing: '0.02em', transition: 'color 0.2s'
-          }}
-          onMouseEnter={(e) => e.target.style.color = 'var(--text)'}
-          onMouseLeave={(e) => e.target.style.color = active === id ? 'var(--accent)' : 'var(--text-muted)'}>
-            {l}</a>
-          )}
-        </div>
-        <a className="nav-cta" href="mailto:contact.pro.faresb@gmail.com" style={{
-          fontFamily: 'var(--sans)', fontSize: 12, fontWeight: 600,
-          color: 'white', background: 'var(--accent)',
-          padding: '8px 22px', borderRadius: 6, textDecoration: 'none',
-          letterSpacing: '0.04em', transition: 'opacity 0.2s'
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.82'}
-        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-          Me contacter</a>
-        <button
-          className={`nav-hamburger${menuOpen ? ' open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>
-          <span/><span/><span/>
-        </button>
-      </nav>
-
-      <div className={`nav-mobile-drawer${menuOpen ? ' open' : ''}`}>
-        {links.map(([l, id]) =>
-          <a key={id} href={`#${id}`}
-            style={{ fontFamily: 'var(--sans)', fontSize: 16, color: active === id ? 'var(--accent)' : 'var(--text-muted)', textDecoration: 'none', padding: '14px 0', borderBottom: '1px solid var(--border)', display: 'block' }}
-            onClick={() => setMenuOpen(false)}>
-            {l}
-          </a>
-        )}
-        <a href="mailto:contact.pro.faresb@gmail.com"
-          style={{ display: 'inline-block', marginTop: 20, fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600, color: 'white', background: 'var(--accent)', padding: '12px 28px', borderRadius: 6, textDecoration: 'none', letterSpacing: '0.04em' }}>
-          Me contacter
-        </a>
-      </div>
-    </>);
-}
-
-/* HERO */
-function Hero() {
-  const titleSize = 'clamp(52px, 7vw, 108px)';
-  return (
-    <section id="hero" data-screen-label="01 Hero" style={{
-      minHeight: '100vh', position: 'relative', overflow: 'hidden',
-      display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      padding: '80px 56px 60px',
-      background: 'transparent'
-    }}>
-      <style>{`
-        @media (max-width: 860px) {
-          .hero-inner { flex-direction: column !important; align-items: flex-start !important; gap: 40px !important; }
-          .hero-photo { width: 60vw !important; max-width: 280px !important; align-self: flex-end !important; }
-          .hero-title { font-size: clamp(44px, 11vw, 72px) !important; }
-          .hero-stats { gap: 28px !important; flex-wrap: wrap; }
-          #hero { padding: 100px 28px 120px !important; }
-        }
-      `}</style>
-
-      {/* Main asymmetric layout */}
-      <div className="hero-inner" style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: 48, width: '100%', maxWidth: 1300, margin: '0 auto',
-        position: 'relative', zIndex: 2
-      }}>
-
-        {/* LEFT — text column */}
-        <div className="reveal" style={{ flex: '1 1 0', minWidth: 0 }}>
-
-          {/* Greeting */}
-          <p style={{
-            fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300,
-            color: 'var(--text-dim)', marginBottom: 24, letterSpacing: '0.01em'
-          }}>
-            👋 Bonjour, je suis <strong style={{ fontWeight: 500 }}>Farès Benamar</strong>
-          </p>
-
-          {/* Title block */}
-          <div style={{ marginBottom: 28 }}>
-            <div className="hero-title" style={{
-              fontFamily: 'var(--sans)', fontWeight: 700,
-              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
-              color: 'var(--text)', userSelect: 'none'
-            }}>Chargé de</div>
-            <div className="hero-title" style={{
-              fontFamily: 'var(--sans)', fontWeight: 700,
-              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
-              color: 'var(--text)', userSelect: 'none'
-            }}>communication 360°,</div>
-            <div className="hero-title" style={{
-              fontFamily: 'var(--sans)', fontWeight: 700,
-              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
-              color: 'var(--text)', userSelect: 'none'
-            }}>digital</div>
-            <div className="hero-title" style={{
-              fontFamily: 'var(--sans)', fontWeight: 700,
-              fontSize: titleSize, lineHeight: 0.88, letterSpacing: '-0.03em',
-              color: 'transparent',
-              WebkitTextStroke: '1.5px var(--text)',
-              userSelect: 'none'
-            }}>&amp; gestion de projet.</div>
-          </div>
-
-          {/* Location + status */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
-            <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-muted)' }}>
-              basé à Châtillon, Île-de-France.
-            </span>
-            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--text-muted)', display: 'inline-block', flexShrink: 0 }} />
-            <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--accent)', fontWeight: 500 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block' }} />
-              Ouvert aux opportunités
-            </span>
-          </div>
-
-          {/* CTAs */}
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <a href="#projets" style={{
-              fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600,
-              color: 'white', background: 'var(--text)',
-              padding: '14px 32px', borderRadius: 8, textDecoration: 'none',
-              letterSpacing: '0.02em', transition: 'opacity 0.2s'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
-            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-              Voir mes projets</a>
-            <a href="assets/cv-fares-benamar.pdf" download style={{
-              fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 500,
-              color: 'var(--text)', background: 'transparent',
-              padding: '14px 32px', borderRadius: 8, textDecoration: 'none',
-              letterSpacing: '0.02em', border: '2px solid var(--border-2)',
-              transition: 'border-color 0.2s'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--text)'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-2)'}>
-              Télécharger mon CV</a>
-          </div>
-        </div>
-
-        {/* RIGHT — photo */}
-        <div className="hero-photo reveal" style={{
-          flexShrink: 0, width: 'clamp(320px, 33vw, 460px)', marginLeft: 104,
-          pointerEvents: 'none', transitionDelay: '0.1s'
-        }}>
-          <div style={{
-            borderRadius: '50%',
-            overflow: 'hidden',
-            aspectRatio: '1/1',
-            boxShadow: '0 20px 60px rgba(42,37,32,0.08)',
-            background: 'var(--surface)'
-          }}>
-            <img
-              src="assets/profil.png"
-              alt="Farès Benamar"
-              style={{
-                width: '100%', height: '100%',
-                objectFit: 'cover', objectPosition: '50% 20%',
-                display: 'block',
-                mixBlendMode: 'multiply',
-                filter: 'contrast(1.04) brightness(0.97)'
-              }} />
-          </div>
-        </div>
-      </div>
-
-      {/* Stats bar */}
-      <div className="hero-stats reveal" style={{
-        display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 64,
-        borderTop: '1px solid var(--border)', paddingTop: 32, marginTop: 56,
-        position: 'relative', zIndex: 3, transitionDelay: '0.15s'
-      }}>
-        {[['3 ans', "d'expérience"], ['4 secteurs', 'public · BTP · médical · AV'], ['50 K€+', 'de budgets pilotés']].map(([n, l]) =>
-        <div key={n} style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
-          <CountUp value={n} style={{ fontFamily: 'var(--serif)', fontSize: 32, fontWeight: 400, color: 'var(--accent)', lineHeight: 1 }} />
-          <span style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.04em' }}>{l}</span>
-        </div>
-        )}
-      </div>
-
-
-
-
-    </section>);
-
-}
-
-/* PROJECT CARD — horizontal full-width, no click affordance */
-function ProjectCard({ p, index }) {
-  const num = String(index + 1).padStart(2, '0');
-  return (
-    <article
-      className="project-card-grid reveal"
-      data-screen-label={`Projet ${num} — ${p.title}`}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 2fr',
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 14,
-        overflow: 'hidden',
-        cursor: 'default',
-        position: 'relative',
-        boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)'
-      }}>
-
-      {/* ── Left: image / placeholder ── */}
-      <div style={{
-        position: 'relative',
-        minHeight: 340,
-        background: 'var(--surface-2)',
-        overflow: 'hidden'
-      }}>
-        {p.image ?
-        <img src={p.image} alt="" role="presentation" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: p.logoOnly ? 'contain' : 'cover', objectPosition: 'center', padding: p.logoOnly ? '32px' : 0, filter: 'saturate(0.85) sepia(0.06) brightness(0.98)' }} /> :
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `repeating-linear-gradient(45deg, rgba(0,0,0,0.025) 0, rgba(0,0,0,0.025) 1px, transparent 1px, transparent 28px)`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }}>
-              <span style={{ fontFamily: 'var(--serif)', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.06em', fontStyle: 'italic', textAlign: 'center', padding: '0 24px', lineHeight: 1.7 }}>
-                visuel confidentiel,<br />lancement été 2026
-              </span>
-            </div>
-        }
-
-        {/* Watermark number */}
-        <div style={{
-          position: 'absolute', bottom: 16, left: 20,
-          fontFamily: 'var(--serif)', fontStyle: 'italic',
-          fontSize: 72, fontWeight: 300, lineHeight: 1,
-          color: 'rgba(255,255,255,0.45)', userSelect: 'none',
-          letterSpacing: '-0.04em', mixBlendMode: 'overlay'
-        }}>{num}</div>
-      </div>
-
-      {/* ── Right: content ── */}
-      <div className="project-card-content" style={{ padding: '44px 52px 40px 44px', display: 'flex', flexDirection: 'column', gap: 0 }}>
-
-        {/* Tag */}
-        <div style={{ marginBottom: 16 }}>
-          <span style={{
-            fontFamily: 'var(--sans)', fontSize: 10, fontWeight: 600,
-            letterSpacing: '0.16em', textTransform: 'uppercase',
-            color: 'var(--accent)'
-          }}>{p.tag}</span>
-        </div>
-
-        {/* Title */}
-        <h3 style={{
-          fontFamily: 'var(--serif)', fontSize: 'clamp(22px, 2.2vw, 32px)',
-          fontWeight: 400, lineHeight: 1.15, color: 'var(--text)',
-          marginBottom: 16
-        }}>{p.title}</h3>
-
-        {/* Meta line */}
-        <div style={{
-          display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap',
-          fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--text-muted)',
-          marginBottom: 24, letterSpacing: '0.01em'
-        }}>
-          <span style={{ fontWeight: 500, color: 'var(--text-dim)' }}>{p.client}</span>
-          <span style={{ opacity: 0.35 }}>·</span>
-          <span>{p.year}</span>
-          {p.budget && <><span style={{ opacity: 0.35 }}>·</span><span style={{ color: 'var(--accent)', fontWeight: 500 }}>{p.budget}</span></>}
-        </div>
-
-        {/* Description */}
-        <p style={{
-          fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300,
-          color: 'var(--text-dim)', lineHeight: 1.75, marginBottom: 24
-        }}>{p.desc}</p>
-
-        {/* Bullets */}
-        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {p.bullets.map((b, i) =>
-          <li key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-              <span style={{ flexShrink: 0, marginTop: 7, width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', opacity: 0.7 }} />
-              <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.65 }}>{b}</span>
-            </li>
-          )}
-        </ul>
-
-        {/* Impact */}
-        <p style={{
-          fontFamily: 'var(--serif)', fontStyle: 'italic',
-          fontSize: 'clamp(15px, 1.4vw, 18px)', fontWeight: 300,
-          color: 'var(--text)', lineHeight: 1.55, marginBottom: 28,
-          borderLeft: '2px solid var(--accent)', paddingLeft: 18
-        }}>{p.impact}</p>
-
-        {/* Footer rule */}
-        <div style={{ borderTop: '1px solid var(--border)', paddingTop: 18, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{
-            fontFamily: 'var(--sans)', fontSize: 10, fontWeight: 500,
-            letterSpacing: '0.14em', textTransform: 'uppercase',
-            color: 'var(--text-muted)'
-          }}>{p.status}</span>
-          <span style={{
-            fontFamily: 'var(--sans)', fontSize: 10,
-            color: 'var(--text-muted)', opacity: 0.5
-          }}>{p.role}</span>
-        </div>
-      </div>
-    </article>);
-
-}
-
-/* PROJECTS */
-function Projects() {
-  return (
-    <section id="projets" data-screen-label="02 Projets" style={{ padding: '60px 56px', background: 'transparent' }}>
-      <style>{`
-        @media (max-width: 768px) {
-          .project-card-grid { grid-template-columns: 1fr !important; }
-          .project-card-grid > div:first-child { min-height: 220px !important; }
-        }
-        @media (max-width: 860px) {
-          #projets { padding: 80px 24px !important; }
-          .project-header-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-        }
-      `}</style>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        {/* Section header */}
-        <div className="reveal" style={{ marginBottom: 36, paddingBottom: 24, borderBottom: '1px solid rgba(155,135,105,0.09)' }}>
-          <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 16 }}>Réalisations & missions</p>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,58px)', fontWeight: 300, lineHeight: 1.05, color: 'var(--text)' }}>
-            Une sélection<br /><em style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>de projets</em>
-          </h2>
-        </div>
-        {/* Cards — one per row */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          {PROJECTS.map((p, i) => <ProjectCard key={p.id} p={p} index={i} />)}
-        </div>
-      </div>
-    </section>);
-
-}
-
-/* ABOUT */
-function About() {
-  return (
-    <section id="apropos" data-screen-label="03 À propos" style={{ padding: '120px 56px', background: 'transparent' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>À propos</p>
-        <div className="surface-card reveal" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
-        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '5fr 4fr', gap: 96, alignItems: 'start' }}>
-          <div>
-            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,64px)', fontWeight: 300, lineHeight: 1.0, marginBottom: 40, color: 'var(--text)' }}>
-              De la stratégie<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>au terrain.</em>
-            </h2>
-            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 24 }}>Chargé de communication et gestion de projet avec 3 ans d'expérience en communication institutionnelle, coordination d'événements et production audiovisuelle.
-Diplômé d'un Master 2 en Management et Communication des Organisations (mention bien), j'ai développé une expertise en stratégie éditoriale, création de contenus multi-formats et coordination d'équipes pluridisciplinaires. Reconnu pour ma rigueur organisationnelle, mon sens du relationnel et ma capacité à piloter des projets transverses dans des environnements exigeants.
-            </p>
-            <p style={{ fontFamily: 'var(--sans)', fontSize: 16, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 48 }}>
-              Dans mon expérience la plus récente chez INRIA, j'ai coordonné des projets transverses avec plusieurs directions simultanément, tout en produisant des contenus multi-formats et en co-pilotant un projet audiovisuel patrimonial de 30 000 €.
-            </p>
-          </div>
-          <div className="about-photo-col" style={{ position: 'sticky', top: 80 }}>
-            <div className="about-photo-wrap" style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '4/5', marginBottom: 20, background: 'var(--bg)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-              <img src="assets/profil.png" alt="Farès Benamar" style={{ width: '85%', display: 'block', mixBlendMode: 'multiply', filter: 'contrast(1.04) brightness(0.97)' }} />
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </section>);
-
-}
-
-
-/* CONTACT */
-function Contact() {
-  return (
-    <section id="contact" data-screen-label="06 Contact" style={{ padding: '120px 56px', background: 'transparent' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <p style={{ fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 20 }}>Contact</p>
-        <div className="surface-card reveal" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '48px 52px', boxShadow: '0 2px 16px rgba(100,80,50,0.07), 0 1px 3px rgba(100,80,50,0.06)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 80, maxWidth: 640 }}>
-          <div>
-            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,68px)', fontWeight: 300, lineHeight: 1.0, color: 'var(--text)', marginBottom: 32 }}>
-              Travaillons<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>ensemble.</em>
-            </h2>
-            <p style={{ fontFamily: 'var(--sans)', fontSize: 15, fontWeight: 300, color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 48, maxWidth: 420 }}>Disponible pour des opportunités en Île-de-France (ou ailleurs selon opportunité). N'hésitez pas à me contacter !
-
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {[['Email', 'contact.pro.faresb@gmail.com', 'mailto:contact.pro.faresb@gmail.com'], ['Téléphone', '06 38 03 66 15', 'tel:+33638036615'], ['LinkedIn', 'farès-benamar', 'https://linkedin.com/in/farès-benamar-721a4726a'], ['Localisation', 'Châtillon (92) · Paris & IDF', null]].map(([k, v, href]) =>
-              <div key={k} style={{ display: 'flex', gap: 24, alignItems: 'center', padding: '16px 0', borderTop: '1px solid var(--border)' }}>
-                  <span style={{ fontFamily: 'var(--sans)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', minWidth: 80 }}>{k}</span>
-                  {href ? <a href={href} style={{ fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300, color: 'var(--text-dim)', textDecoration: 'none' }} onMouseEnter={(e) => e.target.style.color = 'var(--text)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-dim)'}>{v}</a> :
-                <span style={{ fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 300, color: 'var(--text-dim)' }}>{v}</span>}
-                </div>
-              )}
-            </div>
-            <div style={{ marginTop: 32 }}>
-              <a href="mailto:contact.pro.faresb@gmail.com" style={{
-                display: 'inline-block',
-                fontFamily: 'var(--sans)', fontSize: 14, fontWeight: 600,
-                color: 'white', background: 'var(--accent)',
-                padding: '14px 36px', borderRadius: 8, textDecoration: 'none',
-                letterSpacing: '0.04em', transition: 'opacity 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.82'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-                Me contacter →
-              </a>
-            </div>
-          </div>
-
-        </div>
-        </div>
-      </div>
-    </section>);
-
-}
-
-/* FOOTER */
-function Footer() {
-  return (
-    <footer style={{ background: 'transparent', borderTop: '1px solid var(--border)', padding: '24px 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <span style={{ fontFamily: 'var(--serif)', fontSize: 15, color: 'var(--text-muted)', fontWeight: 300 }}>© 2026 Farès Benamar</span>
-      <span style={{ fontFamily: 'var(--sans)', fontSize: 11, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Communication · Paris & IDF</span>
-    </footer>);
-
-}
-
-/* APP */
-function App() {
-  const [active, setActive] = useState('hero');
-  const [scrolled, setScrolled] = useState(false);
-  const [tweaks, setTweaks] = useState(TWEAK_DEFAULTS);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {if (e.isIntersecting) setActive(e.target.id);});
-    }, { threshold: 0.3 });
-    document.querySelectorAll('section[id]').forEach((s) => obs.observe(s));
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => {obs.disconnect();window.removeEventListener('scroll', onScroll);};
-  }, []);
-
-  // Scroll reveal — fade + rise as elements enter the viewport
-  useEffect(() => {
-    const els = document.querySelectorAll('.reveal');
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      els.forEach((el) => el.classList.add('is-visible'));
-      return;
-    }
-    const ro = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('is-visible'); ro.unobserve(e.target); }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    els.forEach((el) => ro.observe(el));
-    return () => ro.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const t = THEMES[tweaks.theme] || THEMES.cognac;
-    root.style.setProperty('--accent', t.accent);
-    root.style.setProperty('--accent-dim', t.accentDim);
-    if (tweaks.bg === 'dark') {
-      root.style.setProperty('--bg', '#0c0b09');
-      document.documentElement.style.backgroundColor = '#0c0b09';
-      root.style.setProperty('--surface', '#141210');
-      root.style.setProperty('--surface-2', '#1c1a16');root.style.setProperty('--surface-3', '#242119');
-      root.style.setProperty('--text', '#f0ede6');root.style.setProperty('--text-dim', '#b8b4ac');
-      root.style.setProperty('--text-muted', '#6e6b64');
-      root.style.setProperty('--border', 'rgba(255,255,255,0.07)');root.style.setProperty('--border-2', 'rgba(255,255,255,0.12)');
-    } else {
-      root.style.setProperty('--bg', '#efeae0');
-      document.documentElement.style.backgroundColor = '#efeae0';
-      root.style.setProperty('--surface', '#faf6ee');
-      root.style.setProperty('--surface-2', '#f3ede2');root.style.setProperty('--surface-3', '#ebe4d6');
-      root.style.setProperty('--text', '#2a2520');root.style.setProperty('--text-dim', '#4a4540');
-      root.style.setProperty('--text-muted', '#8a8278');
-      root.style.setProperty('--border', 'rgba(155,135,105,0.18)');root.style.setProperty('--border-2', 'rgba(155,135,105,0.32)');
-    }
-  }, [tweaks]);
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel').classList.add('visible');else
-      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('visible');
-    };
-    window.addEventListener('message', handler);
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-    return () => window.removeEventListener('message', handler);
-  }, []);
-
-  useEffect(() => {
-    const thEl = document.getElementById('tw-theme');
-    const bgEl = document.getElementById('tw-bg');
-    const cpEl = document.getElementById('tw-compact');
-    if (!thEl) return;
-    const apply = () => {
-      const next = { theme: thEl.value, bg: bgEl.value, compact: cpEl.checked };
-      setTweaks(next);
-      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
-    };
-    thEl.value = tweaks.theme;bgEl.value = tweaks.bg;cpEl.checked = tweaks.compact;
-    [thEl, bgEl, cpEl].forEach((el) => el.addEventListener('change', apply));
-    return () => [thEl, bgEl, cpEl].forEach((el) => el.removeEventListener('change', apply));
-  }, [tweaks]);
-
-  return (
-    <>
-      <Nav active={active} scrolled={scrolled} />
-      <Hero />
-      <Projects />
-      <About />
-      <Contact />
-      <Footer />
-    </>);
-
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-</script>
-<script>
-(function() {
-  // Only on pointer:fine (non-touch) devices
-  if (!window.matchMedia('(pointer: fine)').matches) return;
-  var html = document.documentElement;
-  var ticking = false;
-  var lastY = 0;
-  function update() {
-    // Parallax: grid moves at 40% scroll speed via background-position
-    html.style.backgroundPositionY = (lastY * 0.4) + 'px';
-    ticking = false;
-  }
-  window.addEventListener('scroll', function() {
-    lastY = window.scrollY;
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }, { passive: true });
-})();
-</script>
+</header>
+<main id="contenu">
+<section class="hero container" id="accueil" aria-labelledby="hero-title">
+<div class="hero-copy"><p class="eyebrow hero-kicker"><span class="status-dot" aria-hidden="true"></span> Ouvert aux opportunités · Paris & Île-de-France</p>
+<p class="hero-role">Chargé de communication & gestion de projet</p>
+<h1 id="hero-title">Des idées claires.<br>Des projets <em>concrets.</em></h1>
+<p class="hero-description">Je relie la stratégie, les contenus et le terrain pour faire avancer vos projets de communication.</p>
+<div class="hero-actions"><a class="button button-primary" href="#projets">Explorer mes réalisations <span aria-hidden="true">↘</span></a><a class="text-link" href="#contact">Parlons de votre équipe <span aria-hidden="true">↗</span></a></div>
+<div class="hero-proof"><span>Institutionnel</span><span>Création</span><span>Entrepreneuriat</span></div>
+</div>
+<div class="hero-portrait"><div class="portrait-shape" aria-hidden="true"></div><span class="portrait-top" aria-hidden="true">STRATÉGIE ↔ TERRAIN</span><img src="assets/profil.png" alt="Farès Benamar" width="680" height="800" fetchpriority="high" decoding="async"><div class="portrait-caption"><strong>Farès Benamar</strong><span>Créatif dans l’approche.<br>Rigoureux dans l’exécution.</span></div><span class="portrait-star" aria-hidden="true">✳</span></div>
+</section>
+<div class="credentials"><div class="container credentials-inner"><p>Un profil, plusieurs terrains.</p><div><strong>3 ans</strong><span>d’expérience en communication</span></div><div><strong>Inria</strong><span>projets institutionnels & transverses</span></div><div><strong>Master 2</strong><span>management & communication</span></div></div></div>
+<section class="section container" id="projets" aria-labelledby="projects-title">
+<div class="section-heading"><div><p class="eyebrow">01 / Réalisations</p><h2 id="projects-title">La stratégie prend<br><em>forme ici.</em></h2></div><p>Des projets institutionnels aux aventures entrepreneuriales : une sélection de missions, de contributions et de résultats.</p></div>
+<div class="project-toolbar"><p>Six projets. Des enjeux différents.</p><div class="filters" role="group" aria-label="Filtrer les réalisations" hidden><button type="button" data-filter="all" aria-pressed="true">Tout voir</button><button type="button" data-filter="institutionnel" aria-pressed="false">Institutionnel</button><button type="button" data-filter="creation" aria-pressed="false">Création</button><button type="button" data-filter="digital" aria-pressed="false">Entrepreneuriat</button></div></div>
+<p id="filter-status" class="sr-only" role="status" aria-live="polite"></p>
+<div class="project-grid"><article class="project project-featured" data-category="institutionnel" id="projet-1">
+<div class="project-visual  ">
+<img src="assets/archives-orales.png" alt="Identité visuelle du projet d’archives orales Inria" loading="lazy" decoding="async" width="800" height="540">
+<span class="project-number" aria-hidden="true">01</span></div>
+<div class="project-body"><p class="eyebrow">Audiovisuel · Patrimonial</p><h3>Faire vivre la mémoire d’Inria.</h3><p class="project-subtitle">Une série d’entretiens filmés, du cadrage éditorial à la livraison.</p>
+<div class="project-meta"><span>INRIA – DCOM · DGD-S</span><span>2024–2025</span></div>
+<div class="project-outcome"><strong>30 000 €</strong><span>budget du projet</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Co-Chef de projet</dd></div><div><dt>Budget du projet</dt><dd>30 000 €</dd></div></dl><h4>Le contexte</h4><p>Co-pilotage d'une série d'entretiens filmés retraçant l'histoire d'INRIA à travers ses figures emblématiques, en coordination avec un prestataire externe et plusieurs directions internes.</p><h4>Ma contribution</h4><ul><li>Définition de la stratégie éditoriale et du fil narratif de la série</li><li>Coordination des plannings entre interviewés, directions et équipes techniques</li><li>Pilotage du prestataire audiovisuel externe et suivi des livrables</li></ul><h4>Le résultat</h4><p>Une série patrimoniale pérenne, livrée dans les délais, intégrée aux archives institutionnelles d’INRIA.</p><p class="case-status">Mission livrée</p></div></details>
+</div></article>
+<article class="project" data-category="digital" id="projet-10">
+<div class="project-visual logo-visual ">
+<img src="assets/favicon-192.png" alt="Logo VigySafety" loading="lazy" decoding="async" width="800" height="540">
+<span class="project-number" aria-hidden="true">02</span></div>
+<div class="project-body"><p class="eyebrow">Entrepreneuriat · SaaS</p><h3>Du produit aux premiers clients.</h3><p class="project-subtitle">VigySafety : entreprendre, positionner une offre et développer son marché.</p>
+<div class="project-meta"><span>VigySafety</span><span>2025–2026</span></div>
+<div class="project-outcome"><strong>60 clients</strong><span>actifs, selon le bilan présenté</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Co-fondateur &amp; Responsable commercial</dd></div></dl><h4>Le contexte</h4><p>Co-création d'un SaaS (vigysafety.com) et pilotage du développement commercial en phase de lancement : structuration de l'offre, prospection intensive et gestion d'un portefeuille client actif.</p><h4>Ma contribution</h4><ul><li>Prospection de ~1 000 contacts et qualification des leads entrants</li><li>Acquisition et fidélisation d’un portefeuille de 60 clients actifs à 49,99 €/mois</li><li>Contribution à la définition du positionnement produit et aux supports marketing</li></ul><h4>Le résultat</h4><p>60 clients actifs en quelques mois, validant la pertinence commerciale du produit.</p><p class="case-status">En cours · 2025–2026</p></div></details>
+</div></article>
+<article class="project" data-category="institutionnel" id="projet-2">
+<div class="project-visual  ">
+<img src="assets/inria-expo-bloche.jpg" alt="Exposition organisée au siège d’Inria" loading="lazy" decoding="async" width="800" height="540">
+<span class="project-number" aria-hidden="true">03</span></div>
+<div class="project-body"><p class="eyebrow">Événementiel · Institutionnel</p><h3>Donner du sens aux temps forts.</h3><p class="project-subtitle">Conférences, journée siège et expositions : coordonner chaque détail.</p>
+<div class="project-meta"><span>INRIA siège</span><span>2024–2025</span></div>
+<div class="project-outcome"><strong>Événementiel</strong><span>coordination & création</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Chef de projet événementiel</dd></div></dl><h4>Le contexte</h4><p>Coordination logistique et éditoriale d'événements institutionnels majeurs : conférences scientifiques, journée siège, expositions internes avec des publics variés allant des chercheurs aux partenaires institutionnels.</p><h4>Ma contribution</h4><ul><li>Gestion des intervenants, salles et supports de communication événementielle</li><li>Direction artistique des supports événementiels (kakémonos, programmes, signalétique)</li><li>Coordination avec la DCOM pour l’alignement éditorial et la couverture interne</li></ul><h4>Le résultat</h4><p>Des événements livrés en délais et budgets, salués pour leur tenue éditoriale par les directions partenaires.</p><p class="case-status">Mission livrée</p></div></details>
+</div></article>
+<article class="project" data-category="creation" id="projet-9">
+<div class="project-visual  brand-visual">
+<div class="brand-art" aria-hidden="true"><span>GLOW</span><span class="brand-art-sub">C E N T E R</span><i></i></div><span class="visual-note">Territoire de marque · visuels confidentiels</span>
+<span class="project-number" aria-hidden="true">04</span></div>
+<div class="project-body"><p class="eyebrow">Branding · Identité visuelle</p><h3>Construire une marque, dès le départ.</h3><p class="project-subtitle">Glow Center : du positionnement aux supports de lancement.</p>
+<div class="project-meta"><span>Glow Center</span><span>2026</span></div>
+<div class="project-outcome"><strong>Identité</strong><span>direction artistique</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Directeur artistique &amp; créatif</dd></div><div><dt>Budget du projet</dt><dd>20 000 €</dd></div></dl><h4>Le contexte</h4><p>Création de l’identité visuelle complète d’un centre esthétique en lancement, du logotype aux supports opérationnels de lancement.</p><h4>Ma contribution</h4><ul><li>Définition du positionnement visuel et du territoire de marque</li><li>Direction artistique : logotype, palette chromatique, système typographique</li><li>Déclinaison opérationnelle : charte graphique, supports print et digital</li></ul><h4>Le résultat</h4><p>Une identité cohérente et premium, opérationnelle dès l’ouverture du centre.</p><p class="case-status">Mission livrée</p></div></details>
+</div></article>
+<article class="project" data-category="institutionnel" id="projet-7">
+<div class="project-visual  ">
+<img src="assets/ambassade-seoul.jpg" alt="Ambassade de France à Séoul" loading="lazy" decoding="async" width="800" height="540">
+<span class="project-number" aria-hidden="true">05</span></div>
+<div class="project-body"><p class="eyebrow">Diplomatie culturelle · International</p><h3>Porter la recherche à l’international.</h3><p class="project-subtitle">Une exposition itinérante à l’Ambassade de France à Séoul.</p>
+<div class="project-meta"><span>INRIA · Ambassade de France — Séoul</span><span>2024–2025</span></div>
+<div class="project-outcome"><strong>Séoul</strong><span>communication internationale</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Chargé de communication</dd></div></dl><h4>Le contexte</h4><p>Coordination avec la chargée culturelle de l'Ambassade de France en Corée du Sud pour l'installation d'un kakémono dans le hall de l'ambassade, valorisant INRIA à l'international sous forme d'exposition itinérante.</p><h4>Ma contribution</h4><ul><li>Participation aux réunions de cadrage avec la chargée culturelle de l’ambassade</li><li>Conception éditoriale et graphique du kakémono en lien avec la DCOM (contenu, format, hiérarchie)</li><li>Suivi de la production et validation finale par le directeur du siège pour installation diplomatique</li></ul><h4>Le résultat</h4><p>INRIA représenté dans un espace diplomatique de premier plan, renforçant sa visibilité internationale.</p><p class="case-status">Mission livrée</p></div></details>
+</div></article>
+<article class="project" data-category="institutionnel" id="projet-3">
+<div class="project-visual  ">
+<img src="assets/inria-siege.jpeg" alt="Bâtiment du siège d’Inria" loading="lazy" decoding="async" width="800" height="540">
+<span class="project-number" aria-hidden="true">06</span></div>
+<div class="project-body"><p class="eyebrow">Communication interne</p><h3>Faire circuler l’information.</h3><p class="project-subtitle">Une communication interne pensée pour plusieurs directions.</p>
+<div class="project-meta"><span>INRIA siège</span><span>2024–2025</span></div>
+<div class="project-outcome"><strong>Multicanal</strong><span>intranet, newsletters & écrans</span></div>
+<details><summary>Découvrir la mission <span aria-hidden="true">+</span></summary><div class="case-content"><dl><div><dt>Mon rôle</dt><dd>Contributeur stratégie</dd></div></dl><h4>Le contexte</h4><p>Contribution active à la stratégie de communication interne du siège (Inria.fr, intranet Numin, newsletters, écrans dynamiques), en interface entre le responsable du siège, la DCOM, les Services Généraux et les RH.</p><h4>Ma contribution</h4><ul><li>Contribution à la définition de la charte éditoriale interne du siège</li><li>Appui à l’arbitrage des priorités multi-directions</li><li>Participation au pilotage du calendrier éditorial transverse</li></ul><h4>Le résultat</h4><p>Une circulation de l’information plus fluide entre directions, soutenue par un calendrier éditorial structuré.</p><p class="case-status">Mission livrée</p></div></details>
+</div></article></div>
+<p class="project-footnote">Pour chaque mission, le détail de mon rôle et de ma contribution est accessible dans la fiche.</p>
+</section>
+<section class="expertise-section" id="expertises" aria-labelledby="expertise-title"><div class="container section">
+<div class="section-heading"><div><p class="eyebrow">02 / Expertises</p><h2 id="expertise-title">Une vision d’ensemble.<br><em>Le sens du détail.</em></h2></div><p>Penser le message, créer les bons supports et coordonner les personnes qui donnent vie au projet.</p></div>
+<div class="expertise-grid">
+<article><span class="expertise-index">01</span><h3>Stratégie & éditorial</h3><p>Clarifier un message et le décliner pour chaque public, avec une ligne éditoriale cohérente.</p><ul><li>Communication interne & institutionnelle</li><li>Positionnement & calendrier éditorial</li><li>Contenus print & digitaux</li></ul></article>
+<article><span class="expertise-index">02</span><h3>Création & contenus</h3><p>Transformer une intention en supports lisibles, utiles et fidèles à l’identité de l’organisation.</p><ul><li>Identité visuelle & direction artistique</li><li>Supports événementiels & signalétique</li><li>Production audiovisuelle</li></ul></article>
+<article><span class="expertise-index">03</span><h3>Pilotage & coordination</h3><p>Faire avancer une mission, du cadrage aux livrables, en lien avec les équipes et les prestataires.</p><ul><li>Gestion de projets transverses</li><li>Coordination événementielle</li><li>Suivi des plannings & des budgets</li></ul></article>
+</div>
+<div class="method"><p class="eyebrow">Ma façon de travailler</p><ol><li><span>01</span><strong>Cadrer</strong><p>Les objectifs, les publics et les contraintes.</p></li><li><span>02</span><strong>Concevoir</strong><p>Le message, les formats et les supports.</p></li><li><span>03</span><strong>Coordonner</strong><p>Les équipes, les étapes et les validations.</p></li><li><span>04</span><strong>Livrer</strong><p>Des contenus prêts à être utilisés.</p></li></ol></div>
+</div></section>
+<section class="section container about-section" id="apropos" aria-labelledby="about-title">
+<div class="about-intro"><p class="eyebrow">03 / À propos</p><h2 id="about-title">Le fil conducteur ?<br><em>Faire le lien.</em></h2><p class="about-lead">Entre les idées et leur réalisation.<br>Entre les équipes et leurs publics.</p><p>Chargé de communication avec trois ans d’expérience, j’ai développé mon parcours autour de la communication institutionnelle, de la coordination d’événements et de la production de contenus.</p><p>Chez Inria, j’ai travaillé à l’interface de plusieurs directions, de la communication aux ressources humaines et aux services généraux. Mes projets de création et d’entrepreneuriat prolongent cette même envie : comprendre un besoin et lui donner une forme concrète.</p><a class="text-link" href="https://linkedin.com/in/farès-benamar-721a4726a" target="_blank" rel="noopener noreferrer">Retrouver mon parcours sur LinkedIn <span aria-hidden="true">↗</span><span class="sr-only"> (nouvel onglet)</span></a></div>
+<div class="profile-panel"><p class="eyebrow">L’essentiel</p><dl><div><dt>Expérience</dt><dd>3 ans en communication & gestion de projet</dd></div><div><dt>Formation</dt><dd>Master 2 — Management et Communication des Organisations<span>Mention bien</span></dd></div><div><dt>Points d’appui</dt><dd>Rigueur organisationnelle, relationnel et coordination pluridisciplinaire</dd></div><div><dt>Localisation</dt><dd>Châtillon (92) · Paris & Île-de-France</dd></div></dl><a class="button button-outline" href="mailto:contact.pro.faresb@gmail.com?subject=Demande%20de%20CV%20%E2%80%94%20Far%C3%A8s%20Benamar">Recevoir mon CV <span aria-hidden="true">↗</span></a></div>
+</section>
+<section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">04 / La suite</p><h2 id="contact-title">Votre prochain projet.<br><em>Notre premier échange.</em></h2><p>Vous cherchez un profil qui associe communication, création et coordination ? Échangeons sur vos besoins et sur la place que je pourrais prendre dans votre équipe.</p><a class="button button-light" href="mailto:contact.pro.faresb@gmail.com">M’écrire <span aria-hidden="true">↗</span></a></div><div class="contact-links"><a href="mailto:contact.pro.faresb@gmail.com"><span>Email</span><strong>contact.pro.faresb@gmail.com</strong><span aria-hidden="true">↗</span></a><a href="tel:+33638036615"><span>Téléphone</span><strong>06 38 03 66 15</strong><span aria-hidden="true">↗</span></a><a href="https://linkedin.com/in/farès-benamar-721a4726a" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><strong>Farès Benamar</strong><span aria-hidden="true">↗</span><span class="sr-only"> (nouvel onglet)</span></a><p>Basé à Châtillon. Ouvert aux opportunités en Île-de-France et ailleurs selon le projet.</p></div></div></section>
+</main>
+<footer class="container footer"><a class="footer-name" href="#accueil">Farès Benamar<span aria-hidden="true">.</span></a><p>© 2026 · Communication, création & projets</p><a href="#accueil">Retour en haut <span aria-hidden="true">↑</span></a></footer>
 </body>
 </html>
