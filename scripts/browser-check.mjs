@@ -22,6 +22,8 @@ try{
   page.on('pageerror',error=>errors.push(error.message));
   await page.goto(origin,{waitUntil:'networkidle'});
   assert.ok(!(await page.title()).includes('—'),'No em dash in tab title');
+  assert.equal(await page.locator('.experience-row').count(),3,'Three sourced experience summaries');
+  assert.equal(await page.locator('.project-contribution').count(),6,'A visible role for each project');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
   assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760,'Menu only appears on mobile');
   if(width<=760){
@@ -36,6 +38,11 @@ try{
   if(width===360||width===1440){
    const shot=await page.screenshot({type:'jpeg',quality:35});
    console.log('VISUAL_REVIEW '+width+' '+shot.toString('base64'));
+  }
+  if(width===360||width===1440){
+   await page.locator('#parcours').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   const shot=await page.screenshot({type:'jpeg',quality:35});
+   console.log('PARCOURS_REVIEW '+width+' '+shot.toString('base64'));
   }
   for(const [filter,expected] of [['institutionnel',4],['creation',1],['digital',1],['all',6]]){
    await page.locator('[data-filter="'+filter+'"]').click();
