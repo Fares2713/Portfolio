@@ -45,7 +45,7 @@ h1 em{color:var(--blue)}
 .hero-proof span+span:before{content:"/";margin-right:20px;color:#697571}
 .hero-portrait{position:relative;isolation:isolate;min-width:0;width:100%;max-width:400px;justify-self:end;aspect-ratio:4/5;background:var(--pale);border-radius:18px;overflow:hidden}
 .portrait-shape{position:absolute;width:80%;aspect-ratio:1;border:1px solid #bccca8;border-radius:50%;top:14%;left:10%;z-index:-1}
-.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;mix-blend-mode:multiply}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;mix-blend-mode:normal}
 .portrait-top{position:absolute;top:29px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.17em;color:#415437}
 .portrait-caption{position:absolute;bottom:22px;left:22px;right:22px;background:rgba(255,255,255,.94);border-radius:6px;padding:18px 20px;display:flex;gap:16px;justify-content:space-between;align-items:center}
 .portrait-caption strong{font-size:15px;letter-spacing:-.03em}

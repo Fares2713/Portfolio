@@ -12,6 +12,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Read uploaded CV
+        run: |
+          python -m pip install --quiet pypdf==6.1.1
+          python -c "from pypdf import PdfReader; r=PdfReader('assets/cv-fares-benamar.pdf'); print('CV_TEXT_BEGIN'); print('\\n'.join(p.extract_text() or '' for p in r.pages)); print('CV_TEXT_END')"
       - run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
       - run: npx playwright install --with-deps chromium
       - run: node scripts/browser-check.mjs
