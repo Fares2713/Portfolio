@@ -49,6 +49,11 @@ try{
    const shot=await page.screenshot({type:'jpeg',quality:35});
    console.log('PARCOURS_REVIEW '+width+' '+shot.toString('base64'));
   }
+  if(width===360||width===1440){
+   await page.locator('#projet-lenjeu').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   const shot=await page.screenshot({type:'jpeg',quality:45});
+   console.log('MEDIA_REVIEW '+width+' '+shot.toString('base64'));
+  }
   for(const [filter,expected] of [['institutionnel',4],['creation',1],['digital',2],['all',7]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);

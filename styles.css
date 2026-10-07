@@ -137,7 +137,8 @@ summary:hover{color:var(--blue)}
 .profile-panel dt{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
 .profile-panel dd{margin:7px 0 0;font-size:14px;line-height:1.6}
 .profile-panel dd>span{display:block;font-size:11px;color:var(--muted);margin-top:4px}
-.button-outline{border-color:var(--ink);width:100%}
+.button-outline{border-color:var(--ink)}
+.profile-panel .button-outline{width:100%}
 .button-outline:hover{background:var(--ink);color:white}
 .contact-section{background:var(--blue);color:white}
 .contact-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:100px;padding-block:75px}
