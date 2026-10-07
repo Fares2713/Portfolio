@@ -22,13 +22,13 @@ try{
   page.on('pageerror',error=>errors.push(error.message));
   await page.goto(origin,{waitUntil:'networkidle'});
   assert.ok(!(await page.title()).includes('—'),'No em dash in tab title');
-  assert.equal(await page.locator('.experience-row').count(),6,'Four employments and two entrepreneurial projects');
+  assert.equal(await page.locator('.experience-row').count(),7,'Four employments and three entrepreneurial projects');
   assert.equal(await page.locator('a[download]').count(),3,'Three working CV access points');
   const pdf=await context.request.get(origin+'/assets/cv-fares-benamar.pdf');
   assert.equal(pdf.status(),200,'CV download');
   assert.ok((await pdf.body()).subarray(0,5).toString()==='%PDF-','Actual PDF file');
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.jpg','Updated portrait');
-  assert.equal(await page.locator('.project-contribution').count(),6,'A visible role for each project');
+  assert.equal(await page.locator('.project-contribution').count(),7,'A visible role for each project');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
   assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760,'Menu only appears on mobile');
   if(width<=760){
@@ -49,7 +49,7 @@ try{
    const shot=await page.screenshot({type:'jpeg',quality:35});
    console.log('PARCOURS_REVIEW '+width+' '+shot.toString('base64'));
   }
-  for(const [filter,expected] of [['institutionnel',4],['creation',1],['digital',1],['all',6]]){
+  for(const [filter,expected] of [['institutionnel',4],['creation',1],['digital',2],['all',7]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Filtered layout');
@@ -67,6 +67,6 @@ try{
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await plain.goto(origin);
  assert.ok(await plain.locator('#navigation').isVisible());
- assert.equal(await plain.locator('.project:visible').count(),6);
+ assert.equal(await plain.locator('.project:visible').count(),7);
  console.log('PASS content and navigation without JavaScript');
 }finally{await browser.close();await new Promise(r=>server.close(r));}

@@ -31,7 +31,7 @@ function element() {
  };
 }
 const menu = element(), navigation = element(), filterGroup = element(), status = element();
-const cardList = ['institutionnel', 'digital', 'institutionnel', 'creation', 'institutionnel', 'institutionnel'].map(category => {
+const cardList = ['institutionnel', 'digital', 'institutionnel', 'creation', 'institutionnel', 'institutionnel', 'digital'].map(category => {
  const item = element(); item.dataset.category = category; return item;
 });
 const filterButtons = ['all', 'institutionnel', 'creation', 'digital'].map(filter => {
@@ -54,7 +54,7 @@ navigation.handlers.click({target:{closest: () => ({})}});
 check(menu.getAttribute('aria-expanded') === 'false', 'Navigation closes menu');
 filterButtons.forEach(button => {
  filterGroup.handlers.click({target:{closest: () => button}});
- const expected = button.dataset.filter === 'all' ? 6 : button.dataset.filter === 'institutionnel' ? 4 : 1;
+ const expected = button.dataset.filter === 'all' ? 7 : button.dataset.filter === 'institutionnel' ? 4 : button.dataset.filter === 'digital' ? 2 : 1;
  check(cardList.filter(card => !card.hidden).length === expected, 'Filter result count: ' + button.dataset.filter);
  check(filterButtons.filter(item => item.getAttribute('aria-pressed') === 'true').length === 1, 'Exclusive filter state');
  check(status.textContent.startsWith(String(expected)), 'Announced result count');

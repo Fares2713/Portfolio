@@ -198,3 +198,11 @@ summary{font-size:13px}
 .experience-actions{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px}
 .experience-actions .text-link{margin:0}
 @media(max-width:760px){.experience-group-title{font-size:15px}.experience-actions{align-items:flex-start;flex-direction:column}.experience-focus strong{font-size:15px}}
+
+.media-visual{display:grid;place-items:center;background:#f5f1e8;color:#17211f}
+.media-brand{text-align:center;padding:30px}
+.media-brand img{display:block;width:64px;height:45px;object-fit:contain;margin:0 auto 12px}
+.media-brand>span{font-family:Georgia,serif;font-size:48px;line-height:1.15;letter-spacing:-.04em}
+.media-dot{color:#a6771d}
+.media-brand p{font-size:12px;line-height:1.65;margin:12px 0 0;color:#47534f}
+.media-link{margin:0 0 20px}
