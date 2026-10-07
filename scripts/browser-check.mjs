@@ -20,7 +20,8 @@ const casePaths=(await readdir('projets')).filter(name=>name.endsWith('.html')).
 const paths=['index.html','projets.html','profil.html','contact.html',...casePaths];
 try{
  for(const width of [360,768,1440]){
-  const page=await browser.newPage({viewport:{width,height:1000},reducedMotion:'reduce'});
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});
+  const page=await context.newPage();
   const errors=[];
   page.on('pageerror',error=>errors.push(error.message));
   for(const path of paths){
@@ -31,6 +32,11 @@ try{
    for(const image of await page.locator('img').all()){
     await image.scrollIntoViewIfNeeded();
     await image.evaluate(image=>image.decode());
+   }
+   if ((width===1440 && ['index.html','projets.html'].includes(path)) || (width===360 && path==='index.html')) {
+    await page.evaluate(()=>scrollTo(0,0));
+    const preview=await page.screenshot({type:'jpeg',quality:30});
+    console.log('VISUAL_REVIEW '+path+' '+width+' '+preview.toString('base64'));
    }
    const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
    const issues=result.violations.filter(issue=>['serious','critical'].includes(issue.impact));
@@ -66,7 +72,7 @@ try{
   await page.locator('.footer-invitation a').click();
   await page.waitForURL('**/contact.html');
   console.log('PASS native navigation journey at '+width+'px');
-  await page.close();
+  await context.close();
  }
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  for(const path of paths){
