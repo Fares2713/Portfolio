@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://portfolio-fares-benamar.vercel.app/sitemap.xml
