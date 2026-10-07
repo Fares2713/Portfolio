@@ -45,7 +45,7 @@ h1 em{color:var(--blue)}
 .hero-proof span+span:before{content:"/";margin-right:20px;color:#697571}
 .hero-portrait{position:relative;isolation:isolate;min-width:0;width:100%;max-width:400px;justify-self:end;aspect-ratio:4/5;background:var(--pale);border-radius:18px;overflow:hidden}
 .portrait-shape{position:absolute;width:80%;aspect-ratio:1;border:1px solid #bccca8;border-radius:50%;top:14%;left:10%;z-index:-1}
-.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;mix-blend-mode:multiply}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;mix-blend-mode:normal}
 .portrait-top{position:absolute;top:29px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.17em;color:#415437}
 .portrait-caption{position:absolute;bottom:22px;left:22px;right:22px;background:rgba(255,255,255,.94);border-radius:6px;padding:18px 20px;display:flex;gap:16px;justify-content:space-between;align-items:center}
 .portrait-caption strong{font-size:15px;letter-spacing:-.03em}
@@ -137,7 +137,8 @@ summary:hover{color:var(--blue)}
 .profile-panel dt{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
 .profile-panel dd{margin:7px 0 0;font-size:14px;line-height:1.6}
 .profile-panel dd>span{display:block;font-size:11px;color:var(--muted);margin-top:4px}
-.button-outline{border-color:var(--ink);width:100%}
+.button-outline{border-color:var(--ink)}
+.profile-panel .button-outline{width:100%}
 .button-outline:hover{background:var(--ink);color:white}
 .contact-section{background:var(--blue);color:white}
 .contact-inner{display:grid;grid-template-columns:1.25fr 1fr;gap:100px;padding-block:75px}
@@ -172,7 +173,7 @@ summary:hover{color:var(--blue)}
 .experience-row{display:grid;grid-template-columns:150px minmax(0,1fr) 220px;gap:34px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
 .experience-date{font-size:15px;font-weight:600;margin:0;color:var(--ink)}
 .experience-date>span{display:block;font-size:11px;font-weight:400;line-height:1.6;color:var(--muted);margin-top:6px}
-.experience-content h3{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0}
+.experience-content h4{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0}
 .experience-role{font-size:14px;color:var(--blue);font-weight:500;margin:7px 0 14px}
 .experience-content ul{padding-left:18px;margin:0;font-size:13px;color:var(--muted);line-height:1.7}
 .experience-content li+li{margin-top:5px}
@@ -192,4 +193,17 @@ summary:hover{color:var(--blue)}
 summary{font-size:13px}
 .project[id]{scroll-margin-top:108px}
 @media(max-width:1050px){.experience-row{grid-template-columns:120px minmax(0,1fr) 190px;gap:22px}}
-@media(max-width:760px){.experience-row{grid-template-columns:1fr;gap:14px;padding:24px 0}.experience-date{font-size:13px}.experience-date>span{display:inline;font-size:11px;margin-left:12px}.experience-content h3{font-size:23px}.experience-focus{padding:14px}.experience-role{font-size:13px}.experience-content ul{font-size:13px}.project-meta{font-size:11px}.project-subtitle{font-size:13px}}
+@media(max-width:760px){.experience-row{grid-template-columns:1fr;gap:14px;padding:24px 0}.experience-date{font-size:13px}.experience-date>span{display:inline;font-size:11px;margin-left:12px}.experience-content h4{font-size:23px}.experience-focus{padding:14px}.experience-role{font-size:13px}.experience-content ul{font-size:13px}.project-meta{font-size:11px}.project-subtitle{font-size:13px}}
+
+.experience-group-title{font-size:16px;font-weight:600;margin:30px 0 16px;color:var(--ink)}
+.experience-actions{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px}
+.experience-actions .text-link{margin:0}
+@media(max-width:760px){.experience-group-title{font-size:15px}.experience-actions{align-items:flex-start;flex-direction:column}.experience-focus strong{font-size:15px}}
+
+.media-visual{display:grid;place-items:center;background:#f5f1e8;color:#17211f}
+.media-brand{text-align:center;padding:30px}
+.media-brand img{display:block;width:64px;height:45px;object-fit:contain;margin:0 auto 12px}
+.media-brand>span{font-family:Georgia,serif;font-size:48px;line-height:1.15;letter-spacing:-.04em}
+.media-dot{color:#a6771d}
+.media-brand p{font-size:12px;line-height:1.65;margin:12px 0 0;color:#47534f}
+.media-link{margin:0 0 20px}
