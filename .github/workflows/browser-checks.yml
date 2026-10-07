@@ -1,0 +1,28 @@
+name: Browser and accessibility checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test tools
+        run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify responsive layouts and interactions
+        run: node scripts/browser-check.mjs
+      - name: Save desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-screenshots
+          path: screenshots/
+          if-no-files-found: ignore
