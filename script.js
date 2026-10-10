@@ -61,3 +61,19 @@ if ('IntersectionObserver' in window) {
   }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
   sections.forEach(section => observer.observe(section));
 }
+
+// Reveal only below-the-fold content; keep everything readable without JS or motion.
+if ('IntersectionObserver' in window && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      revealObserver.unobserve(entry.target);
+    });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.section-heading, .project, .experience-row, .expertise-grid article, .method, .profile-panel').forEach(element => {
+    if (element.getBoundingClientRect().top < window.innerHeight) return;
+    element.classList.add('reveal-ready');
+    revealObserver.observe(element);
+  });
+}
