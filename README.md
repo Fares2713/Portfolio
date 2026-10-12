@@ -1,27 +1,60 @@
 # Farès Benamar | Portfolio
 
-Site statique en français, sans framework ni compilation. Vercel publie la racine du dépôt.
+Portfolio statique en français, sans framework ni compilation. Vercel publie la racine du dépôt lors d’un déploiement autorisé.
 
-## Structure
+Le positionnement est « Communication, contenus & coordination de projets ». Le parcours distingue emplois, alternance et projets indépendants. Quatre réalisations principales présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. Les missions de communication interne et de Séoul restent accessibles dans un complément.
 
-- `index.html` : parcours, coordonnées et six réalisations.
-- `styles.css` : styles responsive, clavier, mouvement réduit et impression.
-- `script.js` : navigation mobile, filtres et section active. Les contenus restent accessibles sans JavaScript.
-- `assets/cv-fares-benamar.pdf` et `assets/portrait-fares-benamar.jpg` : CV et portrait fournis par Farès, également conservés sous leurs noms d’origine.
-- `scripts/check.mjs` : ressources, ancres et interactions ; exécuter avec Node 22.
-- `scripts/browser-check.mjs` : vérification Chromium à 360, 768, 1440 et 1920 px, filtres, menu, téléchargement du CV et contrôles axe.
+## Prévisualisation
 
-## Contenu
+Depuis la racine du dépôt :
 
-Le parcours professionnel et la formation sont alignés sur le CV fourni. Les réalisations reprennent les faits du portfolio précédent. L’Enjeu est présenté à partir du dépôt du média et du lancement indiqué par Farès : identité, formats et parcours de lecture, sans chiffres d’audience inventés. Le lien public est https://lenjeumedia.fr.
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1
+```
 
-Le symbole L’Enjeu provient du média.
+Pour produire un fichier HTML autonome à ouvrir dans un navigateur, avec les images, styles et interactions intégrés :
 
-## Références de conception
+```sh
+node scripts/preview.mjs
+```
 
-- [Nielsen Norman Group : Creating a UX-Design Portfolio](https://www.nngroup.com/articles/ux-design-portfolios/) : sélection, rôle, récit et résultats.
-- [W3C WAI : Page Structure](https://www.w3.org/WAI/tutorials/page-structure/) : régions, titres et navigation.
+Le fichier est écrit dans `../portfolio-apercu.html`, hors du dépôt. Les liens vers les sites publics restent des liens externes. La génération de cet aperçu ne publie rien.
 
 ## Validation
 
-GitHub Actions exécute les contrôles statiques et les tests navigateur, avec captures en artefacts. Les contrôles automatisés d’accessibilité ne constituent pas un audit WCAG complet. La prévisualisation Vercel permet de revoir le rendu avant fusion.
+Node 22 est utilisé en CI :
+
+```sh
+node --check script.js
+node scripts/check.mjs
+node scripts/browser-check.mjs
+```
+
+Le test navigateur nécessite Playwright 1.56.1, @axe-core/playwright 4.10.2 et Chromium. Dans l’environnement cloud, ces dépendances sont conservées hors du dépôt dans `/workspace/portfolio-tools`. Le script peut utiliser le Chromium fourni par la machine :
+
+```sh
+cp scripts/browser-check.mjs /workspace/portfolio-tools/browser-check.mjs
+PORTFOLIO_CHROMIUM_PATH=/usr/bin/chromium /workspace/portfolio-tools/node_modules/.bin/node /workspace/portfolio-tools/browser-check.mjs
+```
+
+La suite vérifie quatre largeurs (360, 768, 1440, 1920 px), les images, les proportions, les filtres, les liens vers les études de cas, les interactions au clavier, le contenu sans JavaScript et la préférence de réduction des mouvements. Les contrôles axe incluent les contrastes ; ils ne remplacent pas un audit WCAG complet. Les captures sont écrites dans `screenshots/`.
+
+## Contenus et attributions
+
+- Inria : alternance d’octobre 2023 à novembre 2025. Les chiffres concernent le périmètre précisé dans chaque fiche. Le projet audiovisuel est présenté comme du copilotage avec un prestataire.
+- FNK Location : CDD d’avril à septembre 2026 ; seules les missions confirmées par Farès sont présentées. Aucun résultat chiffré ou support fictif n’est ajouté.
+- L’Enjeu : projet média indépendant associatif, distinct d’un emploi salarié. Aucun chiffre d’audience non confirmé.
+- VigySafety : projet entrepreneurial de novembre 2025 à avril 2026 ; 6 % de conversion sur environ 1 000 contacts prospectés, sans extrapolation de revenus ou de clients actifs.
+- Propulsion Studio, DMANCIEL et le Centre Médical Maréchal Juin restent des expériences secondaires.
+
+Les visuels Inria sont ceux déjà disponibles dans le portfolio. Les légendes distinguent photographies de lieux, travail collectif et contribution personnelle. Aucun document interne supplémentaire n’a été ajouté.
+
+Les captures de L’Enjeu et VigySafety proviennent de leurs sites publics, consultés le 12 octobre 2026. L’aperçu de VigySafety décrit l’état actuel du site ; il n’attribue pas à Farès toutes les évolutions postérieures à sa mission. Les images servies par la page sont optimisées en WebP ; les originaux restent conservés.
+
+## Éléments à compléter avant publication
+
+- Le PDF conservé dans `assets/cv-fares-benamar.pdf` et sous son nom d’origine ne contient pas FNK Location ni toutes les dates confirmées dans la nouvelle demande. Il n’est plus proposé comme CV à jour. Un PDF actualisé permettra de rétablir le téléchargement.
+- Aucun support montrable de FNK Location n’a été fourni : l’expérience figure dans le parcours, sans étude de cas ni visuel inventé.
+- Aucun extrait vidéo autonome ni kakémono de Séoul autorisé n’est disponible. Les aperçus et les légendes indiquent précisément ce qui est montré.
+
+Cette révision doit être prévisualisée et présentée à Farès avant toute publication, conformément à sa demande du 12 octobre 2026.

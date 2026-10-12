@@ -22,19 +22,14 @@ document.addEventListener('keydown', event => {
     toggle.focus();
   }
 });
-document.addEventListener('click', event => {
-  if (!event.target.closest('.site-header')) closeMenu();
-});
+
 const filters = document.querySelector('.filters');
 const cards = [...document.querySelectorAll('.project')];
 const filterStatus = document.querySelector('#filter-status');
 filters.hidden = false;
-filters.addEventListener('click', event => {
-  const button = event.target.closest('button[data-filter]');
-  if (!button) return;
-  const filter = button.dataset.filter;
+function applyFilter(filter) {
   filters.querySelectorAll('button').forEach(item => {
-    item.setAttribute('aria-pressed', String(item === button));
+    item.setAttribute('aria-pressed', String(item.dataset.filter === filter));
   });
   let count = 0;
   cards.forEach(card => {
@@ -43,7 +38,33 @@ filters.addEventListener('click', event => {
     if (visible) count++;
   });
   filterStatus.textContent = count + (count > 1 ? ' réalisations affichées.' : ' réalisation affichée.');
+}
+filters.addEventListener('click', event => {
+  const button = event.target.closest('button[data-filter]');
+  if (button) applyFilter(button.dataset.filter);
 });
+function revealAnchor(hash) {
+  if (!hash || hash === '#') return;
+  let target;
+  try { target = document.getElementById(decodeURIComponent(hash.slice(1))); }
+  catch { return; }
+  if (!target) return;
+  const project = target.closest('.project');
+  if (project && project.hidden) applyFilter('all');
+  // Direct links also work for the two complementary cases inside a disclosure.
+  for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+    if (parent.tagName === 'DETAILS') parent.open = true;
+  }
+}
+document.addEventListener('click', event => {
+  if (!event.target.closest('.site-header')) closeMenu();
+  const link = event.target.closest('a[href^="#"]');
+  if (link) revealAnchor(link.getAttribute('href'));
+});
+if (window.addEventListener) {
+  window.addEventListener('hashchange', () => revealAnchor(window.location.hash));
+  revealAnchor(window.location.hash);
+}
 if ('IntersectionObserver' in window) {
   const sections = document.querySelectorAll('main > section[id]');
   const links = [...nav.querySelectorAll('a[href^="#"]')];
@@ -60,20 +81,4 @@ if ('IntersectionObserver' in window) {
     }
   }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
   sections.forEach(section => observer.observe(section));
-}
-
-// Reveal only below-the-fold content; keep everything readable without JS or motion.
-if ('IntersectionObserver' in window && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-revealed');
-      revealObserver.unobserve(entry.target);
-    });
-  }, {threshold: 0.08});
-  document.querySelectorAll('.section-heading, .project, .experience-row, .expertise-grid article, .method, .profile-panel').forEach(element => {
-    if (element.getBoundingClientRect().top < window.innerHeight) return;
-    element.classList.add('reveal-ready');
-    revealObserver.observe(element);
-  });
 }
