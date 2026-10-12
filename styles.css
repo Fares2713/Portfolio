@@ -122,6 +122,12 @@ summary:hover{color:var(--blue)}
 .experience-content>p:not(.experience-role){font-size:14px;color:var(--muted);margin:10px 0}
 .experience-focus{font-size:14px;font-weight:500;line-height:1.5;margin:0;padding:18px;border-radius:12px;background:#eeeee8}
 .experience-focus>span{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:8px;line-height:1.7}
+.experience-missions{padding-left:18px;margin:16px 0 0;font-size:14px;color:var(--muted);line-height:1.8}
+.experience-missions li+li{margin-top:7px}
+.fnk-focus strong{font-size:14px;font-weight:500}
+.fnk-focus>p{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:20px 0 8px}
+.fnk-focus ul{list-style:none;padding:0;margin:0;font-size:11px;font-weight:400;color:var(--muted)}
+.fnk-focus li{border-top:1px solid #d1d7d5;padding-block:7px}
 .earlier-experience{border-bottom:1px solid var(--line);margin-top:26px}
 .earlier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;padding:14px 0 28px}
 .earlier-grid h4{font-size:16px;font-weight:500;margin:0 0 12px}
