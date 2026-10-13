@@ -72,3 +72,5 @@ Les fichiers sont dans `assets/rencontres-enjeu/`. Pour les régénérer : `pyth
 Projet collectif de fin de formation, préparé en 2025 pour une école élémentaire en REP+ à Argenteuil. Le descriptif transmis par Farès porte sur la découverte artistique et les besoins de financement (matériel, repas et imprévus). Le rôle d’appui à la préparation logistique est une formulation proposée à partir de sa demande ; les détails personnels restent à valider. La fiche ne revendique aucun événement réalisé, partenaire acquis, montant collecté ou résultat pédagogique.
 
 La photographie de l’équipe des Petites mains créatives a été fournie par Farès dans `1745505572412.pdf`. Le JPEG intégré au PDF a été extrait directement, sans modification, puis ajouté à la carte et à la galerie.
+
+L’affiche A3 et l’invitation A5 ont été recréées avec l’outil image dans une identité éditoriale commune (ivoire, noir et doré). Leurs PNG sources sont conservés dans le dossier. `python3 scripts/build_rencontres_visuals.py` réexporte uniquement les deux PDF aux formats exacts et actualise l’archive complète.

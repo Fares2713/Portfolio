@@ -297,40 +297,14 @@ sheet('Décisions',['Sujet','Décision / preuve','Responsable proposé','Échéa
 wb.save(OUT/'07-classeur-pilotage.xlsx')
 
 # Professionally typeset public-facing concept pieces, with provisional status on every support.
-def small_footer(c,w):
- c.setFillColor(colors.HexColor(MUTED));c.setFont('Body',7);c.drawString(28,20,'Projet de conception · Avril 2027 envisagé · Informations à confirmer')
-def poster():
- w,h=A3;c=canvas.Canvas(str(OUT/'04-affiche-a3.pdf'),pagesize=A3);c.setTitle(E['title']+' | Affiche de conception');c.setAuthor(E['owner'])
- c.setFillColor(colors.HexColor(PAPER));c.rect(0,0,w,h,fill=1,stroke=0)
- c.setFillColor(colors.HexColor(GOLD));c.rect(42,h-80,65,8,fill=1,stroke=0)
- c.setFillColor(colors.HexColor(INK));c.setFont('Editorial',40);c.drawString(42,h-135,'L’Enjeu.')
- c.setFont('Body',10);c.drawString(42,h-164,'UN RENDEZ-VOUS POUR COMPRENDRE ET ÉCHANGER')
- for y,t in [(h-280,'Les Rencontres'),(h-339,'de L’Enjeu')]:c.setFont('Editorial',48);c.drawString(42,y,t)
- c.setStrokeColor(colors.HexColor(GOLD));c.line(42,h-380,w-42,h-380)
- c.setFont('Bold',24)
- for y,t in [(h-442,'Comprendre l’information'),(h-478,'à l’heure des réseaux'),(h-514,'sociaux et de l’IA')]:c.drawString(42,y,t)
- c.setFont('Editorial',30);c.drawString(42,h-602,'Avril 2027')
- c.setFont('Body',13)
- for y,t in [(h-638,'Paris / Île-de-France · Lieu à confirmer'),(h-663,'Table ronde · Questions · Atelier collectif'),(h-688,'Accès prévu gratuit, sur inscription')]:c.drawString(42,y,t)
- c.setFillColor(colors.HexColor(GOLD));c.setFont('Bold',11);c.drawString(42,145,'PREMIÈRE ÉDITION EN PRÉPARATION')
- c.setFillColor(colors.HexColor(MUTED));c.setFont('Body',9);c.drawString(42,121,'Date exacte et intervenants à confirmer. Inscriptions non ouvertes.');c.drawString(42,99,E['email'])
- small_footer(c,w);c.save()
-def invitation():
- w,h=A5;c=canvas.Canvas(str(OUT/'05-invitation-a5.pdf'),pagesize=A5);c.setTitle(E['title']+' | Invitation de conception');c.setAuthor(E['owner']);c.setFillColor(colors.HexColor(PAPER));c.rect(0,0,w,h,fill=1,stroke=0)
- y=h-40
- for font,size,t,gap in [('Editorial',24,'L’Enjeu.',46),('Bold',9,'ÉDITION PILOTE EN PRÉPARATION',35),('Editorial',25,'Les Rencontres',31),('Editorial',25,'de L’Enjeu',46),('Bold',12,'Comprendre l’information',20),('Body',11,'Réseaux sociaux et IA :',19),('Body',11,'prendre du recul, vérifier, échanger.',38),('Editorial',20,'Avril 2027',28),('Body',10,'Paris / Île-de-France · Lieu à confirmer',24),('Body',10,'18 h 30 – 21 h 30 · Horaires envisagés',22),('Body',10,'Table ronde, questions et atelier collectif',22),('Body',10,'Accès prévu gratuit sur inscription',30),('Body',9,'Date et intervenants à confirmer.',18),('Body',9,'Inscriptions non ouvertes.',23),('Body',8,E['email'],15)]:
-  c.setFont(font,size);c.setFillColor(colors.HexColor(INK));c.drawString(28,y,t);y-=gap
- small_footer(c,w);c.save()
+from build_rencontres_visuals import build_visuals
+
 def programme():
  pdf_document('06-programme-public','Programme envisagé', [('Une soirée pour prendre du recul',[
   para(E['title']+' · '+E['theme']),para('Avril 2027 · Paris ou Île-de-France. Date, lieu et intervenants à confirmer. Les horaires ci-dessous sont une proposition de conception.'),
   table(['Horaire','Au programme'],[[a+' – '+b,c] for a,b,c,*_ in RUN if a>='18:30' and a<='21:05']),
   para('Accès prévu gratuit sur inscription après confirmation du lieu. Deux intervenants et une modération sont envisagés ; aucun nom n’est annoncé avant accord.'),para('Pour recevoir les informations de préparation : '+E['email'])])])
-poster();invitation();programme()
-
-# Vector poster for the portfolio thumbnail and full-size on-screen viewing.
-svg='''<svg xmlns="http://www.w3.org/2000/svg" width="840" height="1188" viewBox="0 0 840 1188"><rect width="840" height="1188" fill="#f7f4ec"/><rect x="60" y="62" width="90" height="10" fill="#92681d"/><g fill="#202720"><text x="60" y="150" font-family="Georgia,serif" font-size="62">L’Enjeu.</text><text x="60" y="202" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">COMPRENDRE. QUESTIONNER. ÉCHANGER.</text><text x="60" y="345" font-family="Georgia,serif" font-size="72">Les Rencontres</text><text x="60" y="425" font-family="Georgia,serif" font-size="72">de L’Enjeu</text><path d="M60 475H780" stroke="#92681d"/><text x="60" y="560" font-family="Arial,sans-serif" font-size="34" font-weight="bold">Comprendre l’information</text><text x="60" y="610" font-family="Arial,sans-serif" font-size="34">à l’heure des réseaux</text><text x="60" y="660" font-family="Arial,sans-serif" font-size="34">sociaux et de l’IA</text><text x="60" y="780" font-family="Georgia,serif" font-size="48">Avril 2027</text><text x="60" y="830" font-family="Arial,sans-serif" font-size="21">Paris / Île-de-France · Lieu à confirmer</text><text x="60" y="875" font-family="Arial,sans-serif" font-size="21">Table ronde · Questions · Atelier collectif</text><text x="60" y="920" font-family="Arial,sans-serif" font-size="21">Accès prévu gratuit, sur inscription</text><text x="60" y="1020" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#92681d">ÉDITION PILOTE EN PRÉPARATION</text><text x="60" y="1055" font-family="Arial,sans-serif" font-size="15">Date et intervenants à confirmer · Inscriptions non ouvertes</text><text x="60" y="1120" font-family="Arial,sans-serif" font-size="13">Conception : Farès Benamar · Projet personnel de portfolio</text></g></svg>'''
-(OUT/'affiche.svg').write_text(svg)
+build_visuals();programme()
 
 # A working concept page, with no fake registration form or invented confirmed date.
 landing='''<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Les Rencontres de L’Enjeu | Projet en préparation</title><style>*{box-sizing:border-box}body{margin:0;background:#f7f4ec;color:#202720;font:17px/1.8 Arial,sans-serif}main{max-width:1000px;padding:60px 28px;margin:auto}.brand{font:42px Georgia,serif}h1{font:clamp(42px,7vw,78px)/1.08 Georgia,serif;max-width:850px}h2{font:30px Georgia,serif;margin-top:50px}.status{color:#78531b;font-size:12px;font-weight:bold;letter-spacing:.1em}a{color:#202720;text-underline-offset:5px}:focus-visible{outline:3px solid #78531b;outline-offset:5px}.button{display:inline-block;border:1px solid #202720;border-radius:28px;padding:12px 20px;text-decoration:none;font-size:14px;margin-top:15px}.facts{display:flex;flex-wrap:wrap;gap:12px;margin:25px 0}.facts span{border:1px solid #cbd0c8;border-radius:25px;padding:7px 14px;font-size:13px}table{width:100%;border-collapse:collapse;font-size:15px}th,td{padding:14px 8px;text-align:left;border-bottom:1px solid #ccd0c7}footer{border-top:1px solid #ccd0c7;margin-top:55px;padding-top:22px;font-size:12px;color:#536056}</style></head><body><main><p class="brand">L’Enjeu.</p><p class="status">PROJET PERSONNEL · ÉDITION PILOTE EN PRÉPARATION</p><h1>Les Rencontres<br>de L’Enjeu.</h1><p>Comprendre l’information à l’heure des réseaux sociaux et de l’IA.</p><div class="facts"><span>Avril 2027 envisagé</span><span>Paris / Île-de-France</span><span>Accès prévu gratuit</span></div><p>Une table ronde, vos questions et un atelier collectif pour prendre du recul sur les informations qui circulent. La date exacte, le lieu et les intervenants restent à confirmer.</p><a class="button" href="mailto:contact.pro.faresb@gmail.com?subject=Les%20Rencontres%20de%20L%27Enjeu%20-%20informations">Recevoir les informations de préparation</a><h2>Au programme envisagé</h2><table><thead><tr><th>Horaire</th><th>Séquence</th></tr></thead><tbody>ROWS</tbody></table><h2>Pourquoi cette rencontre ?</h2><p>Identifier les sources, rechercher les preuves et remettre les informations en contexte. Un format ouvert à la discussion, pour les lecteurs du média et les personnes intéressées par les usages de l’information.</p><h2>Informations pratiques</h2><p>Première édition envisagée en avril 2027, de 18 h 30 à 21 h 30, à Paris ou en Île-de-France. La jauge de travail est de 80 participants. L’ouverture des inscriptions dépend de la confirmation du lieu et de l’organisation.</p><p>Les informations pratiques et l’ouverture des inscriptions seront annoncées après confirmation de l’organisation.</p><footer>Page de conception réalisée pour le portfolio de Farès Benamar. Aucun événement passé ni résultat de fréquentation n’est revendiqué.</footer></main></body></html>'''
@@ -345,8 +319,8 @@ Projet personnel de conception, préparé par Farès Benamar le 13 octobre 2026.
 - 01 : dossier de conception (PDF et DOCX modifiable).
 - 02 : organisation, responsabilités, rétroplanning, conducteur et risques (PDF et DOCX).
 - 03 : textes de communication, calendrier et indicateurs (PDF et DOCX).
-- 04 : affiche A3 (PDF), avec aperçu vectoriel affiche.svg.
-- 05 : invitation A5 (PDF).
+- 04 : affiche A3 (PDF), avec aperçu affiche.png généré avec l’outil image.
+- 05 : invitation A5 (PDF), avec visuel invitation.png généré avec l’outil image.
 - 06 : programme public envisagé (PDF).
 - 07 : classeur de pilotage XLSX, dix feuilles avec hypothèses, formules et résultats vierges.
 - 08 : page de présentation HTML autonome, sans formulaire ni collecte active.

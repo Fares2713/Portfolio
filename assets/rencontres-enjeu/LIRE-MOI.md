@@ -7,8 +7,8 @@ Projet personnel de conception, préparé par Farès Benamar le 13 octobre 2026.
 - 01 : dossier de conception (PDF et DOCX modifiable).
 - 02 : organisation, responsabilités, rétroplanning, conducteur et risques (PDF et DOCX).
 - 03 : textes de communication, calendrier et indicateurs (PDF et DOCX).
-- 04 : affiche A3 (PDF), avec aperçu vectoriel affiche.svg.
-- 05 : invitation A5 (PDF).
+- 04 : affiche A3 (PDF), avec aperçu affiche.png généré avec l’outil image.
+- 05 : invitation A5 (PDF), avec visuel invitation.png généré avec l’outil image.
 - 06 : programme public envisagé (PDF).
 - 07 : classeur de pilotage XLSX, dix feuilles avec hypothèses, formules et résultats vierges.
 - 08 : page de présentation HTML autonome, sans formulaire ni collecte active.
