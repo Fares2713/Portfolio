@@ -30,6 +30,7 @@ nav .nav-contact:hover{background:var(--blue);color:white}
 .direction-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;vertical-align:middle}
 .direction-icon svg{display:block}
 .eyebrow{margin:0 0 16px;font-size:11px;line-height:1.6;font-weight:650;text-transform:uppercase;letter-spacing:.1em;color:var(--blue)}
+#projets>.section-heading .eyebrow{font-size:clamp(16px,1.6vw,22px);line-height:1.4;letter-spacing:.06em}
 .hero{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);align-items:center;gap:64px;padding-block:72px 68px}
 .hero-kicker{font-size:10px;letter-spacing:.12em}
 .hero-role{font-size:15px;line-height:1.6;max-width:540px;color:var(--muted);margin:0 0 20px}
