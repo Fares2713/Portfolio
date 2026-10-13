@@ -32,8 +32,9 @@ try{
   assert.equal(await page.locator('.experience-row').count(),4,'Two employment experiences and two independent projects');
   assert.match(await page.locator('.experience-row').first().innerText(),/FNK Location/);
   assert.equal(await page.locator('a[download]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
-  assert.equal(await page.locator('.project-contribution').count(),4,'Exact role visible on each selected project');
-  assert.equal(await page.locator('.additional-project').count(),2,'Both earlier case studies retained');
+  assert.equal(await page.locator('.project-contribution').count(),7,'Exact role visible on each selected project');
+  assert.ok(await page.locator('#projet-fnk').isVisible(),'FNK mission added without fabricated visuals');
+  assert.equal(await page.locator('#projet-fnk img').count(),0);
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.webp');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
   assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760);
@@ -48,12 +49,12 @@ try{
   assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=341);
   const portraitImage=await page.locator('.hero-portrait img').boundingBox();
   assert.ok(portraitImage.height<=portraitImage.width*1.25,'Portrait keeps a natural crop');
-  for(const image of await page.locator('.project-visual img').all()) {
+  for(const image of await page.locator('.project:not(.project-featured) .project-visual img').all()) {
    const bounds=await image.boundingBox();
    assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
   }
   await page.screenshot({path:'screenshots/hero-'+width+'.png'});
-  for(const [filter,expected] of [['institutionnel',2],['digital',2],['all',4]]){
+  for(const [filter,expected] of [['communication',3],['evenementiel',1],['audiovisuel',1],['digital',4],['all',7]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
@@ -68,11 +69,29 @@ try{
   const firstSummary=page.locator('.project summary').first();
   await firstSummary.focus();
   await page.keyboard.press('Enter');
-  assert.equal(await page.locator('.project details').first().getAttribute('open'),'');
-  assert.ok(await page.locator('.project .case-content').first().isVisible());
-  await page.keyboard.press('Enter');
-  await page.locator('.additional-projects>summary').focus();
-  await page.keyboard.press('Enter');
+  const dialog=page.locator('#project-dialog');
+  assert.ok(await dialog.isVisible(),'Case opens in a native modal');
+  assert.equal(await dialog.locator('h4').count(),5,'Objective, role, actions, deliverables and results');
+  const caseAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.deepEqual(caseAudit.violations.map(x=>x.id),[],'Accessible case dialog');
+  await page.keyboard.press('Tab');
+  assert.ok(await dialog.evaluate(el=>el.contains(document.activeElement)),'Keyboard focus stays inside modal');
+  await page.keyboard.press('Escape');
+  assert.ok(!(await dialog.isVisible()));
+  assert.ok(await firstSummary.evaluate(el=>el===document.activeElement),'Case restores focus');
+  const media=page.locator('#projet-1 .project-media-action');
+  await media.click();
+  assert.ok(await dialog.isVisible());
+  assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/archives-orales.webp');
+  const mediaAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.deepEqual(mediaAudit.violations.map(x=>x.id),[],'Accessible image dialog');
+  await dialog.locator('.dialog-close').click();
+  assert.ok(await media.evaluate(el=>el===document.activeElement),'Gallery restores focus');
+  await page.locator('#projet-fnk summary').click();
+  assert.match(await dialog.innerText(),/Aucun fichier de ces supports/);
+  assert.equal(await dialog.locator('.case-content li').count(),6,'All FNK missions are represented');
+  await page.mouse.click(3,3);
+  assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
   await page.locator('.earlier-experience>summary').click();
@@ -82,31 +101,31 @@ try{
   await page.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
   const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
   assert.deepEqual(audit.violations.map(x=>({id:x.id,impact:x.impact,nodes:x.nodes.map(n=>n.target)})),[],'Accessibility including color contrast');
-  await page.locator('.additional-projects>summary').click();
   await page.locator('.earlier-experience>summary').click();
   await page.locator('#projets').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
   await page.screenshot({path:'screenshots/projects-'+width+'.png'});
+  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
   await page.screenshot({path:'screenshots/site-'+width+'.png',fullPage:true});
   assert.deepEqual(errors,[]);
   assert.deepEqual(failedLocal,[],'All local resources load');
-  console.log('PASS '+width+'px: keyboard menu, filters, anchor recovery, cases, real images, recruitment actions and axe');
+  console.log('PASS '+width+'px: keyboard menu, skill filters, hidden-case recovery, modals, gallery, images and axe');
   await context.close();
  }
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await plain.goto(origin);
  assert.ok(await plain.locator('#navigation').isVisible());
- assert.equal(await plain.locator('.project:visible').count(),4);
+ assert.equal(await plain.locator('.project:visible').count(),7);
  await plain.locator('.project summary').first().click();
  assert.ok(await plain.locator('.project .case-content').first().isVisible());
- await plain.locator('.additional-projects>summary').click();
- assert.equal(await plain.locator('.additional-project:visible').count(),2);
+ await plain.locator('#projet-fnk summary').click();
+ assert.ok(await plain.locator('#projet-fnk .case-content').isVisible());
  console.log('PASS content, case studies and navigation without JavaScript');
  const deep=await browser.newPage({viewport:{width:360,height:1000}});
  await deep.goto(origin+'/#projet-7');
- assert.ok(await deep.locator('#projet-7').isVisible(),'Direct hash reveals complementary case');
+ assert.ok(await deep.locator('#projet-7').isVisible(),'Direct hash reaches the retained case');
  assert.ok(await deep.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  const reduced=await browser.newPage({viewport:{width:360,height:1000},reducedMotion:'reduce'});
  await reduced.goto(origin);
  assert.equal(await reduced.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior),'auto');
- console.log('PASS complementary deep links and reduced-motion preference');
+ console.log('PASS retained deep links and reduced-motion preference');
 }finally{await browser.close();await new Promise(r=>server.close(r));}

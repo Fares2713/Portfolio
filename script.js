@@ -33,7 +33,7 @@ function applyFilter(filter) {
   });
   let count = 0;
   cards.forEach(card => {
-    const visible = filter === 'all' || card.dataset.category === filter;
+    const visible = filter === 'all' || card.dataset.category.split(' ').includes(filter);
     card.hidden = !visible;
     if (visible) count++;
   });
@@ -51,7 +51,7 @@ function revealAnchor(hash) {
   if (!target) return;
   const project = target.closest('.project');
   if (project && project.hidden) applyFilter('all');
-  // Direct links also work for the two complementary cases inside a disclosure.
+  // Reveal any case hidden by the active skill filter.
   for (let parent = target.parentElement; parent; parent = parent.parentElement) {
     if (parent.tagName === 'DETAILS') parent.open = true;
   }
@@ -81,4 +81,77 @@ if ('IntersectionObserver' in window) {
     }
   }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
   sections.forEach(section => observer.observe(section));
+}
+
+// Native disclosures and image links remain the fallback without JavaScript.
+const projectDialog = document.querySelector('#project-dialog');
+if (projectDialog && typeof projectDialog.showModal === 'function') {
+  const dialogTitle = document.querySelector('#project-dialog-title');
+  const dialogContent = document.querySelector('#project-dialog-content');
+  const dialogKind = document.querySelector('#project-dialog-kind');
+  const dialogClose = projectDialog.querySelector('.dialog-close');
+  let dialogTrigger = null;
+  function openProjectDialog(card, trigger, media) {
+    dialogTrigger = trigger;
+    dialogTitle.textContent = card.querySelector('h3').textContent;
+    dialogKind.textContent = media ? 'Aperçu visuel' : 'Étude de cas';
+    dialogContent.replaceChildren();
+    if (media) {
+      const figure = document.createElement('figure');
+      figure.className = 'dialog-media';
+      const image = card.querySelector('.project-visual img').cloneNode();
+      image.loading = 'eager';
+      const caption = card.querySelector('figcaption').cloneNode(true);
+      figure.append(image, caption);
+      dialogContent.append(figure);
+    } else {
+      const content = card.querySelector('.case-content').cloneNode(true);
+      dialogContent.append(content);
+    }
+    projectDialog.showModal();
+    projectDialog.scrollTop = 0;
+    dialogClose.focus();
+  }
+  cards.forEach(card => {
+    const summary = card.querySelector('summary');
+    summary.setAttribute('aria-haspopup', 'dialog');
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      openProjectDialog(card, summary, false);
+    });
+    card.querySelectorAll('[data-media]').forEach(mediaLink => {
+      mediaLink.setAttribute('aria-haspopup', 'dialog');
+      mediaLink.addEventListener('click', event => {
+        // Preserve modified-click browser behavior for the original image URL.
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        openProjectDialog(card, mediaLink, true);
+      });
+    });
+  });
+  dialogClose.addEventListener('click', () => projectDialog.close());
+  projectDialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...projectDialog.querySelectorAll('button, a[href], input, select, textarea, [tabindex]')]
+      .filter(element => !element.disabled && element.tabIndex >= 0 && element.getClientRects().length);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  projectDialog.addEventListener('click', event => {
+    if (event.target !== projectDialog) return;
+    const bounds = projectDialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) projectDialog.close();
+  });
+  projectDialog.addEventListener('close', () => {
+    dialogContent.replaceChildren();
+    if (dialogTrigger) dialogTrigger.focus();
+  });
 }

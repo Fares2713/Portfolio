@@ -2,7 +2,7 @@
 
 Portfolio statique en français, sans framework ni compilation. Vercel publie la racine du dépôt lors d’un déploiement autorisé.
 
-Le positionnement est « Communication, contenus & coordination de projets ». Le parcours distingue emplois, alternance et projets indépendants. Quatre réalisations principales présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. Les missions de communication interne et de Séoul restent accessibles dans un complément.
+Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Sept réalisations présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. Les filtres sont organisés par compétence : communication, événementiel, audiovisuel et digital. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
 
 ## Prévisualisation
 
@@ -37,7 +37,7 @@ cp scripts/browser-check.mjs /workspace/portfolio-tools/browser-check.mjs
 PORTFOLIO_CHROMIUM_PATH=/usr/bin/chromium /workspace/portfolio-tools/node_modules/.bin/node /workspace/portfolio-tools/browser-check.mjs
 ```
 
-La suite vérifie quatre largeurs (360, 768, 1440, 1920 px), les images, les proportions, les filtres, les liens vers les études de cas, les interactions au clavier, le contenu sans JavaScript et la préférence de réduction des mouvements. Les contrôles axe incluent les contrastes ; ils ne remplacent pas un audit WCAG complet. Les captures sont écrites dans `screenshots/`.
+La suite vérifie quatre largeurs (360, 768, 1440, 1920 px), les images, les proportions, les filtres, les liens vers les études de cas, les fenêtres de détail, l’agrandissement des visuels, le retour du focus et les interactions au clavier, le contenu sans JavaScript et la préférence de réduction des mouvements. Les contrôles axe incluent les contrastes ; ils ne remplacent pas un audit WCAG complet. Les captures sont écrites dans `screenshots/`.
 
 ## Contenus et attributions
 
@@ -54,7 +54,7 @@ Les captures de L’Enjeu et VigySafety proviennent de leurs sites publics, cons
 ## Éléments à compléter avant publication
 
 - Le PDF conservé dans `assets/cv-fares-benamar.pdf` et sous son nom d’origine ne contient pas FNK Location ni toutes les dates confirmées dans la nouvelle demande. Il n’est plus proposé comme CV à jour. Un PDF actualisé permettra de rétablir le téléchargement.
-- Aucun support montrable de FNK Location n’a été fourni : l’expérience figure dans le parcours, sans étude de cas ni visuel inventé.
+- Aucun support montrable de FNK Location n’a été fourni : l’expérience figure dans le parcours et dans une fiche de mission, sans visuel ni résultat chiffré inventé.
 - Aucun extrait vidéo autonome ni kakémono de Séoul autorisé n’est disponible. Les aperçus et les légendes indiquent précisément ce qui est montré.
 
 Cette révision doit être prévisualisée et présentée à Farès avant toute publication, conformément à sa demande du 12 octobre 2026.
