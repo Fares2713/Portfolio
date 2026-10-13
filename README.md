@@ -70,3 +70,5 @@ Les fichiers sont dans `assets/rencontres-enjeu/`. Pour les régénérer : `pyth
 ## Les petites mains créatives
 
 Projet collectif de fin de formation, préparé en 2025 pour une école élémentaire en REP+ à Argenteuil. Le descriptif transmis par Farès porte sur la découverte artistique et les besoins de financement (matériel, repas et imprévus). Le rôle d’appui à la préparation logistique est une formulation proposée à partir de sa demande ; les détails personnels restent à valider. La fiche ne revendique aucun événement réalisé, partenaire acquis, montant collecté ou résultat pédagogique.
+
+La photographie de l’équipe des Petites mains créatives a été fournie par Farès dans `1745505572412.pdf`. Le JPEG intégré au PDF a été extrait directement, sans modification, puis ajouté à la carte et à la galerie.

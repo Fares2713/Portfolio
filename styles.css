@@ -255,3 +255,5 @@ summary:hover{color:var(--blue)}
 @media(max-width:500px){.project-resources li{align-items:flex-start;flex-direction:column;gap:3px}.project-resources li span{flex-shrink:1}}
 /* Keep the close control available while reading longer project documents. */
 .project-dialog .dialog-bar{position:sticky;top:0;z-index:2;background:var(--white);padding-block:8px;box-shadow:0 -30px 0 var(--white)}
+
+.petites-mains-visual img{object-fit:contain;background:var(--paper)}
