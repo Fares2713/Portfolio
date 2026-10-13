@@ -249,52 +249,8 @@ def docx_document(stem,title,sections):
 for stem,title,sections in DOCS:
  pdf_document(stem,title,sections);docx_document(stem,title,sections)
 
-# Operational workbook: inputs stay explicit; unknown results remain blank.
-wb=Workbook();wb.remove(wb.active);wb.calculation=CalcProperties(calcId=191029,fullCalcOnLoad=True,forceFullCalc=True,calcMode='auto')
-def sheet(name,headers,rows,widths):
- ws=wb.create_sheet(name);ws.append(headers)
- for row in rows:ws.append(list(row))
- ws.freeze_panes='A2';ws.auto_filter.ref=ws.dimensions;ws.sheet_view.showGridLines=False
- for cell in ws[1]:cell.font=Font(name='Calibri',bold=True,color='FFFFFF');cell.fill=PatternFill('solid',fgColor='202720');cell.alignment=Alignment(wrap_text=True,vertical='center')
- ws.row_dimensions[1].height=32
- for row in ws.iter_rows(min_row=2):
-  for cell in row:cell.font=Font(name='Calibri',size=11,color='202720');cell.alignment=Alignment(wrap_text=True,vertical='top')
-  ws.row_dimensions[row[0].row].height=45
- for i,width in enumerate(widths,1):ws.column_dimensions[__import__('openpyxl').utils.get_column_letter(i)].width=width
- ws.sheet_properties.pageSetUpPr.fitToPage=True;ws.page_setup.orientation='landscape';ws.page_setup.paperSize=ws.PAPERSIZE_A4;ws.page_setup.fitToWidth=1;ws.page_setup.fitToHeight=0
- ws.print_title_rows='1:1'
- return ws
-sheet('Mode emploi',['Repère','Instruction'],[
- ['Statut',E['status']],['Période publique',E['period']+' ; date exacte à confirmer'],['Date de travail','08/04/2027 = référence non confirmée, à modifier après validation'],['Cellules bleues','Données ou hypothèses modifiables'],['Formules','Calcul automatique à l’ouverture dans un tableur compatible'],['Données inconnues','Ne pas remplacer les cellules de résultats vides par des résultats fictifs'],['Budget','Tous les montants sont des hypothèses TTC à confirmer par devis'],['Rétroplanning','Dates calculées depuis la cellule B2 de la feuille Paramètres'],['Données personnelles','Ce modèle ne contient aucune liste de participants'],['Version','V1.0 · 13 octobre 2026 · Farès Benamar']],[25,100])
-params=sheet('Paramètres',['Paramètre','Valeur'],[['Date de référence',date(2027,4,8)],['Participants visés',80],['Capacité minimale salle',100],['Équipe maximale',8],['Statut','Date de référence non confirmée ; diffusion publique : avril 2027']],[32,70]);params['B2'].number_format='dd/mm/yyyy'
-for row in range(2,6):params.cell(row,2).font=Font(color='173EC4')
-b=sheet('Budget',['Poste','Quantité','Prix unitaire TTC','Total TTC','Hypothèse / validation'],[(label,q,u,f'=B{i}*C{i}',note) for i,(label,q,u,note) in enumerate(COSTS,2)],[35,12,20,20,85])
-b['B5']="='Paramètres'!B3" # Collation quantity tracks the target attendance.
-b.append(['Sous-total','','','=SUM(D2:D9)','Hypothèses, pas des dépenses engagées'])
-b.append(['Réserve',.10,'','=ROUND(D10*B11,2)','Taux modifiable'])
-b.append(['Total prévisionnel','','','=D10+D11','Montants TTC à confirmer'])
-b.append(['Plafond de travail','','',2500,'À valider avant engagement'])
-b.append(['Marge disponible','','','=D13-D12','Peut devenir négative après modification des hypothèses'])
-b.append(['Contribution envisagée','','',1500,'Scénario non validé ; aucun financement acquis'])
-b.append(['Solde à financer','','','=MAX(0,D12-D15)','À couvrir ou arbitrer, sans partenaire confirmé'])
-for row in b.iter_rows(min_row=2,max_row=16):
- for cell in row:
-  cell.alignment=Alignment(wrap_text=True,vertical='top');cell.font=Font(name='Calibri',size=11,color='173EC4' if cell.column in [2,3] and not str(cell.value).startswith('=') else '202720')
- for col in [3,4]:b.cell(row[0].row,col).number_format='#,##0.00 "€"'
-b['B11'].number_format='0%';b.auto_filter.ref='A1:E9'
-retro=sheet('Rétroplanning',['Début relatif','Fin relative','Phase','Action','Pilote proposé','Livrable','Statut','Début calculé','Fin calculée'],[(a,z,phase,action,owner,deliverable,status,f"='Paramètres'!$B$2+A{i}",f"='Paramètres'!$B$2+B{i}") for i,(a,z,phase,action,owner,deliverable,status) in enumerate(TASKS,2)],[15,15,20,75,30,45,20,20,20])
-for row in range(2,len(TASKS)+2):
- for col in [8,9]:retro.cell(row,col).number_format='dd/mm/yyyy'
-sheet('Déroulé',['Début','Fin','Séquence','Pilote proposé','Préparation','Vigilance'],RUN,[12,12,28,30,55,85])
-sheet('RACI',['Action','Responsable projet','Éditorial','Communication','Logistique','Accueil'],RACI,[40,23,23,23,23,23])
-sheet('Risques',['Risque','Probabilité','Impact','Prévention / repli','Pilote','Statut'],RISKS,[40,20,20,100,25,20])
-sheet('Diffusion',['Échéance','Canal','Contenu','Objectif','Statut'],[[-28,'Page et e-mail','Programme validé, informations pratiques et inscription','Ouverture après validation','À préparer'],[-21,'Réseaux et relais','Angle éditorial et invitation','Faire connaître le rendez-vous','À préparer'],[-14,'Réseaux','Programme et présentation des intervenants confirmés','Préciser la valeur de la soirée','À préparer'],[-7,'Page et e-mail','Accès, horaires et conditions','Préparer la venue','À préparer'],[-2,'E-mail inscrits','Rappel et désistement','Confirmer / libérer les places','À préparer'],[1,'E-mail participants','Remerciement et ressources','Prolonger les échanges','À préparer'],[7,'Bilan interne','Données vérifiées et améliorations','Décider des suites','Non mesuré']],[15,25,75,45,20])
-kpi=sheet('Indicateurs',['Indicateur','Valeur','Statut / définition'],[['Participants visés',"='Paramètres'!B3",'Objectif, pas un résultat'],['Inscriptions confirmées',None,'À renseigner après ouverture'],['Entrées uniques',None,'À renseigner après l’événement'],['Taux de présence','=IF(COUNT(B3:B4)<2,"",IFERROR(B4/B3,""))','Entrées uniques / inscriptions confirmées'],['Questionnaires envoyés',None,'À renseigner après l’événement'],['Réponses reçues',None,'À renseigner après l’événement'],['Taux de réponse','=IF(COUNT(B6:B7)<2,"",IFERROR(B7/B6,""))','Réponses / questionnaires envoyés'],['Dépenses réelles TTC',None,'À renseigner à partir des dépenses vérifiées'],['Budget prévisionnel',"='Budget'!D12",'Hypothèses, 2 310 € au départ'],['Écart réel - prévisionnel','=IF(COUNT(B9)=0,"",B9-B10)','Un écart ne se calcule pas avant saisie des dépenses']],[35,25,90])
-for row in [5,8]:kpi.cell(row,2).number_format='0.0%'
-for row in [9,10,11]:kpi.cell(row,2).number_format='#,##0.00 "€"'
-for row in [3,4,6,7,9]:kpi.cell(row,2).fill=PatternFill('solid',fgColor='E8EEFF');kpi.cell(row,2).font=Font(color='173EC4')
-sheet('Décisions',['Sujet','Décision / preuve','Responsable proposé','Échéance','Statut'],[['Portage et financement',None,'Responsable projet','Avant diffusion','Non confirmé'],['Date et lieu',None,'Responsable projet / logistique','J-42','Non confirmé'],['Intervenants',None,'Éditorial','J-35','Non confirmé'],['Assurance et technique',None,'Logistique','J-28','Non confirmé'],['Inscriptions et données',None,'Responsable projet / accueil','Avant ouverture','Non ouvert'],['Dépenses engagées',None,'Responsable projet','Avant commande','Non engagé']],[35,85,35,22,22])
-wb.save(OUT/'07-classeur-pilotage.xlsx')
+# Detailed workbook uses the shared JSON baseline, without overwriting the visual supports.
+import build_rencontres_workbook
 
 # Professionally typeset public-facing concept pieces, with provisional status on every support.
 from build_rencontres_visuals import build_visuals
@@ -322,7 +278,7 @@ Projet personnel de conception, préparé par Farès Benamar le 13 octobre 2026.
 - 04 : affiche A3 (PDF), avec aperçu affiche.png généré avec l’outil image.
 - 05 : invitation A5 (PDF), avec visuel invitation.png généré avec l’outil image.
 - 06 : programme public envisagé (PDF).
-- 07 : classeur de pilotage XLSX, dix feuilles avec hypothèses, formules et résultats vierges.
+- 07 : classeur de pilotage XLSX, vingt onglets de pilotage, avec tableau de bord, Gantt, budget détaillé et résultats vierges.
 - 08 : page de présentation HTML autonome, sans formulaire ni collecte active.
 - sources-projet.json : données et textes sources.
 

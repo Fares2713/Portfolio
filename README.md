@@ -74,3 +74,7 @@ Projet collectif de fin de formation, préparé en 2025 pour une école élémen
 La photographie de l’équipe des Petites mains créatives a été fournie par Farès dans `1745505572412.pdf`. Le JPEG intégré au PDF a été extrait directement, sans modification, puis ajouté à la carte et à la galerie.
 
 L’affiche A3 et l’invitation A5 ont été recréées avec l’outil image dans une identité éditoriale commune (ivoire, noir et doré). Leurs PNG sources sont conservés dans le dossier. `python3 scripts/build_rencontres_visuals.py` réexporte uniquement les deux PDF aux formats exacts et actualise l’archive complète.
+
+Le classeur de pilotage V2 propose 20 onglets visibles : tableau de bord et graphiques, paramètres, budget détaillé en 20 postes, financement, registre des dépenses, rétroplanning de 31 tâches, Gantt, conducteur, RACI, communication, partenaires, intervenants, logistique, comparaison de lieux, risques, décisions, check-list, indicateurs, bilan et mode d’emploi. Il se génère avec `python3 scripts/build_rencontres_workbook.py` depuis les hypothèses du JSON commun. Les formules ont été recalculées dans LibreOffice, avec un scénario de modification de date, jauge, financement et paiements ; les résultats réels ne sont pas inventés.
+
+Vérification du classeur : `python3 scripts/check_rencontres_workbook.py` (LibreOffice requis). Cette vérification recalcule trois scénarios, dont les valeurs nulles et les changements de paramètres, et contrôle les alertes ainsi que la stabilité des dates déjà réalisées.

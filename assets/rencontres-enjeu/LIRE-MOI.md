@@ -10,7 +10,7 @@ Projet personnel de conception, préparé par Farès Benamar le 13 octobre 2026.
 - 04 : affiche A3 (PDF), avec aperçu affiche.png généré avec l’outil image.
 - 05 : invitation A5 (PDF), avec visuel invitation.png généré avec l’outil image.
 - 06 : programme public envisagé (PDF).
-- 07 : classeur de pilotage XLSX, dix feuilles avec hypothèses, formules et résultats vierges.
+- 07 : classeur de pilotage XLSX, vingt onglets de pilotage, avec tableau de bord, Gantt, budget détaillé et résultats vierges.
 - 08 : page de présentation HTML autonome, sans formulaire ni collecte active.
 - sources-projet.json : données et textes sources.
 
@@ -23,3 +23,5 @@ Les documents de communication comportant des champs entre crochets sont des mod
 ## Réutilisation
 
 Dans le dépôt Portfolio, le script scripts/build-rencontres.py régénère les documents avec reportlab, python-docx et openpyxl. Les PDF sont prêts à consulter et les DOCX/XLSX permettent des ajustements. Les valeurs modifiées dans le XLSX doivent aussi être reportées dans les documents de conception avant toute diffusion.
+
+Le classeur V2 comporte 20 onglets visibles et une feuille masquée pour les listes de validation. Modifier les cellules bleues ; les cellules vertes contiennent des formules. La date de revue est saisie pour rendre les alertes reproductibles. Le budget conserve les hypothèses du dossier (2 310 € TTC, réserve comprise). Le registre des dépenses et les indicateurs de réalisation restent vierges. Génération : `python3 scripts/build_rencontres_workbook.py`.
