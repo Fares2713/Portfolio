@@ -10,7 +10,7 @@ const server=http.createServer(async(req,res)=>{
  if(!path.startsWith(root+'/')){res.writeHead(403).end();return;}
  try{
   const content=await readFile(path);
-  const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml','.pdf':'application/pdf'};
+  const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml','.pdf':'application/pdf','.xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','.docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document','.zip':'application/zip'};
   res.writeHead(200,{'Content-Type':types[extname(path)]||'application/octet-stream'}).end(content);
  }catch{res.writeHead(404).end();}
 });
@@ -31,10 +31,11 @@ try{
   assert.equal(await page.locator('.hero-actions a').last().getAttribute('href'),'#contact');
   assert.equal(await page.locator('.experience-row').count(),4,'Two employment experiences and two independent projects');
   assert.match(await page.locator('.experience-row').first().innerText(),/FNK Location/);
-  assert.equal(await page.locator('a[download]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
-  assert.equal(await page.locator('.project-contribution').count(),7,'Exact role visible on each selected project');
+  assert.equal(await page.locator('a[download][href*="cv-fares"]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
+  assert.equal(await page.locator('.project-contribution').count(),11,'Exact role visible on each selected project');
   assert.ok(await page.locator('#projet-fnk').isVisible(),'FNK mission added without fabricated visuals');
-  assert.equal(await page.locator('#projet-fnk img').count(),0);
+  assert.equal(await page.locator('#projet-fnk img').getAttribute('src'),'assets/fnk-agence.jpg','FNK agency visual');
+  assert.equal(await page.locator('#projet-fnk .project-image-link').getAttribute('href'),'https://fnklocation.com');
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.webp');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
   assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760);
@@ -54,7 +55,7 @@ try{
    assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
   }
   await page.screenshot({path:'screenshots/hero-'+width+'.png'});
-  for(const [filter,expected] of [['communication',3],['evenementiel',1],['audiovisuel',1],['digital',4],['all',7]]){
+  for(const [filter,expected] of [['communication',5],['evenementiel',5],['audiovisuel',1],['digital',5],['all',11]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
@@ -87,13 +88,31 @@ try{
   assert.deepEqual(mediaAudit.violations.map(x=>x.id),[],'Accessible image dialog');
   await dialog.locator('.dialog-close').click();
   assert.ok(await media.evaluate(el=>el===document.activeElement),'Gallery restores focus');
+  await page.locator('#projet-fnk .project-media-action').click();
+  assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/fnk-agence.jpg');
+  await page.keyboard.press('Escape');
   await page.locator('#projet-fnk summary').click();
-  assert.match(await dialog.innerText(),/Aucun fichier de ces supports/);
+  assert.match(await dialog.innerText(),/visuel présenté provient du site public/);
   assert.equal(await dialog.locator('.case-content li').count(),6,'All FNK missions are represented');
   await page.mouse.click(3,3);
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
+  await page.locator('#projet-rencontres-enjeu summary').click();
+  assert.match(await dialog.innerText(),/avril 2027/);
+  assert.match(await dialog.innerText(),/hypothèses de travail/);
+  const resourcesAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.deepEqual(resourcesAudit.violations.map(x=>x.id),[],'Accessible project documents');
+  const [download]=await Promise.all([page.waitForEvent('download'),dialog.locator('a[download="01-dossier-conception.pdf"]').click()]);
+  assert.equal(download.suggestedFilename(),'01-dossier-conception.pdf');
+  assert.ok((await readFile(await download.path())).subarray(0,5).toString()==='%PDF-','Real downloadable dossier');
+  const closeBounds=await dialog.locator('.dialog-close').boundingBox();
+  const dialogBounds=await dialog.boundingBox();
+  assert.ok(closeBounds.y>=dialogBounds.y&&closeBounds.y+closeBounds.height<=dialogBounds.y+dialogBounds.height,'Close control remains accessible while reading documents');
+  await page.keyboard.press('Escape');
+  const pack=await context.request.get(origin+'/assets/rencontres-enjeu/dossier-complet.zip');
+  assert.equal(pack.status(),200);
+  assert.equal((await pack.body()).subarray(0,2).toString(),'PK','Valid archive response');
   await page.locator('.earlier-experience>summary').click();
   assert.equal(await page.locator('.earlier-grid article:visible').count(),3);
   // Force lazy images to load before validating and capturing the whole page.
@@ -114,7 +133,7 @@ try{
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await plain.goto(origin);
  assert.ok(await plain.locator('#navigation').isVisible());
- assert.equal(await plain.locator('.project:visible').count(),7);
+ assert.equal(await plain.locator('.project:visible').count(),11);
  await plain.locator('.project summary').first().click();
  assert.ok(await plain.locator('.project .case-content').first().isVisible());
  await plain.locator('#projet-fnk summary').click();

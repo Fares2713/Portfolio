@@ -1,0 +1,1494 @@
+{
+  "event": {
+    "title": "Les Rencontres de L’Enjeu",
+    "theme": "Comprendre l’information à l’heure des réseaux sociaux et de l’IA",
+    "status": "Projet personnel de conception · Événement en préparation",
+    "period": "Avril 2027",
+    "date_reference": "2027-04-08",
+    "date_reference_status": "Jeudi 8 avril 2027 : référence de travail, non confirmée",
+    "place": "Paris ou Île-de-France · Lieu à confirmer",
+    "capacity_guests": 80,
+    "capacity_room": 100,
+    "team_max": 8,
+    "public_hours": "18 h 30 – 21 h 30",
+    "owner": "Farès Benamar",
+    "email": "contact.pro.faresb@gmail.com",
+    "version": "1.0",
+    "prepared": "13 octobre 2026",
+    "entry": "Gratuit, sur inscription après confirmation du lieu",
+    "financial_status": "Hypothèses TTC à confirmer par devis ; aucun financement acquis"
+  },
+  "budget": {
+    "lines": [
+      [
+        "Location de salle",
+        1,
+        600,
+        "Hypothèse ; capacité 100 personnes et accessibilité à confirmer"
+      ],
+      [
+        "Sonorisation et régie",
+        1,
+        450,
+        "Deux micros, diffusion sonore, technicien selon devis"
+      ],
+      [
+        "Interventions et modération",
+        1,
+        300,
+        "Enveloppe globale indicative ; conditions à convenir"
+      ],
+      [
+        "Collation légère",
+        80,
+        3,
+        "Hypothèse par participant ; eau et boissons sans alcool"
+      ],
+      [
+        "Impression et signalétique",
+        1,
+        90,
+        "Affiches, programme et repères d’accueil"
+      ],
+      [
+        "Assurance et frais administratifs",
+        1,
+        120,
+        "Hypothèse à préciser avec la structure porteuse"
+      ],
+      [
+        "Accessibilité et adaptations",
+        1,
+        120,
+        "Provision ; besoins à recueillir avant l’événement"
+      ],
+      [
+        "Photographie / documentation",
+        1,
+        180,
+        "Option selon devis et consentement des personnes"
+      ]
+    ],
+    "base": 2100,
+    "reserve_rate": 0.1,
+    "reserve": 210.0,
+    "total": 2310.0
+  },
+  "tasks": [
+    [
+      -56,
+      -49,
+      "Cadrage",
+      "Valider le concept, le public et l’enveloppe",
+      "Responsable projet",
+      "Dossier de conception",
+      "À valider"
+    ],
+    [
+      -49,
+      -42,
+      "Lieu",
+      "Comparer les lieux, les accès et les devis",
+      "Logistique",
+      "Fiche lieu et devis",
+      "À lancer"
+    ],
+    [
+      -42,
+      -35,
+      "Programme",
+      "Identifier puis confirmer les deux intervenants et la modération",
+      "Éditorial",
+      "Accords écrits et biographies",
+      "À lancer"
+    ],
+    [
+      -42,
+      -28,
+      "Technique",
+      "Confirmer salle, assurance, besoins audio et accessibilité",
+      "Logistique / régie",
+      "Fiche technique",
+      "À lancer"
+    ],
+    [
+      -35,
+      -28,
+      "Supports",
+      "Adapter affiche, invitation et page aux informations confirmées",
+      "Communication",
+      "Supports validés",
+      "À préparer"
+    ],
+    [
+      -28,
+      -21,
+      "Inscriptions",
+      "Ouvrir le formulaire et annoncer le rendez-vous",
+      "Communication / accueil",
+      "Page et formulaire validés",
+      "Non ouvert"
+    ],
+    [
+      -21,
+      -14,
+      "Relais",
+      "Diffuser les messages et solliciter les relais pertinents",
+      "Communication",
+      "Suivi des canaux",
+      "À préparer"
+    ],
+    [
+      -14,
+      -7,
+      "Conduite",
+      "Brief des intervenants et validation du déroulé",
+      "Responsable projet",
+      "Conducteur partagé",
+      "À préparer"
+    ],
+    [
+      -7,
+      -2,
+      "Accueil",
+      "Vérifier les inscrits, les besoins et les confirmations",
+      "Accueil",
+      "Liste d’accueil à accès limité",
+      "À préparer"
+    ],
+    [
+      -2,
+      -1,
+      "Répétition",
+      "Tester matériel et consignes avec l’équipe",
+      "Régie / logistique",
+      "Check-list technique",
+      "À préparer"
+    ],
+    [
+      0,
+      0,
+      "Événement",
+      "Déployer le conducteur, accueillir et documenter",
+      "Équipe complète",
+      "Journal des écarts",
+      "Non réalisé"
+    ],
+    [
+      1,
+      3,
+      "Retour",
+      "Envoyer remerciement, questionnaire et ressources",
+      "Communication",
+      "Message et questionnaire",
+      "À préparer"
+    ],
+    [
+      3,
+      7,
+      "Bilan",
+      "Rapprocher dépenses, fréquentation et retours",
+      "Responsable projet",
+      "Bilan factuel et suites",
+      "Non mesuré"
+    ]
+  ],
+  "run": [
+    [
+      "16:00",
+      "16:45",
+      "Installation",
+      "Logistique / régie",
+      "Salle, flux, sonorisation, signalétique",
+      "Vérifier accès, issues et capacité avec le lieu"
+    ],
+    [
+      "16:45",
+      "17:15",
+      "Tests techniques",
+      "Régie",
+      "Micros, niveaux, présentation",
+      "Tester le plan de secours sans projection"
+    ],
+    [
+      "17:15",
+      "17:45",
+      "Brief équipe",
+      "Responsable projet",
+      "Rôles, accueil, incidents, consentement",
+      "Rappeler les responsables du lieu et les contacts"
+    ],
+    [
+      "17:45",
+      "18:15",
+      "Brief intervenants",
+      "Éditorial / modération",
+      "Fil conducteur et timing",
+      "Confirmer les noms seulement après accord"
+    ],
+    [
+      "18:15",
+      "18:30",
+      "Mise en place accueil",
+      "Accueil",
+      "Liste, badges et supports",
+      "Installer une file accessible et éviter l’affichage des coordonnées"
+    ],
+    [
+      "18:30",
+      "19:00",
+      "Accueil du public",
+      "Accueil / logistique",
+      "Orientation et installation",
+      "Noter le nombre d’entrées, sans double comptage"
+    ],
+    [
+      "19:00",
+      "19:10",
+      "Ouverture",
+      "Responsable projet / modération",
+      "Intention et règles d’échange",
+      "Présenter les intervenants confirmés"
+    ],
+    [
+      "19:10",
+      "19:45",
+      "Table ronde",
+      "Modération + deux intervenants",
+      "Réseaux sociaux, sources et IA",
+      "Limiter les prises de parole et distinguer faits et opinions"
+    ],
+    [
+      "19:45",
+      "20:10",
+      "Questions du public",
+      "Modération",
+      "Questions regroupées par thème",
+      "Faire circuler le micro de façon inclusive"
+    ],
+    [
+      "20:10",
+      "20:25",
+      "Pause",
+      "Logistique",
+      "Collation et échanges",
+      "Réduire déchets et congestion"
+    ],
+    [
+      "20:25",
+      "20:55",
+      "Atelier collectif",
+      "Modération / éditorial",
+      "Examiner une information et ses sources",
+      "Utiliser un exemple documenté, sans exposer de données personnelles"
+    ],
+    [
+      "20:55",
+      "21:05",
+      "Synthèse",
+      "Modération",
+      "Trois repères pratiques et ressources",
+      "Indiquer comment retrouver les ressources"
+    ],
+    [
+      "21:05",
+      "21:30",
+      "Échanges informels",
+      "Équipe complète",
+      "Rencontres et retours",
+      "Veiller à l’horaire et aux participants ayant besoin d’aide"
+    ],
+    [
+      "21:30",
+      "21:45",
+      "Sortie et remise en état",
+      "Logistique / régie",
+      "Rangement et restitution",
+      "Vérifier salle, matériel et objets trouvés"
+    ]
+  ],
+  "risks": [
+    [
+      "Lieu ou financement non confirmé",
+      "Fort",
+      "Fort",
+      "Ne pas ouvrir les inscriptions avant décision écrite ; comparer au moins deux options",
+      "Responsable projet",
+      "Non vérifié"
+    ],
+    [
+      "Désistement d’un intervenant",
+      "Moyen",
+      "Fort",
+      "Confirmer par écrit ; prévoir un format à un intervenant et une séquence de questions étendue",
+      "Éditorial",
+      "À préparer"
+    ],
+    [
+      "Inscrits absents",
+      "Moyen",
+      "Moyen",
+      "Rappel à J-2, confirmation simple et liste d’attente sans dépasser la jauge",
+      "Accueil",
+      "À préparer"
+    ],
+    [
+      "Panne audio / projection",
+      "Moyen",
+      "Fort",
+      "Test J-1 et le jour même ; conducteur et supports imprimés de secours",
+      "Régie",
+      "À tester"
+    ],
+    [
+      "Besoin d’accessibilité non anticipé",
+      "Moyen",
+      "Fort",
+      "Vérifier le lieu et offrir un contact pour recueillir les besoins, sans demander de diagnostic médical",
+      "Logistique",
+      "À vérifier"
+    ],
+    [
+      "Photo ou donnée utilisée sans accord",
+      "Moyen",
+      "Fort",
+      "Informer, recueillir l’accord pour les usages prévus et limiter les accès à la liste d’inscrits",
+      "Communication",
+      "À préparer"
+    ],
+    [
+      "Incident dans le lieu",
+      "Faible",
+      "Fort",
+      "Suivre le protocole du lieu ; repérer issues, personnel référent et moyens d’alerte",
+      "Logistique",
+      "À confirmer avec le lieu"
+    ],
+    [
+      "Dérive budgétaire",
+      "Moyen",
+      "Fort",
+      "Aucun engagement sans validation ; réserve de 10 % et arbitrage des options avant commande",
+      "Responsable projet",
+      "À suivre"
+    ]
+  ],
+  "raci": [
+    [
+      "Concept et budget",
+      "A/R",
+      "C",
+      "C",
+      "C",
+      "I"
+    ],
+    [
+      "Programme et intervenants",
+      "A",
+      "R",
+      "C",
+      "I",
+      "I"
+    ],
+    [
+      "Lieu et technique",
+      "A",
+      "C",
+      "I",
+      "R",
+      "C"
+    ],
+    [
+      "Supports et diffusion",
+      "A",
+      "C",
+      "R",
+      "C",
+      "I"
+    ],
+    [
+      "Inscriptions et accueil",
+      "A",
+      "I",
+      "C",
+      "C",
+      "R"
+    ],
+    [
+      "Déroulé et brief équipe",
+      "A/R",
+      "C",
+      "C",
+      "C",
+      "C"
+    ],
+    [
+      "Bilan et suivi",
+      "A",
+      "C",
+      "R",
+      "C",
+      "C"
+    ]
+  ],
+  "documents": [
+    [
+      "01-dossier-conception",
+      "Dossier de conception",
+      [
+        [
+          "Le projet en une page",
+          [
+            {
+              "kind": "p",
+              "value": "Une rencontre publique pour comprendre comment circulent les informations, comment les vérifier et ce que l’IA change dans nos pratiques. Le format associe discussion, questions et mise en pratique, dans l’esprit du média indépendant associatif L’Enjeu."
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Repère",
+                  "Hypothèse de conception"
+                ],
+                "rows": [
+                  [
+                    "Statut",
+                    "Projet personnel de conception · Événement en préparation"
+                  ],
+                  [
+                    "Période",
+                    "Avril 2027 ; date exacte à confirmer"
+                  ],
+                  [
+                    "Lieu",
+                    "Paris ou Île-de-France · Lieu à confirmer"
+                  ],
+                  [
+                    "Public cible",
+                    "Lecteurs du média, étudiants, acteurs associatifs et personnes intéressées par l’information"
+                  ],
+                  [
+                    "Jauge",
+                    "80 participants visés ; salle de 100 places minimum, équipe jusqu’à 8 personnes"
+                  ],
+                  [
+                    "Format",
+                    "Une soirée, deux intervenants proposés et une modération ; aucun intervenant confirmé"
+                  ],
+                  [
+                    "Accès",
+                    "Gratuit, sur inscription après confirmation du lieu"
+                  ],
+                  [
+                    "Budget",
+                    "2 310 € TTC prévisionnels ; plafond de travail 2 500 €"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Ce dossier est une production de conception. Aucun événement, partenariat, réservation ou résultat de fréquentation n’est présenté comme acquis."
+            }
+          ]
+        ],
+        [
+          "Objectifs et choix éditoriaux",
+          [
+            {
+              "kind": "bullets",
+              "value": [
+                "Rendre accessibles les enjeux de fiabilité de l’information, sans ton prescriptif ni jargon.",
+                "Créer un échange direct entre le média et son public.",
+                "Donner trois repères pratiques : identifier la source, chercher la preuve, vérifier le contexte.",
+                "Expérimenter un format reproductible pour une éventuelle deuxième édition."
+              ]
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Objectif de travail",
+                  "Indicateur prévu",
+                  "Mode de mesure"
+                ],
+                "rows": [
+                  [
+                    "Viser 80 participants",
+                    "Entrées réelles, distinctes des inscriptions",
+                    "Comptage à l’accueil ; résultat à renseigner"
+                  ],
+                  [
+                    "Faciliter une expérience utile",
+                    "Appréciation de l’utilité et commentaires",
+                    "Questionnaire volontaire ; aucun score actuel"
+                  ],
+                  [
+                    "Garder un budget maîtrisé",
+                    "Dépenses et écart au prévisionnel",
+                    "Factures et engagements validés"
+                  ],
+                  [
+                    "Documenter les suites",
+                    "Ressources publiées et pistes retenues",
+                    "Bilan à J+7"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Les cibles sont des intentions de conception. Les résultats seront renseignés uniquement après réalisation et à partir de données effectivement collectées."
+            }
+          ]
+        ],
+        [
+          "Format et programme proposé",
+          [
+            {
+              "kind": "p",
+              "value": "Thème : Comprendre l’information à l’heure des réseaux sociaux et de l’IA. Format : une table ronde de 35 minutes, 25 minutes de questions, une pause puis un atelier collectif. Deux profils sont à rechercher : une personne travaillant sur les médias / l’éducation à l’information et une personne travaillant sur les usages de l’IA. La modération reste à désigner."
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Horaire",
+                  "Séquence"
+                ],
+                "rows": [
+                  [
+                    "18:30 – 19:00",
+                    "Accueil du public"
+                  ],
+                  [
+                    "19:00 – 19:10",
+                    "Ouverture"
+                  ],
+                  [
+                    "19:10 – 19:45",
+                    "Table ronde"
+                  ],
+                  [
+                    "19:45 – 20:10",
+                    "Questions du public"
+                  ],
+                  [
+                    "20:10 – 20:25",
+                    "Pause"
+                  ],
+                  [
+                    "20:25 – 20:55",
+                    "Atelier collectif"
+                  ],
+                  [
+                    "20:55 – 21:05",
+                    "Synthèse"
+                  ],
+                  [
+                    "21:05 – 21:30",
+                    "Échanges informels"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Questions de préparation : pourquoi une information attire-t-elle notre attention ? Quelles vérifications sont possibles avant de partager ? Comment contextualiser un contenu produit ou amplifié par l’IA ? Les exemples utilisés devront être sourcés et validés avant présentation."
+            }
+          ]
+        ],
+        [
+          "Publics, lieu et accessibilité",
+          [
+            {
+              "kind": "bullets",
+              "value": [
+                "Lieu à rechercher à Paris ou en Île-de-France, accessible en transports, disposant d’une salle adaptée à au moins 100 personnes.",
+                "Prévoir un accueil lisible, des places assises et un cheminement accessible ; vérifier les équipements avec le gestionnaire.",
+                "Publier les accès, horaires et conditions d’accueil seulement après confirmation.",
+                "Prévoir un contact pour les besoins particuliers, sans collecte de renseignements médicaux.",
+                "Jauge d’inscription envisagée : 80 personnes ; équipe maximale de 8 personnes, soit 88 occupants prévus avant vérification du lieu."
+              ]
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Critère de sélection du lieu",
+                  "À vérifier"
+                ],
+                "rows": [
+                  [
+                    "Capacité et disposition",
+                    "Jauge autorisée, visibilité, circulation et espaces de pause"
+                  ],
+                  [
+                    "Accès",
+                    "Transports, accès PMR et toilettes accessibles"
+                  ],
+                  [
+                    "Technique",
+                    "Micros, prises, acoustique et appui technique"
+                  ],
+                  [
+                    "Conditions",
+                    "Devis, assurance demandée, horaires et restitution"
+                  ]
+                ]
+              }
+            }
+          ]
+        ],
+        [
+          "Budget et financement envisagés",
+          [
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Poste",
+                  "Quantité",
+                  "Prix TTC",
+                  "Total TTC"
+                ],
+                "rows": [
+                  [
+                    "Location de salle",
+                    "1",
+                    "600,00 €",
+                    "600,00 €"
+                  ],
+                  [
+                    "Sonorisation et régie",
+                    "1",
+                    "450,00 €",
+                    "450,00 €"
+                  ],
+                  [
+                    "Interventions et modération",
+                    "1",
+                    "300,00 €",
+                    "300,00 €"
+                  ],
+                  [
+                    "Collation légère",
+                    "80",
+                    "3,00 €",
+                    "240,00 €"
+                  ],
+                  [
+                    "Impression et signalétique",
+                    "1",
+                    "90,00 €",
+                    "90,00 €"
+                  ],
+                  [
+                    "Assurance et frais administratifs",
+                    "1",
+                    "120,00 €",
+                    "120,00 €"
+                  ],
+                  [
+                    "Accessibilité et adaptations",
+                    "1",
+                    "120,00 €",
+                    "120,00 €"
+                  ],
+                  [
+                    "Photographie / documentation",
+                    "1",
+                    "180,00 €",
+                    "180,00 €"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Synthèse",
+                  "Montant"
+                ],
+                "rows": [
+                  [
+                    "Sous-total",
+                    "2 100,00 €"
+                  ],
+                  [
+                    "Réserve de 10 %",
+                    "210,00 €"
+                  ],
+                  [
+                    "Total prévisionnel",
+                    "2 310,00 €"
+                  ],
+                  [
+                    "Plafond de travail",
+                    "2 500,00 €"
+                  ],
+                  [
+                    "Marge par rapport au plafond",
+                    "190,00 €"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Scénario de financement : contribution envisagée de 1 500 € par la structure porteuse, à valider ; solde de 810 € à rechercher ou à couvrir par une réduction de dépenses. Aucun financement ni soutien extérieur n’est confirmé. Tous les montants doivent être rapprochés de devis réels avant engagement."
+            }
+          ]
+        ],
+        [
+          "Décisions avant lancement",
+          [
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Décision",
+                  "Responsable proposé",
+                  "Preuve attendue"
+                ],
+                "rows": [
+                  [
+                    "Valider le portage et le budget",
+                    "Responsable projet / structure porteuse",
+                    "Décision écrite et capacité de financement"
+                  ],
+                  [
+                    "Confirmer date, lieu et assurance",
+                    "Responsable projet / logistique",
+                    "Accords et conditions du lieu"
+                  ],
+                  [
+                    "Confirmer les intervenants",
+                    "Éditorial",
+                    "Accord écrit et programme validé"
+                  ],
+                  [
+                    "Autoriser la diffusion et l’inscription",
+                    "Responsable projet",
+                    "Informations confirmées et modalités de données précisées"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Farès Benamar est identifié comme concepteur du dossier. Les rôles opérationnels sont proposés et les membres de l’équipe restent à désigner. La réalisation de l’événement dépend de ces validations."
+            },
+            {
+              "kind": "p",
+              "value": "Contact de conception : contact.pro.faresb@gmail.com · Portfolio : portfolio-fares-benamar.vercel.app"
+            }
+          ]
+        ]
+      ]
+    ],
+    [
+      "02-dossier-operationnel",
+      "Organisation & conduite",
+      [
+        [
+          "Organisation et responsabilités",
+          [
+            {
+              "kind": "p",
+              "value": "Un noyau de coordination organise le projet ; une équipe de huit personnes maximum est envisagée le jour de l’événement. Les rôles ci-dessous ne désignent pas une équipe déjà constituée."
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Rôle",
+                  "Mission proposée"
+                ],
+                "rows": [
+                  [
+                    "Responsable projet",
+                    "Cadrage, budget, décisions, suivi et brief général"
+                  ],
+                  [
+                    "Éditorial / modération",
+                    "Fil conducteur, intervenants, questions et rythme"
+                  ],
+                  [
+                    "Communication",
+                    "Supports, diffusion, ressources et retours"
+                  ],
+                  [
+                    "Logistique / régie",
+                    "Lieu, technique, installation et restitution"
+                  ],
+                  [
+                    "Accueil",
+                    "Inscriptions, orientation et comptage"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Action",
+                  "Projet",
+                  "Éditorial",
+                  "Communication",
+                  "Logistique",
+                  "Accueil"
+                ],
+                "rows": [
+                  [
+                    "Concept et budget",
+                    "A/R",
+                    "C",
+                    "C",
+                    "C",
+                    "I"
+                  ],
+                  [
+                    "Programme et intervenants",
+                    "A",
+                    "R",
+                    "C",
+                    "I",
+                    "I"
+                  ],
+                  [
+                    "Lieu et technique",
+                    "A",
+                    "C",
+                    "I",
+                    "R",
+                    "C"
+                  ],
+                  [
+                    "Supports et diffusion",
+                    "A",
+                    "C",
+                    "R",
+                    "C",
+                    "I"
+                  ],
+                  [
+                    "Inscriptions et accueil",
+                    "A",
+                    "I",
+                    "C",
+                    "C",
+                    "R"
+                  ],
+                  [
+                    "Déroulé et brief équipe",
+                    "A/R",
+                    "C",
+                    "C",
+                    "C",
+                    "C"
+                  ],
+                  [
+                    "Bilan et suivi",
+                    "A",
+                    "C",
+                    "R",
+                    "C",
+                    "C"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "R = réalise ; A = assume la décision ; C = consulté ; I = informé. Les personnes et prestataires sont à confirmer avant lancement."
+            }
+          ]
+        ],
+        [
+          "Rétroplanning",
+          [
+            {
+              "kind": "p",
+              "value": "Le jeudi 8 avril 2027 sert uniquement de référence de travail au calendrier. La communication publique indique avril 2027, sans annoncer un jour confirmé. Les échéances relatives devront être recalculées après validation de la date."
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Échéance",
+                  "Phase",
+                  "Livrable / décision"
+                ],
+                "rows": [
+                  [
+                    "J-56 à J-49",
+                    "Cadrage",
+                    "Dossier de conception"
+                  ],
+                  [
+                    "J-49 à J-42",
+                    "Lieu",
+                    "Fiche lieu et devis"
+                  ],
+                  [
+                    "J-42 à J-35",
+                    "Programme",
+                    "Accords écrits et biographies"
+                  ],
+                  [
+                    "J-42 à J-28",
+                    "Technique",
+                    "Fiche technique"
+                  ],
+                  [
+                    "J-35 à J-28",
+                    "Supports",
+                    "Supports validés"
+                  ],
+                  [
+                    "J-28 à J-21",
+                    "Inscriptions",
+                    "Page et formulaire validés"
+                  ],
+                  [
+                    "J-21 à J-14",
+                    "Relais",
+                    "Suivi des canaux"
+                  ],
+                  [
+                    "J-14 à J-7",
+                    "Conduite",
+                    "Conducteur partagé"
+                  ],
+                  [
+                    "J-7 à J-2",
+                    "Accueil",
+                    "Liste d’accueil à accès limité"
+                  ],
+                  [
+                    "J-2 à J-1",
+                    "Répétition",
+                    "Check-list technique"
+                  ],
+                  [
+                    "J+0 à J+0",
+                    "Événement",
+                    "Journal des écarts"
+                  ],
+                  [
+                    "J+1 à J+3",
+                    "Retour",
+                    "Message et questionnaire"
+                  ],
+                  [
+                    "J+3 à J+7",
+                    "Bilan",
+                    "Bilan factuel et suites"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Point d’équipe hebdomadaire de 20 minutes proposé : décisions, actions de la semaine, blocages, écarts budget et prochaine échéance. Le classeur joint permet d’attribuer les tâches et de renseigner leur avancement."
+            }
+          ]
+        ],
+        [
+          "Conducteur du jour",
+          [
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Début",
+                  "Fin",
+                  "Séquence",
+                  "Pilote proposé"
+                ],
+                "rows": [
+                  [
+                    "16:00",
+                    "16:45",
+                    "Installation",
+                    "Logistique / régie"
+                  ],
+                  [
+                    "16:45",
+                    "17:15",
+                    "Tests techniques",
+                    "Régie"
+                  ],
+                  [
+                    "17:15",
+                    "17:45",
+                    "Brief équipe",
+                    "Responsable projet"
+                  ],
+                  [
+                    "17:45",
+                    "18:15",
+                    "Brief intervenants",
+                    "Éditorial / modération"
+                  ],
+                  [
+                    "18:15",
+                    "18:30",
+                    "Mise en place accueil",
+                    "Accueil"
+                  ],
+                  [
+                    "18:30",
+                    "19:00",
+                    "Accueil du public",
+                    "Accueil / logistique"
+                  ],
+                  [
+                    "19:00",
+                    "19:10",
+                    "Ouverture",
+                    "Responsable projet / modération"
+                  ],
+                  [
+                    "19:10",
+                    "19:45",
+                    "Table ronde",
+                    "Modération + deux intervenants"
+                  ],
+                  [
+                    "19:45",
+                    "20:10",
+                    "Questions du public",
+                    "Modération"
+                  ],
+                  [
+                    "20:10",
+                    "20:25",
+                    "Pause",
+                    "Logistique"
+                  ],
+                  [
+                    "20:25",
+                    "20:55",
+                    "Atelier collectif",
+                    "Modération / éditorial"
+                  ],
+                  [
+                    "20:55",
+                    "21:05",
+                    "Synthèse",
+                    "Modération"
+                  ],
+                  [
+                    "21:05",
+                    "21:30",
+                    "Échanges informels",
+                    "Équipe complète"
+                  ],
+                  [
+                    "21:30",
+                    "21:45",
+                    "Sortie et remise en état",
+                    "Logistique / régie"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "La fin publique est prévue à 21 h 30 et la restitution à 21 h 45, sous réserve des horaires du lieu. Le détail technique et les vigilances sont disponibles dans la feuille « Déroulé » du classeur."
+            }
+          ]
+        ],
+        [
+          "Fiche technique et accueil",
+          [
+            {
+              "kind": "bullets",
+              "value": [
+                "Prévoir deux micros pour les intervenants et une solution de prise de parole pour le public, à confirmer avec la régie.",
+                "Tester la sonorisation et la projection ; conserver une conduite possible sans écran.",
+                "Installer un point d’accueil avec programme, repères et contact de l’équipe.",
+                "Prévoir une liste d’accueil à accès limité, un comptage des entrées et une procédure simple pour la liste d’attente.",
+                "Recueillir les besoins d’accès avant la soirée et vérifier les adaptations avec le lieu.",
+                "Repérer les issues et les consignes du gestionnaire ; désigner un référent logistique.",
+                "Les prises de vue sont optionnelles. Informer le public, respecter les personnes ne souhaitant pas être photographiées et obtenir les accords nécessaires aux usages annoncés."
+              ]
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Moment",
+                  "Contrôle indispensable"
+                ],
+                "rows": [
+                  [
+                    "Avant ouverture",
+                    "Capacité, accès, matériel, horaires, équipe et programme confirmés"
+                  ],
+                  [
+                    "Pendant",
+                    "Comptage, rythme, circulation, incidents et besoins particuliers"
+                  ],
+                  [
+                    "Après",
+                    "Restitution du lieu, inventaire, dépenses et retour d’équipe"
+                  ]
+                ]
+              }
+            }
+          ]
+        ],
+        [
+          "Risques et solutions de repli",
+          [
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Risque",
+                  "Prévention / repli",
+                  "Pilote"
+                ],
+                "rows": [
+                  [
+                    "Lieu ou financement non confirmé",
+                    "Ne pas ouvrir les inscriptions avant décision écrite ; comparer au moins deux options",
+                    "Responsable projet"
+                  ],
+                  [
+                    "Désistement d’un intervenant",
+                    "Confirmer par écrit ; prévoir un format à un intervenant et une séquence de questions étendue",
+                    "Éditorial"
+                  ],
+                  [
+                    "Inscrits absents",
+                    "Rappel à J-2, confirmation simple et liste d’attente sans dépasser la jauge",
+                    "Accueil"
+                  ],
+                  [
+                    "Panne audio / projection",
+                    "Test J-1 et le jour même ; conducteur et supports imprimés de secours",
+                    "Régie"
+                  ],
+                  [
+                    "Besoin d’accessibilité non anticipé",
+                    "Vérifier le lieu et offrir un contact pour recueillir les besoins, sans demander de diagnostic médical",
+                    "Logistique"
+                  ],
+                  [
+                    "Photo ou donnée utilisée sans accord",
+                    "Informer, recueillir l’accord pour les usages prévus et limiter les accès à la liste d’inscrits",
+                    "Communication"
+                  ],
+                  [
+                    "Incident dans le lieu",
+                    "Suivre le protocole du lieu ; repérer issues, personnel référent et moyens d’alerte",
+                    "Logistique"
+                  ],
+                  [
+                    "Dérive budgétaire",
+                    "Aucun engagement sans validation ; réserve de 10 % et arbitrage des options avant commande",
+                    "Responsable projet"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "La liste est un outil de préparation, pas une attestation de conformité du lieu. Les mesures opérationnelles doivent être validées avec le gestionnaire et les personnes compétentes."
+            }
+          ]
+        ],
+        [
+          "Données, suivi et bilan",
+          [
+            {
+              "kind": "bullets",
+              "value": [
+                "Le formulaire d’inscription n’est pas encore ouvert. Ne recueillir que les informations nécessaires : nom, e-mail, nombre de places et besoin d’accès formulé librement si la personne le souhaite.",
+                "L’inscription à une newsletter doit être une démarche distincte et facultative.",
+                "Définir avant ouverture le responsable du traitement, la notice d’information, la durée de conservation et les accès. Proposition de travail : suppression de la liste d’accueil après le bilan, au plus tard J+30, hors obligations justifiées.",
+                "Questionnaire de retour volontaire : utilité, clarté, accueil, point à améliorer et souhait de revenir.",
+                "Bilan J+7 : entrées réelles, inscriptions, dépenses engagées, retours et trois améliorations prioritaires. Aucune donnée de fréquentation n’est actuellement renseignée."
+              ]
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Question du bilan",
+                  "Source"
+                ],
+                "rows": [
+                  [
+                    "Qu’a-t-on effectivement réalisé ?",
+                    "Conducteur et journal des écarts"
+                  ],
+                  [
+                    "Qui a participé ?",
+                    "Comptage des entrées et inscriptions, sans publier de données nominatives"
+                  ],
+                  [
+                    "Quel coût ?",
+                    "Devis, engagements et factures"
+                  ],
+                  [
+                    "Qu’est-ce qui doit évoluer ?",
+                    "Retour d’équipe et questionnaire volontaire"
+                  ]
+                ]
+              }
+            }
+          ]
+        ]
+      ]
+    ],
+    [
+      "03-kit-communication",
+      "Kit de communication",
+      [
+        [
+          "Positionnement et règles de diffusion",
+          [
+            {
+              "kind": "p",
+              "value": "Promesse : une soirée pour prendre du recul sur l’information et repartir avec des repères pratiques. Ton : accessible, précis, ouvert à la discussion. Éviter les promesses de vérité absolue, les témoignages fictifs et les noms d’intervenants non confirmés."
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Information",
+                  "Version de conception"
+                ],
+                "rows": [
+                  [
+                    "Nom",
+                    "Les Rencontres de L’Enjeu"
+                  ],
+                  [
+                    "Thème",
+                    "Comprendre l’information à l’heure des réseaux sociaux et de l’IA"
+                  ],
+                  [
+                    "Période",
+                    "Avril 2027 · date exacte à confirmer"
+                  ],
+                  [
+                    "Zone",
+                    "Paris ou Île-de-France · Lieu à confirmer"
+                  ],
+                  [
+                    "Accès",
+                    "Gratuit, sur inscription après confirmation du lieu"
+                  ],
+                  [
+                    "Statut",
+                    "Projet en préparation ; inscriptions non ouvertes"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Les textes suivants sont prêts à adapter. Une annonce ferme nécessite la confirmation du jour, de l’adresse, du programme, des intervenants et du dispositif d’inscription. Aucun lien d’inscription fictif n’est utilisé."
+            }
+          ]
+        ],
+        [
+          "Invitation par e-mail",
+          [
+            {
+              "kind": "p",
+              "value": "Objet : Les Rencontres de L’Enjeu, une première édition envisagée en avril 2027"
+            },
+            {
+              "kind": "p",
+              "value": "Bonjour,\n\nComment prendre du recul sur une information qui circule vite ? Que changent les réseaux sociaux et l’IA dans notre façon de nous informer ?\n\nNous préparons une première édition des Rencontres de L’Enjeu en avril 2027, à Paris ou en Île-de-France. Au programme envisagé : une table ronde, vos questions et un atelier collectif pour identifier les sources et remettre les informations en contexte.\n\nL’accès est prévu gratuit, sur inscription. La date exacte, le lieu et les intervenants seront annoncés après confirmation.\n\nPour être informé de l’ouverture des inscriptions, vous pouvez écrire à contact.pro.faresb@gmail.com.\n\nÀ bientôt,\nFarès Benamar\nProjet Les Rencontres de L’Enjeu"
+            },
+            {
+              "kind": "p",
+              "value": "Ce message est une proposition de texte. Aucun e-mail n’a été envoyé et aucune liste de destinataires n’est fournie."
+            }
+          ]
+        ],
+        [
+          "Publications et relais",
+          [
+            {
+              "kind": "p",
+              "value": "Publication LinkedIn proposée"
+            },
+            {
+              "kind": "p",
+              "value": "Nous préparons Les Rencontres de L’Enjeu : un rendez-vous pour discuter de l’information à l’heure des réseaux sociaux et de l’IA.\n\nUne table ronde, des questions et un atelier pour repartir avec des repères concrets : d’où vient une information, sur quelles preuves repose-t-elle, dans quel contexte faut-il la lire ?\n\nPremière édition envisagée en avril 2027, à Paris ou en Île-de-France. Accès prévu gratuit sur inscription. Date, lieu et intervenants à confirmer.\n\nVous souhaitez recevoir les informations lors de l’ouverture ? Contact : contact.pro.faresb@gmail.com."
+            },
+            {
+              "kind": "p",
+              "value": "Publication courte proposée"
+            },
+            {
+              "kind": "p",
+              "value": "Comprendre l’information. Questionner les sources. Prendre le temps d’échanger. Les Rencontres de L’Enjeu sont en préparation pour avril 2027. Une soirée gratuite, avec table ronde et atelier. Date et lieu à confirmer."
+            },
+            {
+              "kind": "p",
+              "value": "Message de relais proposé"
+            },
+            {
+              "kind": "p",
+              "value": "Bonjour, nous concevons une rencontre publique autour de l’information, des réseaux sociaux et de l’IA, envisagée en avril 2027. Votre public pourrait être intéressé. Seriez-vous disponible pour un échange sur le format et un éventuel relais une fois les informations confirmées ? Cette prise de contact n’implique aucun partenariat acquis."
+            }
+          ]
+        ],
+        [
+          "Rappel et messages après inscription",
+          [
+            {
+              "kind": "p",
+              "value": "Modèle de confirmation à utiliser seulement après ouverture effective"
+            },
+            {
+              "kind": "p",
+              "value": "Objet : Votre inscription aux Rencontres de L’Enjeu\nBonjour, votre inscription est confirmée pour [date confirmée], de 18 h 30 à 21 h 30, à [lieu et adresse confirmés]. Retrouvez le programme et les accès sur [page validée]. Si vous ne pouvez plus venir, prévenez-nous à contact.pro.faresb@gmail.com. Pour un besoin d’accès particulier, vous pouvez également nous écrire."
+            },
+            {
+              "kind": "p",
+              "value": "Rappel J-2 à adapter"
+            },
+            {
+              "kind": "p",
+              "value": "Nous avons rendez-vous dans deux jours pour Les Rencontres de L’Enjeu. Accueil dès 18 h 30 ; début des échanges à 19 h. Vérifiez le lieu, l’itinéraire et le programme dans votre confirmation. Un empêchement ? Un message permet de libérer votre place."
+            },
+            {
+              "kind": "p",
+              "value": "Remerciement J+1 à utiliser seulement après réalisation"
+            },
+            {
+              "kind": "p",
+              "value": "Merci d’avoir participé aux Rencontres de L’Enjeu. Nous vous transmettons les ressources citées : [liens vérifiés]. Si vous le souhaitez, partagez votre retour dans [questionnaire actif]. Votre avis nous aidera à améliorer une éventuelle prochaine édition."
+            },
+            {
+              "kind": "p",
+              "value": "Les champs entre crochets sont des informations manquantes à compléter ; les modèles ne doivent pas être diffusés ainsi."
+            }
+          ]
+        ],
+        [
+          "Calendrier et indicateurs",
+          [
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Moment",
+                  "Support",
+                  "But"
+                ],
+                "rows": [
+                  [
+                    "Après validation, J-28",
+                    "Page, invitation et annonce",
+                    "Présenter une information complète et ouvrir les inscriptions"
+                  ],
+                  [
+                    "J-21",
+                    "Publication et relais ciblés",
+                    "Faire connaître le rendez-vous auprès des publics concernés"
+                  ],
+                  [
+                    "J-14",
+                    "Programme et angle éditorial",
+                    "Expliquer ce que les participants pourront découvrir"
+                  ],
+                  [
+                    "J-7",
+                    "Informations pratiques",
+                    "Réduire les questions d’accès et d’organisation"
+                  ],
+                  [
+                    "J-2",
+                    "Rappel aux inscrits",
+                    "Confirmer la présence et libérer les places inutilisées"
+                  ],
+                  [
+                    "J+1",
+                    "Remerciement et ressources",
+                    "Prolonger les échanges"
+                  ],
+                  [
+                    "J+7",
+                    "Bilan factuel",
+                    "Évaluer les objectifs et décider des suites"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "table",
+              "value": {
+                "headers": [
+                  "Indicateur prévu",
+                  "Calcul / précaution"
+                ],
+                "rows": [
+                  [
+                    "Inscriptions par source",
+                    "Formulaire : source facultative ou liens de campagne, sans déductions inventées"
+                  ],
+                  [
+                    "Taux de présence",
+                    "Entrées uniques / inscriptions confirmées × 100"
+                  ],
+                  [
+                    "Taux de réponse au questionnaire",
+                    "Réponses / participants contactés × 100"
+                  ],
+                  [
+                    "Utilité perçue",
+                    "Distribution des réponses ; ne pas présenter une cible comme un résultat"
+                  ],
+                  [
+                    "Écart budgétaire",
+                    "Dépenses réelles - prévisionnel, avec les mêmes postes"
+                  ]
+                ]
+              }
+            },
+            {
+              "kind": "p",
+              "value": "Le classeur contient les champs et les formules ; les cellules de résultats restent vides tant que les données n’existent pas."
+            }
+          ]
+        ],
+        [
+          "Direction graphique et supports",
+          [
+            {
+              "kind": "p",
+              "value": "Palette : ivoire, encre et or, inspirée de l’identité du média. Typographie éditoriale pour les titres et caractères sans empattement pour les informations pratiques. Maintenir un contraste suffisant et une hiérarchie courte : nom, sujet, période, format, statut."
+            },
+            {
+              "kind": "bullets",
+              "value": [
+                "Affiche A3 : annonce du concept et de la période envisagée ; aucune fausse adresse ni aucun intervenant fictif.",
+                "Invitation A5 : format et modalités prévues, avec contact de conception.",
+                "Programme A4 : séquences horaires de la soirée, sans noms non confirmés.",
+                "Page de présentation HTML : aperçu du rendez-vous, programme et contact ; aucun formulaire actif ni collecte de données."
+              ]
+            },
+            {
+              "kind": "p",
+              "value": "Les supports sont des productions de conception destinées au portfolio. Adapter les mentions provisoires après validation, sans attribuer une réalisation effective à cet exercice."
+            }
+          ]
+        ]
+      ]
+    ]
+  ]
+}

@@ -11,7 +11,7 @@ html=html.replace('<link rel="stylesheet" href="styles.css">','<style>'+css+'</s
 html=html.replace('<script src="script.js" defer></script>','');
 html=html.replace('</body>','<script>'+script.replaceAll('</script','<\\/script')+'</script></body>');
 const assets=[...new Set([...html.matchAll(/(?:src|href)="(assets\/[^"#]+)"/g)].map(match=>match[1]))];
-const types={'.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'};
+const types={'.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf','.docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document','.xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','.zip':'application/zip','.html':'text/html'};
 for(const asset of assets){
  const bytes=await readFile(resolve(root,asset));
  const type=types[extname(asset)];
