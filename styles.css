@@ -243,6 +243,8 @@ summary:hover{color:var(--blue)}
 @media print{.project-dialog{display:none!important}.project-featured{display:block}.project-visual figcaption{display:block}.project-actions>details{display:block}.project-actions .case-content{display:block}.project-grid{display:block}.no-media{min-height:0;aspect-ratio:auto;display:block}.project-featured .project-visual img{height:170px;aspect-ratio:auto}}
 
 .fnk-agency-visual img{object-position:center 35%}
+.fnk-agency-visual .project-image-link{position:relative}
+.fnk-agency-visual .project-image-link::after{content:"";position:absolute;inset:0;background:rgba(20,29,35,.42);pointer-events:none}
 
 .rencontres-visual img{object-fit:contain;background:#f2efe7;padding:12px}
 .project-resources{margin-top:28px}
