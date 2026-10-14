@@ -100,7 +100,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   function openProjectDialog(card, trigger, media) {
     dialogTrigger = trigger;
     const carousel = trigger.hasAttribute('data-case');
-    dialogTitle.textContent = carousel ? card.querySelector('.editorial-carousel h4').textContent : card.querySelector('h3').textContent;
+    dialogTitle.textContent = carousel ? 'L’Enjeu · Carrousels éditoriaux' : card.querySelector('h3').textContent;
     dialogKind.textContent = carousel ? 'Carrousel éditorial' : media ? 'Aperçu visuel' : 'Étude de cas';
     dialogContent.replaceChildren();
     if (media) {

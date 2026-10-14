@@ -6,11 +6,12 @@ from io import BytesIO
 from PIL import Image
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
-OUT=Path(__file__).resolve().parents[1]/'assets/lenjeu-carrousel'
+import sys
+OUT=Path(__file__).resolve().parents[1]/'assets'/ (sys.argv[1] if len(sys.argv)>1 else 'lenjeu-carrousel')
 meta=json.loads((OUT/'sources.json').read_text())
 c=canvas.Canvas(str(OUT/'carrousel.pdf'),pagesize=(540,675))
-c.setTitle('L’Enjeu | L’IA a une adresse | Carrousel éditorial')
-c.setAuthor('Farès Benamar');c.setSubject('Adaptation du grand format L’Enjeu, chiffres mondiaux AIE 2025. Illustrations éditoriales générées avec l’outil image.')
+c.setTitle('L’Enjeu | '+meta['titre']+' | Carrousel éditorial')
+c.setAuthor('Farès Benamar');c.setSubject('Adaptation éditoriale L’Enjeu. Sources dans sources.json. Illustrations générées avec l’outil image.')
 for page in meta['slides']:
  path=OUT/page['image'];im=Image.open(path)
  im.save(path.with_suffix('.webp'),format='WEBP',quality=88,method=6)
@@ -22,5 +23,5 @@ for page in meta['slides']:
  c.showPage()
 c.save()
 with zipfile.ZipFile(OUT/'carrousel-complet.zip','w',zipfile.ZIP_DEFLATED) as z:
- for name in ['LIRE-MOI.md','sources.json','carrousel.pdf']+[f'{i:02}.png' for i in range(1,7)]:z.write(OUT/name,name)
-print('Built 6-slide PDF, original-image archive and optimized WebP previews.')
+ for name in ['LIRE-MOI.md','sources.json','carrousel.pdf']+[slide['image'] for slide in meta['slides']]:z.write(OUT/name,name)
+print('Built',len(meta['slides']),'slides, PDF, original-image archive and optimized WebP previews.')

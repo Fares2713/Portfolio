@@ -261,7 +261,7 @@ summary:hover{color:var(--blue)}
 .petites-mains-visual img{object-fit:contain;background:var(--paper)}
 
 /* Editorial carousel: native horizontal scrolling also works without JS. */
-.lenjeu-carousel-visual img{object-fit:contain;background:#f7f4ec}
+.lenjeu-carousel-visual img{object-fit:contain;background:#0928bf}
 .editorial-carousel{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--line)}
 .editorial-carousel h4{font-family:var(--serif);font-size:32px;margin:8px 0 14px}
 .carousel-controls{display:flex;align-items:center;gap:10px;margin:20px 0 12px}

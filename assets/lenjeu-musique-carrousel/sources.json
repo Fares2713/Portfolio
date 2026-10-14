@@ -1,0 +1,43 @@
+{
+  "titre": "Musique & IA : tu l’écoutes, mais qui l’a créée ?",
+  "creation": "2026-10-14",
+  "statut": "Adaptation éditoriale créée pour le portfolio, sans diffusion sociale ni résultats d’audience revendiqués.",
+  "article": "https://lenjeumedia.fr/article/463-musique-et-ia-reconnaitre-un-morceau-ne-dit-pas-ce-qu-on-veut-ecouter",
+  "article_date": "2026-10-11",
+  "source_chiffres": "https://newsroom-deezer.com/2025/11/deezer-ipsos-survey-ai-music/",
+  "verification": "2026-10-14",
+  "direction_artistique": "Bleu électrique, graphite, corail et citron vert ; sans empattement, une idée par écran, illustrations sculpturales audio.",
+  "images": "Illustrations générées avec l’outil image, pas des photographies documentaires.",
+  "slides": [
+    {
+      "numero": 1,
+      "titre": "Tu l’écoutes. Mais qui l’a créée ?",
+      "texte": "Musique & IA : ce que les chiffres disent vraiment.",
+      "image": "01.png"
+    },
+    {
+      "numero": 2,
+      "titre": "97 %",
+      "texte": "N’ont pas correctement identifié les trois titres du test. Enquête Deezer / Ipsos Digital, octobre 2025 : 9 000 adultes dans huit pays. Deux titres entièrement générés par IA et un titre humain.",
+      "image": "02.png"
+    },
+    {
+      "numero": 3,
+      "titre": "Reconnaître ≠ choisir.",
+      "texte": "On peut aimer un morceau et vouloir connaître son origine.",
+      "image": "03.png"
+    },
+    {
+      "numero": 4,
+      "titre": "Un dépôt ≠ une écoute.",
+      "texte": "Les morceaux reçus ne disent pas ce que le public écoute.",
+      "image": "04.png"
+    },
+    {
+      "numero": 5,
+      "titre": "Savoir. Choisir. Découvrir.",
+      "texte": "L’origine, la visibilité et la rémunération sont trois questions différentes. Lire le décryptage sur lenjeumedia.fr.",
+      "image": "05.png"
+    }
+  ]
+}

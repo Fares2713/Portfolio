@@ -103,8 +103,9 @@ try{
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
   await page.locator('#projet-lenjeu [data-case]').click();
-  const carousel=dialog.locator('.editorial-carousel');
-  assert.equal(await carousel.locator('.carousel-track>li').count(),6,'Six editorial slides');
+  const carousel=dialog.locator('.editorial-carousel').first();
+  assert.equal(await carousel.locator('.carousel-track>li').count(),5,'Five mobile-first music slides');
+  assert.equal(await dialog.locator('.editorial-carousel').nth(1).locator('.carousel-track>li').count(),6,'First editorial carousel retained');
   await carousel.locator('.carousel-track img').first().evaluate(img=>img.decode());
   await carousel.locator('[data-carousel-step="1"]').click();
   await page.waitForFunction(()=>document.querySelector('#project-dialog .carousel-track').scrollLeft>0);
@@ -114,7 +115,7 @@ try{
   await page.screenshot({path:'screenshots/carousel-'+width+'.png'});
   await page.keyboard.press('Escape');
   assert.ok(await page.locator('#projet-lenjeu [data-case]').evaluate(el=>el===document.activeElement),'Carousel restores focus');
-  const carouselPdf=await context.request.get(origin+'/assets/lenjeu-carrousel/carrousel.pdf');
+  const carouselPdf=await context.request.get(origin+'/assets/lenjeu-musique-carrousel/carrousel.pdf');
   assert.ok(carouselPdf.ok());
   assert.equal((await carouselPdf.body()).subarray(0,4).toString(),'%PDF');
   await page.locator('#projet-rencontres-enjeu summary').click();
