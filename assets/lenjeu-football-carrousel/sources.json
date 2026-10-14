@@ -1,0 +1,44 @@
+{
+  "titre": "Football féminin : peut-on en vivre ?",
+  "creation": "2026-10-14",
+  "statut": "Adaptation éditoriale créée pour le portfolio, sans diffusion sociale ni résultat d’audience revendiqué.",
+  "article": "https://lenjeumedia.fr/article/467-football-feminin-la-hausse-des-salaires-ne-garantit-pas-encore-une-carriere",
+  "article_date": "2026-10-12",
+  "source_chiffres": "https://www.fifpro.org/en/articles/2026/10/womens-players-considering-leaving-game-early-for-financial-and-mental-health-reasons-fifpro-report-finds",
+  "verification_source_primaire": "2026-10-14",
+  "perimetre": "Enquête et entretiens FIFPRO auprès d’environ 800 joueuses dans le monde ; salaire mensuel de club. La moyenne est annoncée corrigée de l’inflation. Ces chiffres ne constituent pas un salaire minimum ni une donnée propre au championnat français.",
+  "direction_artistique": "Crème, bleu nuit, terracotta ; titres courts, illustrations éditoriales simples, compositions équilibrées.",
+  "images": "Illustrations générées avec l’outil image ; aucune joueuse réelle ni équipe identifiée.",
+  "slides": [
+    {
+      "numero": 1,
+      "titre": "Football féminin. Peut-on en vivre ?",
+      "texte": "La visibilité progresse. La sécurité des carrières reste un enjeu.",
+      "image": "01.png"
+    },
+    {
+      "numero": 2,
+      "titre": "La moyenne ne dit pas tout.",
+      "texte": "Moyenne : 2 601 dollars ; médiane : 1 669 dollars. Salaire mensuel de club dans l’enquête internationale FIFPRO 2026. Résultats d’enquête, pas un salaire minimum.",
+      "image": "02.png"
+    },
+    {
+      "numero": 3,
+      "titre": "Un salaire ne fait pas une carrière.",
+      "texte": "Contrat, accompagnement et santé comptent aussi.",
+      "image": "03.png"
+    },
+    {
+      "numero": 4,
+      "titre": "La durée compte.",
+      "texte": "Un contrat plus long donne un horizon. Les protections lui donnent du sens.",
+      "image": "04.png"
+    },
+    {
+      "numero": 5,
+      "titre": "Progresser. Et protéger.",
+      "texte": "Les conditions d’emploi comptent autant que la visibilité. Lire le décryptage sur lenjeumedia.fr.",
+      "image": "05.png"
+    }
+  ]
+}
