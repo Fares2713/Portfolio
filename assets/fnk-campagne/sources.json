@@ -1,0 +1,35 @@
+{
+  "titre": "FNK Location · Le départ change tout",
+  "creation": "2026-10-14",
+  "statut": "Proposition créative conçue pour le portfolio en octobre 2026. Aucun support diffusé, validation de FNK ou résultat commercial revendiqué.",
+  "site_source": "https://fnklocation.com",
+  "logo_source": "https://fnklocation.com/assets/fnk-logo-transparent.png",
+  "consultation": "2026-10-14",
+  "messages": "Les accroches Le départ change tout et Prenez une autre direction sont présentes sur le site public FNK lors de la consultation.",
+  "vehicules": "Illustrations automobiles générées avec l’outil image ; aucun véhicule présenté comme disponible dans la flotte réelle.",
+  "offres": "Aucun tarif, remise, assurance, livraison ou condition de location inventé.",
+  "direction_artistique": "Crème, vert profond, graphite ; typographie forte et routes diagonales.",
+  "supports": [
+    {
+      "titre": "Publication Instagram",
+      "texte": "Le départ change tout. Location de véhicules. Découvrez la collection sur fnklocation.com.",
+      "image": "01-publication.png",
+      "largeur": 1122,
+      "hauteur": 1402
+    },
+    {
+      "titre": "Story Instagram",
+      "texte": "Votre voiture. Votre moment. Choisissez vos dates. Explorez la collection sur fnklocation.com.",
+      "image": "02-story.png",
+      "largeur": 941,
+      "hauteur": 1672
+    },
+    {
+      "titre": "Bannière web",
+      "texte": "Prenez une autre direction. Découvrez la collection FNK. Choisir ma voiture sur fnklocation.com.",
+      "image": "03-banniere.png",
+      "largeur": 1672,
+      "hauteur": 941
+    }
+  ]
+}
