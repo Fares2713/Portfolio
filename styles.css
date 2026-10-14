@@ -259,3 +259,25 @@ summary:hover{color:var(--blue)}
 .project-dialog .dialog-bar{position:sticky;top:0;z-index:2;background:var(--white);padding-block:8px;box-shadow:0 -30px 0 var(--white)}
 
 .petites-mains-visual img{object-fit:contain;background:var(--paper)}
+
+/* Editorial carousel: native horizontal scrolling also works without JS. */
+.lenjeu-carousel-visual img{object-fit:contain;background:#f7f4ec}
+.editorial-carousel{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.editorial-carousel h4{font-family:var(--serif);font-size:32px;margin:8px 0 14px}
+.carousel-controls{display:flex;align-items:center;gap:10px;margin:20px 0 12px}
+.carousel-controls>span{flex:1;font-size:12px;color:var(--muted)}
+.carousel-controls button{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink)}
+.carousel-controls button:hover{background:var(--paper)}
+.carousel-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;list-style:none!important;padding:0 0 16px!important;margin:0!important;overscroll-behavior-x:contain}
+.carousel-track>li{flex:0 0 min(370px,85%);scroll-snap-align:start;margin:0!important}
+.carousel-track figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper)}
+.carousel-track img{width:100%;height:auto}
+.carousel-track figcaption{padding:16px;font-size:12px;line-height:1.65;background:var(--white)}
+.carousel-track figcaption strong,.carousel-track figcaption span{display:block}
+.carousel-track figcaption span{margin-top:6px;color:var(--muted)}
+.carousel-links{display:flex;flex-wrap:wrap;gap:12px 22px;font-size:13px}
+.carousel-links a,.carousel-source a{text-decoration:underline;text-underline-offset:4px;color:var(--blue)}
+.carousel-source{font-size:12px!important;color:var(--muted)}
+@media print{.carousel-track{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.carousel-controls{display:none}}
+
+.project-dialog .editorial-carousel h4{font-family:var(--serif);font-size:26px;line-height:1.25;margin:8px 0 14px;padding:0;border:0}

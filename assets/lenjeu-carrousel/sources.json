@@ -1,0 +1,49 @@
+{
+  "titre": "L’IA a une adresse",
+  "creation": "2026-10-14",
+  "statut": "Adaptation éditoriale créée pour le portfolio ; publication sur les réseaux non revendiquée.",
+  "article": "https://lenjeumedia.fr/article/201-l-ia-a-une-adresse",
+  "article_date": "2026-10-06",
+  "article_mise_a_jour": "2026-10-08",
+  "source_chiffres": "https://www.iea.org/reports/energy-and-ai/executive-summary",
+  "verification": "2026-10-14",
+  "images": "Créées avec l’outil image ; illustrations éditoriales, pas des photographies documentaires.",
+  "slides": [
+    {
+      "numero": 1,
+      "titre": "L’IA a une adresse.",
+      "texte": "Le numérique a besoin de terrains, de réseaux et d’énergie.",
+      "image": "01.png"
+    },
+    {
+      "numero": 2,
+      "titre": "Derrière le cloud, du concret.",
+      "texte": "Construire, raccorder, alimenter, refroidir : les services numériques reposent sur des bâtiments et des réseaux.",
+      "image": "02.png"
+    },
+    {
+      "numero": 3,
+      "titre": "L’électricité, en chiffres.",
+      "texte": "Environ 415 TWh en 2024 (estimation) ; environ 945 TWh en 2030 (projection). Monde, tous les centres de données. Source : AIE, Energy and AI, 2025.",
+      "image": "03.png"
+    },
+    {
+      "numero": 4,
+      "titre": "Ce n’est pas seulement l’IA.",
+      "texte": "Les chiffres concernent tous les centres de données. L’IA contribue à la croissance, aux côtés d’autres services numériques.",
+      "image": "04.png"
+    },
+    {
+      "numero": 5,
+      "titre": "Des bénéfices globaux. Des effets locaux.",
+      "texte": "Terrains, réseaux, énergie : chaque implantation engage des choix pour un territoire.",
+      "image": "05.png"
+    },
+    {
+      "numero": 6,
+      "titre": "L’IA a une adresse. Et des enjeux.",
+      "texte": "Comprendre l’information, c’est aussi regarder ses infrastructures. Lire le grand format sur lenjeumedia.fr. Sources : L’Enjeu et AIE.",
+      "image": "06.png"
+    }
+  ]
+}

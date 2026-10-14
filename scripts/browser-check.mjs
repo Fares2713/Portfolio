@@ -102,6 +102,21 @@ try{
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
+  await page.locator('#projet-lenjeu [data-case]').click();
+  const carousel=dialog.locator('.editorial-carousel');
+  assert.equal(await carousel.locator('.carousel-track>li').count(),6,'Six editorial slides');
+  await carousel.locator('.carousel-track img').first().evaluate(img=>img.decode());
+  await carousel.locator('[data-carousel-step="1"]').click();
+  await page.waitForFunction(()=>document.querySelector('#project-dialog .carousel-track').scrollLeft>0);
+  assert.equal(await carousel.locator('.carousel-links a').count(),3);
+  const carouselAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.deepEqual(carouselAudit.violations.map(x=>x.id),[],'Accessible editorial carousel');
+  await page.screenshot({path:'screenshots/carousel-'+width+'.png'});
+  await page.keyboard.press('Escape');
+  assert.ok(await page.locator('#projet-lenjeu [data-case]').evaluate(el=>el===document.activeElement),'Carousel restores focus');
+  const carouselPdf=await context.request.get(origin+'/assets/lenjeu-carrousel/carrousel.pdf');
+  assert.ok(carouselPdf.ok());
+  assert.equal((await carouselPdf.body()).subarray(0,4).toString(),'%PDF');
   await page.locator('#projet-rencontres-enjeu summary').click();
   assert.match(await dialog.innerText(),/avril 2027/);
   assert.match(await dialog.innerText(),/hypothèses de travail/);
@@ -120,6 +135,7 @@ try{
   await page.locator('.earlier-experience>summary').click();
   assert.equal(await page.locator('.earlier-grid article:visible').count(),3);
   // Force lazy images to load before validating and capturing the whole page.
+  await page.evaluate(()=>[...document.images].forEach(image=>{image.loading='eager';}));
   for(const image of await page.locator('img').all()) await image.scrollIntoViewIfNeeded();
   await page.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
   const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();

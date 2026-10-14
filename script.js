@@ -57,9 +57,15 @@ function revealAnchor(hash) {
   }
 }
 document.addEventListener('click', event => {
+  const step = event.target.closest('[data-carousel-step]');
+  if (step) {
+    const track = step.closest('.editorial-carousel').querySelector('.carousel-track');
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollBy({left: Number(step.dataset.carouselStep) * track.clientWidth, behavior: reduced ? 'auto' : 'smooth'});
+  }
   if (!event.target.closest('.site-header')) closeMenu();
   const link = event.target.closest('a[href^="#"]');
-  if (link) revealAnchor(link.getAttribute('href'));
+  if (link && !event.defaultPrevented) revealAnchor(link.getAttribute('href'));
 });
 if (window.addEventListener) {
   window.addEventListener('hashchange', () => revealAnchor(window.location.hash));
@@ -93,8 +99,9 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   let dialogTrigger = null;
   function openProjectDialog(card, trigger, media) {
     dialogTrigger = trigger;
-    dialogTitle.textContent = card.querySelector('h3').textContent;
-    dialogKind.textContent = media ? 'Aperçu visuel' : 'Étude de cas';
+    const carousel = trigger.hasAttribute('data-case');
+    dialogTitle.textContent = carousel ? card.querySelector('.editorial-carousel h4').textContent : card.querySelector('h3').textContent;
+    dialogKind.textContent = carousel ? 'Carrousel éditorial' : media ? 'Aperçu visuel' : 'Étude de cas';
     dialogContent.replaceChildren();
     if (media) {
       const figure = document.createElement('figure');
@@ -106,6 +113,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       dialogContent.append(figure);
     } else {
       const content = card.querySelector('.case-content').cloneNode(true);
+      content.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
       dialogContent.append(content);
     }
     projectDialog.showModal();
@@ -118,6 +126,14 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
     summary.addEventListener('click', event => {
       event.preventDefault();
       openProjectDialog(card, summary, false);
+    });
+    card.querySelectorAll('[data-case]').forEach(caseLink => {
+      caseLink.setAttribute('aria-haspopup', 'dialog');
+      caseLink.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        openProjectDialog(card, caseLink, false);
+      });
     });
     card.querySelectorAll('[data-media]').forEach(mediaLink => {
       mediaLink.setAttribute('aria-haspopup', 'dialog');
