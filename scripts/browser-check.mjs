@@ -118,10 +118,11 @@ try{
   assert.ok(await page.locator('#projet-7').isVisible());
   await page.locator('#projet-lenjeu [data-case]').click();
   const carousel=dialog.locator('.editorial-carousel').first();
-  assert.equal(await carousel.locator('.carousel-track>li').count(),5,'Five football slides');
-  assert.equal(await dialog.locator('.editorial-carousel').count(),3,'Three distinct editorial carousels');
-  assert.equal(await dialog.locator('.editorial-carousel').nth(1).locator('.carousel-track>li').count(),5,'Music carousel retained');
-  assert.equal(await dialog.locator('.editorial-carousel').nth(2).locator('.carousel-track>li').count(),6,'Infrastructure carousel retained');
+  assert.equal(await carousel.locator('.carousel-track>li').count(),5,'Five economy slides');
+  assert.equal(await dialog.locator('.editorial-carousel').count(),5,'Five distinct editorial carousels');
+  for(const [index,count] of [[1,5],[2,5],[3,5],[4,6]]) {
+    assert.equal(await dialog.locator('.editorial-carousel').nth(index).locator('.carousel-track>li').count(),count,'Retained and new carousel slide count');
+  }
   await carousel.locator('.carousel-track img').first().evaluate(img=>img.decode());
   await carousel.locator('[data-carousel-step="1"]').click();
   await page.waitForFunction(()=>document.querySelector('#project-dialog .carousel-track').scrollLeft>0);
@@ -131,9 +132,12 @@ try{
   await page.screenshot({path:'screenshots/carousel-'+width+'.png'});
   await page.keyboard.press('Escape');
   assert.ok(await page.locator('#projet-lenjeu [data-case]').evaluate(el=>el===document.activeElement),'Carousel restores focus');
-  const carouselPdf=await context.request.get(origin+'/assets/lenjeu-football-carrousel/carrousel.pdf');
+  const carouselPdf=await context.request.get(origin+'/assets/lenjeu-autoroutes-carrousel/carrousel.pdf');
   assert.ok(carouselPdf.ok());
   assert.equal((await carouselPdf.body()).subarray(0,4).toString(),'%PDF');
+  const spacePdf=await context.request.get(origin+'/assets/lenjeu-iss-carrousel/carrousel.pdf');
+  assert.equal((await spacePdf.body()).subarray(0,4).toString(),'%PDF');
+
   await page.locator('#projet-rencontres-enjeu summary').click();
   assert.match(await dialog.innerText(),/avril 2027/);
   assert.match(await dialog.innerText(),/hypothèses de travail/);

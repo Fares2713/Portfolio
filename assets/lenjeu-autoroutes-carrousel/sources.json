@@ -1,0 +1,44 @@
+{
+  "titre": "Péages : où va l’argent ?",
+  "creation": "2026-10-14",
+  "statut": "Adaptation éditoriale créée pour le portfolio ; aucune diffusion ni résultat d’audience revendiqué.",
+  "article": "https://lenjeumedia.fr/article/473-autoroutes-comment-un-chantier-retarde-devient-un-avantage-financier",
+  "article_date": "2026-10-13",
+  "source_primaire": "https://www.autorite-transports.fr/wp-content/uploads/2025/12/synthese_des_comptes_sca_2024.pdf",
+  "verification": "2026-10-14",
+  "perimetre": "Lecture qualitative de la synthèse ART des comptes 2024. Les compensations portent sur les mécanismes contractuels de certaines opérations ; aucun remboursement automatique, illégalité générale ou montant actualisé à 2026 n’est affirmé.",
+  "direction_artistique": "Bleu pétrole, gris bleuté et jaune signalétique ; illustrations graphiques autour de la route et des mécanismes financiers.",
+  "images": "Illustrations générées avec l’outil image, pas des photographies documentaires.",
+  "slides": [
+    {
+      "numero": 1,
+      "titre": "Péages : où va l’argent ?",
+      "texte": "Les recettes, les travaux et le temps n’ont pas le même rôle.",
+      "image": "01.png"
+    },
+    {
+      "numero": 2,
+      "titre": "Recettes ≠ bénéfices.",
+      "texte": "Le chiffre d’affaires, le bénéfice et les dividendes mesurent des choses différentes.",
+      "image": "02.png"
+    },
+    {
+      "numero": 3,
+      "titre": "Un retard peut créer un avantage.",
+      "texte": "Reporter une dépense laisse les fonds disponibles plus longtemps.",
+      "image": "03.png"
+    },
+    {
+      "numero": 4,
+      "titre": "Compenser ne veut pas dire rembourser.",
+      "texte": "Des investissements supplémentaires ou une baisse tarifaire peuvent compenser certains retards.",
+      "image": "04.png"
+    },
+    {
+      "numero": 5,
+      "titre": "Un péage. Des comptes à lire.",
+      "texte": "Lire le décryptage sur lenjeumedia.fr.",
+      "image": "05.png"
+    }
+  ]
+}

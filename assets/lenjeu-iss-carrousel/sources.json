@@ -1,0 +1,44 @@
+{
+  "titre": "L’espace nous apprend quoi ?",
+  "creation": "2026-10-14",
+  "statut": "Adaptation éditoriale créée pour le portfolio ; aucune diffusion ni résultat d’audience revendiqué.",
+  "article": "https://lenjeumedia.fr/article/469-iss-crs-35-doit-emporter-quatre-experiences-sur-la-sante",
+  "article_date": "2026-10-13",
+  "source_primaire": "https://science.nasa.gov/missions/station/nasas-spacex-crs-35-mission-to-launch-health-research/",
+  "verification": "2026-10-14",
+  "perimetre": "Les quatre expériences sont décrites comme annoncées dans la présentation NASA. Le carrousel ne confirme ni lancement, ni amarrage, ni résultats médicaux. Les modèles de tissu ne sont pas des cerveaux complets ni des essais cliniques.",
+  "direction_artistique": "Bleu nuit, cyan et blanc ; illustrations éditoriales de laboratoire orbital et de recherche.",
+  "images": "Illustrations générées avec l’outil image, pas des photographies documentaires.",
+  "slides": [
+    {
+      "numero": 1,
+      "titre": "L’espace nous apprend quoi ?",
+      "texte": "CRS-35 : quatre expériences annoncées vers l’ISS.",
+      "image": "01.png"
+    },
+    {
+      "numero": 2,
+      "titre": "Observer le vivant.",
+      "texte": "Des modèles de tissu cérébral et des plantes pour comparer l’orbite et la Terre.",
+      "image": "02.png"
+    },
+    {
+      "numero": 3,
+      "titre": "Analyser sur place.",
+      "texte": "Tester un lecteur de biomarqueurs pour réduire l’attente des analyses.",
+      "image": "03.png"
+    },
+    {
+      "numero": 4,
+      "titre": "Surveiller. Puis comprendre.",
+      "texte": "Étudier comment des bactéries résistantes évoluent en microgravité.",
+      "image": "04.png"
+    },
+    {
+      "numero": 5,
+      "titre": "Un laboratoire. Des résultats à évaluer.",
+      "texte": "Lire le décryptage sur lenjeumedia.fr.",
+      "image": "05.png"
+    }
+  ]
+}
