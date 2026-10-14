@@ -102,7 +102,16 @@ try{
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
+  await page.locator('#projet-lenjeu summary').click();
+  assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Contexte & objectif','Case starts with context');
+  assert.ok(await dialog.locator('.case-content').evaluate(el=>{
+    const result=[...el.querySelectorAll(':scope > h4')].find(h=>h.textContent==='Résultats & périmètre');
+    return Boolean(result.compareDocumentPosition(el.querySelector('.editorial-carousel'))&Node.DOCUMENT_POSITION_FOLLOWING);
+  }),'Carousels follow the results section');
+  assert.equal(await dialog.evaluate(el=>el.scrollTop),0,'Case opens at the top');
+  await page.keyboard.press('Escape');
   await page.locator('#projet-lenjeu [data-case]').click();
+  assert.ok(await dialog.evaluate(el=>el.scrollTop>0),'Carousel action opens directly at the gallery');
   const carousel=dialog.locator('.editorial-carousel').first();
   assert.equal(await carousel.locator('.carousel-track>li').count(),5,'Five economy slides');
   assert.equal(await dialog.locator('.editorial-carousel').count(),5,'Five distinct editorial carousels');

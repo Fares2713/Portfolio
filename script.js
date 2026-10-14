@@ -119,6 +119,14 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
     projectDialog.showModal();
     projectDialog.scrollTop = 0;
     dialogClose.focus();
+    if (carousel) {
+      const gallery = dialogContent.querySelector('.editorial-carousel');
+      if (gallery) {
+        const bar = projectDialog.querySelector('.dialog-bar');
+        projectDialog.scrollTop = gallery.getBoundingClientRect().top - projectDialog.getBoundingClientRect().top
+          + projectDialog.scrollTop - bar.getBoundingClientRect().height - 24;
+      }
+    }
   }
   cards.forEach(card => {
     const summary = card.querySelector('summary');
