@@ -88,3 +88,13 @@ Le second carrousel « Musique & IA » comprend cinq slides au format portrait 4
 Le troisième carrousel porte sur le football féminin : cinq slides en crème, bleu nuit et terracotta, avec illustrations simples et accroches courtes. Il adapte l’article L’Enjeu https://lenjeumedia.fr/article/467-football-feminin-la-hausse-des-salaires-ne-garantit-pas-encore-une-carriere. Les salaires mensuels moyen et médian ont été vérifiés dans le communiqué FIFPRO 2026, consulté le 14 octobre 2026. Le périmètre d’enquête est conservé dans les sources et la transcription. La couverture historique de la fiche L’Enjeu reste inchangée ; les trois séries sont dans la galerie. Exports : `python3 scripts/build_lenjeu_carousel.py lenjeu-football-carrousel`.
 
 Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va l’argent ? » (ART, comptes 2024) et « L’espace nous apprend quoi ? » (présentation NASA de CRS-35). Chaque carrousel compte cinq slides avec sources, transcription, PDF et ZIP. Les éléments primaires ont été consultés ; aucun lancement ou résultat médical n’est présenté comme acquis, ni remboursement automatique des péages. Les cinq séries L’Enjeu restent accessibles avec la couverture historique. Exports : `python3 scripts/build_lenjeu_carousel.py lenjeu-autoroutes-carrousel` et `python3 scripts/build_lenjeu_carousel.py lenjeu-iss-carrousel`.
+
+## Direction visuelle et animations
+
+L’ouverture éditoriale « Donner du sens. Créer du lien. » accompagne le rôle professionnel existant. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+
+Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
+
+Le réglage « Réduire les animations » en bas de page est conservé localement quand le stockage est disponible. La préférence système `prefers-reduced-motion` reste prioritaire, y compris lorsqu’elle change pendant la visite. Sans JavaScript, le contenu et les liens restent disponibles. L’impression conserve sa mise en page dédiée.
+
+Références : [performances des animations, web.dev](https://web.dev/articles/animations-and-performance) et [réduction des mouvements, W3C](https://www.w3.org/WAI/WCAG22/Techniques/css/C39.html).

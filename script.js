@@ -179,3 +179,82 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
     if (dialogTrigger) dialogTrigger.focus();
   });
 }
+
+// Motion enhances native scrolling; content remains usable without it.
+(() => {
+  if (!window.matchMedia || !window.requestAnimationFrame) return;
+  const root = document.documentElement;
+  const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const motionButton = document.querySelector('.motion-toggle');
+  const header = document.querySelector('.site-header');
+  const portrait = document.querySelector('.hero-portrait');
+  const hero = document.querySelector('.hero');
+  let savedReduction = false;
+  try { savedReduction = localStorage.getItem('portfolio-reduce-motion') === 'true'; } catch {}
+  let reduced = systemMotion.matches || savedReduction;
+  let frame = 0;
+  let revealObserver;
+  function updateMotion() {
+    reduced = systemMotion.matches || savedReduction;
+    root.classList.toggle('motion-reduced', reduced);
+    motionButton.setAttribute('aria-pressed', String(reduced));
+    motionButton.textContent = reduced ? 'Animations réduites' : 'Réduire les animations';
+    motionButton.disabled = systemMotion.matches;
+    if (reduced) {
+      document.querySelectorAll('.reveal-ready').forEach(item => item.classList.add('is-revealed'));
+      portrait.style.removeProperty('--portrait-shift');
+    }
+    requestUpdate();
+  }
+  function updateScroll() {
+    frame = 0;
+    const y = window.scrollY;
+    const max = root.scrollHeight - window.innerHeight;
+    root.style.setProperty('--read-progress', max > 0 ? Math.min(1, y / max) : 0);
+    header.classList.toggle('is-scrolled', y > 24);
+    if (!reduced && pointer.matches && hero.getBoundingClientRect().bottom > 0) {
+      portrait.style.setProperty('--portrait-shift', Math.min(y * .065, 26) + 'px');
+    }
+  }
+  function requestUpdate() {
+    if (!frame) frame = window.requestAnimationFrame(updateScroll);
+  }
+  motionButton.hidden = false;
+  motionButton.addEventListener('click', () => {
+    savedReduction = !reduced;
+    try { localStorage.setItem('portfolio-reduce-motion', String(savedReduction)); } catch {}
+    updateMotion();
+  });
+  systemMotion.addEventListener('change', updateMotion);
+  window.addEventListener('scroll', requestUpdate, {passive: true});
+  window.addEventListener('resize', requestUpdate, {passive: true});
+  if ('ResizeObserver' in window) new ResizeObserver(requestUpdate).observe(document.body);
+  if ('IntersectionObserver' in window && !reduced) {
+    revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: .06, rootMargin: '0px 0px 36px 0px'});
+    document.querySelectorAll('.section-heading, .project, .experience-row, .expertise-grid article, .about-intro, .profile-panel, .contact-inner>div').forEach(item => {
+      item.classList.add('reveal-ready');
+      revealObserver.observe(item);
+      item.addEventListener('focusin', () => item.classList.add('is-revealed'));
+    });
+  }
+  filters.addEventListener('click', event => {
+    if (!event.target.closest('[data-filter]')) return;
+    cards.forEach(card => {
+      card.classList.remove('filter-enter');
+      if (!card.hidden) {
+        card.classList.add('is-revealed');
+        if (!reduced) card.classList.add('filter-enter');
+      }
+    });
+    requestUpdate();
+  });
+  updateMotion();
+})();

@@ -183,4 +183,21 @@ try{
  await reduced.goto(origin);
  assert.equal(await reduced.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior),'auto');
  console.log('PASS retained deep links and reduced-motion preference');
+ const motion=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
+ await motion.goto(origin);
+ await motion.locator('.hero-copy').screenshot({path:'screenshots/premium-intro.png',animations:'disabled'});
+ assert.ok(await motion.locator('.project.reveal-ready').count()>0,'Scroll reveal is progressively enabled');
+ await motion.locator('.motion-toggle').click();
+ assert.equal(await motion.locator('.motion-toggle').getAttribute('aria-pressed'),'true');
+ assert.equal(await motion.locator('html').evaluate(el=>el.classList.contains('motion-reduced')),true);
+ assert.equal(await motion.locator('.reveal-ready:not(.is-revealed)').count(),0,'Disabling motion reveals all content');
+ await motion.reload();
+ assert.equal(await motion.locator('.motion-toggle').getAttribute('aria-pressed'),'true','Motion preference persists');
+ await motion.locator('.motion-toggle').click();
+ assert.equal(await motion.locator('.motion-toggle').getAttribute('aria-pressed'),'false');
+ await motion.emulateMedia({reducedMotion:'reduce'});
+ await motion.waitForFunction(()=>document.querySelector('.motion-toggle').getAttribute('aria-pressed')==='true');
+ assert.equal(await motion.locator('.motion-toggle').getAttribute('aria-pressed'),'true','Live system preference is respected');
+ assert.equal(await motion.locator('.motion-toggle').isDisabled(),true);
+ console.log('PASS motion controls, persistence and live system preference');
 }finally{await browser.close();await new Promise(r=>server.close(r));}
