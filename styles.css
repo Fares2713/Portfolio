@@ -363,3 +363,6 @@ html:not(.motion-reduced) .project.filter-enter{animation:hero-enter .5s var(--e
 }
 @media print{.portrait-orbit,.hero-scroll,.experience-settings,.reading-progress{display:none!important}.portrait-stage{display:none}}
 @media screen and (min-width:761px) and (max-width:1100px){.portrait-orbit{inset:16px 0 48px 0;transform:rotate(5deg)}}
+
+/* Preserve the original research document cover within the project image ratio. */
+#projet-memoire .project-visual img{object-fit:contain;padding:20px;background:#e8ecef}

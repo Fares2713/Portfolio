@@ -2,7 +2,7 @@
 
 Portfolio statique en français, sans framework ni compilation. Vercel publie la racine du dépôt lors d’un déploiement autorisé.
 
-Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Onze réalisations présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. Les filtres sont organisés par compétence : communication, événementiel, audiovisuel et digital. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
+Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Douze réalisations présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. Les filtres sont organisés par compétence : communication, événementiel, audiovisuel et digital. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
 
 ## Prévisualisation
 
@@ -98,3 +98,7 @@ Les animations utilisent principalement `transform` et `opacity` : entrée des �
 Le réglage « Réduire les animations » en bas de page est conservé localement quand le stockage est disponible. La préférence système `prefers-reduced-motion` reste prioritaire, y compris lorsqu’elle change pendant la visite. Sans JavaScript, le contenu et les liens restent disponibles. L’impression conserve sa mise en page dédiée.
 
 Références : [performances des animations, web.dev](https://web.dev/articles/animations-and-performance) et [réduction des mouvements, W3C](https://www.w3.org/WAI/WCAG22/Techniques/css/C39.html).
+
+## Mémoire de Master 2
+
+Mémoire de recherche 2024–2025 de Farès Benamar sur le rôle de l’intelligence émotionnelle dans les dynamiques collectives des fonctions supports. Le PDF original fourni est conservé dans `assets/memoire-m2-fares-benamar.pdf` (111 pages) ; la couverture WebP est issue de sa première page. La fiche présente la méthodologie qualitative (11 entretiens semi-directifs, dont huit professionnels du siège d’Inria et trois participants extérieurs), ses limites et l’accès au document complet. La note de 18/20, la durée de l’oral de 30 minutes et les trois personnes présentes ont été indiquées par Farès. La fonction de Gilles Rouet reprend la page de garde : directeur de l’ISM-IAE de l’UVSQ et directeur du mémoire.
