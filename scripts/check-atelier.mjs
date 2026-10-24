@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+import {emptyWorkspace,structure,blockers,reviseItem,reviseSource,reviseBrief,requestReview,approve,toCSV,toDocument,importWorkspace,readWorkspace,calendar} from '../atelier-editorial/modele.mjs';
+const demo=()=>readWorkspace(readFileSync('atelier-editorial/exemple.json','utf8'));
+let w=demo(),item=w.items[0];
+assert.throws(()=>approve(w,item.id,'Relecteur','Contrôle'),/Vérifier la source/);
+requestReview(w,item.id);assert.throws(()=>approve(w,item.id,'Relecteur','Contrôle'),/responsable/);
+reviseSource(w,'source-w3c',{checked:true,note:'Section et portée relues pour cet exemple.'});
+reviseItem(w,item.id,{owner:'Responsable éditorial'});requestReview(w,item.id);approve(w,item.id,'Relecteur de test','Affirmations et périmètre contrôlés.');
+assert.equal(item.status,'valide');assert.equal(item.approval.version,item.version);assert.equal(item.approval.sourceVersions[0].version,w.sources[0].version);
+const approvedVersion=item.version;reviseItem(w,item.id,{content:'Une version modifiée.'});assert.equal(item.status,'brouillon');assert.equal(item.approval,null);assert.equal(item.version,approvedVersion+1);assert.equal(item.history.at(-1).approval.reviewer,'Relecteur de test');
+requestReview(w,item.id);approve(w,item.id,'Relecteur de test','Vérification de la modification.');const before=item.version;
+reviseSource(w,'source-w3c',{claim:'Périmètre de la source modifié.'});assert.equal(w.sources[0].checked,false);assert.equal(w.sources[0].note,'');assert.equal(item.status,'brouillon');assert.equal(item.version,before+1);assert.ok(item.history.at(-1).approval);
+reviseSource(w,'source-w3c',{checked:true,note:'Nouvelle revue explicite.'});requestReview(w,item.id);approve(w,item.id,'Relecteur de test','Nouvelle décision.');reviseBrief(w,{...w.brief,goal:'Un objectif modifié.'});assert.equal(item.approval,null);assert.equal(item.status,'brouillon');
+assert.throws(()=>approve(w,item.id,'',''),/relecture/);
+const restored=importWorkspace(JSON.stringify(w));assert.ok(restored.sources.every(s=>!s.checked));assert.ok(restored.items.every(i=>i.status==='brouillon'&&!i.approval));
+w=emptyWorkspace();assert.throws(()=>structure(w),/Complétez/);w.brief={subject:'Une campagne',goal:'Informer',message:'Fait à vérifier',audiences:['Usagers','Agents'],start:'2026-11-02'};structure(w);assert.equal(w.items.length,2);assert.equal(w.items[0].content,'Fait à vérifier');assert.ok(blockers(w,w.items[0]).length);assert.throws(()=>structure(w),/plan existe/);
+w.items[0].title='=HYPERLINK("https://example.com")';assert.match(toCSV(w),/"'=HYPERLINK/);assert.match(toDocument(w),/validations sont déclaratives/);
+assert.throws(()=>readWorkspace('{"schema":2}'),/non reconnu/);const bad=demo();bad.sources[0].url='javascript:alert(1)';assert.throws(()=>readWorkspace(JSON.stringify(bad)),/Source non valide/);
+const malformed=demo();malformed.items[0].history=[null];assert.throws(()=>readWorkspace(JSON.stringify(malformed)),/Historique/);const invalidEvent=demo();invalidEvent.events[0].at='pas une date';assert.throws(()=>readWorkspace(JSON.stringify(invalidEvent)),/Journal/);
+const order=calendar(demo());assert.ok(order[0].date<=order[1].date);
+const atelierHTML=readFileSync('atelier-editorial/index.html','utf8');for(const m of atelierHTML.matchAll(/(?:href|src)="([^"#]+)"/g)){if(/^(https?:|mailto:)/.test(m[1]))continue;assert.ok(existsSync('atelier-editorial/'+m[1]),'Atelier resource: '+m[1]);}
+console.log('PASS atelier: gated approval, version snapshots, dependency invalidation, source review, safe import/CSV, scheduling and deterministic brief structure.');

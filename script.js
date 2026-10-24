@@ -13,6 +13,9 @@ toggle.addEventListener('click', () => {
   toggle.setAttribute('aria-expanded', String(open));
   nav.classList.toggle('is-open', open);
 });
+nav.addEventListener('focusout', event => {
+  if (event.relatedTarget && !event.relatedTarget.closest('.site-header')) closeMenu();
+});
 nav.addEventListener('click', event => {
   if (event.target.closest('a')) closeMenu();
 });
@@ -39,6 +42,24 @@ function applyFilter(filter) {
   });
   filterStatus.textContent = count + (count > 1 ? ' réalisations affichées.' : ' réalisation affichée.');
 }
+// Density is a reading preference; no project or filter result is removed.
+const projectViews = document.querySelector('.project-views');
+const projectGrid = document.querySelector('.project-grid');
+if (projectViews && projectGrid) {
+  let savedView = 'compact';
+  try { if (localStorage.getItem('portfolio-project-view') === 'visual') savedView = 'visual'; } catch {}
+  function setProjectView(view) {
+    projectGrid.classList.toggle('is-compact', view === 'compact');
+    projectViews.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.projectView === view)));
+    try { localStorage.setItem('portfolio-project-view', view); } catch {}
+  }
+  projectViews.hidden = false;
+  setProjectView(savedView);
+  projectViews.addEventListener('click', event => {
+    const button = event.target.closest('[data-project-view]');
+    if (button) setProjectView(button.dataset.projectView);
+  });
+}
 filters.addEventListener('click', event => {
   const button = event.target.closest('button[data-filter]');
   if (button) applyFilter(button.dataset.filter);
@@ -56,6 +77,15 @@ function revealAnchor(hash) {
     if (parent.tagName === 'DETAILS') parent.open = true;
   }
 }
+function focusHashTarget(hash) {
+  let target;
+  try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return null; }
+  if (!target) return null;
+  const focusTarget = target.matches('h1,h2,h3,button,a,input,select,textarea') ? target : target.querySelector('h1,h2,h3') || target;
+  if (!focusTarget.matches('button,a,input,select,textarea')) focusTarget.setAttribute('tabindex','-1');
+  focusTarget.focus({preventScroll:true});
+  return target;
+}
 document.addEventListener('click', event => {
   const step = event.target.closest('[data-carousel-step]');
   if (step) {
@@ -65,28 +95,42 @@ document.addEventListener('click', event => {
   }
   if (!event.target.closest('.site-header')) closeMenu();
   const link = event.target.closest('a[href^="#"]');
-  if (link && !event.defaultPrevented) revealAnchor(link.getAttribute('href'));
+  if (link && !event.defaultPrevented && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+    const hash = link.getAttribute('href');
+    revealAnchor(hash);
+    const target = focusHashTarget(hash);
+    if (target) {
+      event.preventDefault();
+      target.scrollIntoView({block:'start'});
+      if (window.location.hash !== hash) window.history.pushState(null,'',hash);
+    }
+  }
 });
 if (window.addEventListener) {
   window.addEventListener('hashchange', () => revealAnchor(window.location.hash));
+  window.addEventListener('popstate', () => { revealAnchor(window.location.hash); focusHashTarget(window.location.hash); });
+  window.addEventListener('load', () => { if (window.location.hash) focusHashTarget(window.location.hash); });
   revealAnchor(window.location.hash);
 }
-if ('IntersectionObserver' in window) {
-  const sections = document.querySelectorAll('main > section[id]');
+// Track the section at the reading line, including sections taller than the viewport.
+if (window.requestAnimationFrame && window.addEventListener) {
+  const header = document.querySelector('.site-header');
   const links = [...nav.querySelectorAll('a[href^="#"]')];
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      links.forEach(link => {
-        if (link.getAttribute('href') === '#' + entry.target.id) {
-          link.setAttribute('aria-current', 'location');
-        } else {
-          link.removeAttribute('aria-current');
-        }
-      });
-    }
-  }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-  sections.forEach(section => observer.observe(section));
+  const sections = links.map(link => document.getElementById(link.getAttribute('href').slice(1)));
+  let pending = false;
+  function updateLocation() {
+    pending = false;
+    const height = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-height', (height + 16) + 'px');
+    let current = -1;
+    sections.forEach((section, i) => { if (section && section.getBoundingClientRect().top <= height + 45) current = i; });
+    links.forEach((link,i) => { if (i === current) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current'); });
+  }
+  function scheduleLocation() { if (!pending) { pending = true; window.requestAnimationFrame(updateLocation); } }
+  window.addEventListener('scroll',scheduleLocation,{passive:true});
+  window.addEventListener('resize',scheduleLocation,{passive:true});
+  if ('ResizeObserver' in window) { new ResizeObserver(scheduleLocation).observe(header); new ResizeObserver(scheduleLocation).observe(document.querySelector('main')); }
+  updateLocation();
 }
 
 // Native disclosures and image links remain the fallback without JavaScript.
@@ -97,8 +141,27 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   const dialogKind = document.querySelector('#project-dialog-kind');
   const dialogClose = projectDialog.querySelector('.dialog-close');
   let dialogTrigger = null;
+  let currentCard = null;
+  const caseNavigation = projectDialog.querySelector('.dialog-navigation');
+  function updateCaseNavigation(media) {
+    if (!caseNavigation) return;
+    caseNavigation.hidden = Boolean(media);
+    const visible = cards.filter(card => !card.hidden);
+    const index = visible.indexOf(currentCard);
+    caseNavigation.querySelector('[data-case-direction="-1"]').disabled = index <= 0;
+    caseNavigation.querySelector('[data-case-direction="1"]').disabled = index >= visible.length - 1;
+    document.querySelector('#dialog-position').textContent = (index + 1) + ' sur ' + visible.length;
+  }
+  if (caseNavigation) caseNavigation.addEventListener('click', event => {
+    const button = event.target.closest('[data-case-direction]');
+    if (!button || button.disabled) return;
+    const visible = cards.filter(card => !card.hidden);
+    const next = visible[visible.indexOf(currentCard) + Number(button.dataset.caseDirection)];
+    if (next) { openProjectDialog(next,next.querySelector('summary'),false); dialogTitle.setAttribute('tabindex','-1'); dialogTitle.focus({preventScroll:true}); }
+  });
   function openProjectDialog(card, trigger, media) {
     dialogTrigger = trigger;
+    currentCard = card;
     const carousel = trigger.hasAttribute('data-case');
     dialogTitle.textContent = carousel ? (trigger.dataset.caseTitle || 'L’Enjeu · Carrousels éditoriaux') : card.querySelector('h3').textContent;
     dialogKind.textContent = carousel ? (trigger.dataset.caseKind || 'Carrousel éditorial') : media ? 'Aperçu visuel' : 'Étude de cas';
@@ -116,7 +179,9 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       content.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
       dialogContent.append(content);
     }
-    projectDialog.showModal();
+    if (!projectDialog.open) projectDialog.showModal();
+    document.documentElement.classList.add('dialog-open');
+    updateCaseNavigation(media);
     projectDialog.scrollTop = 0;
     dialogClose.focus();
     if (carousel) {
@@ -175,6 +240,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) projectDialog.close();
   });
   projectDialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('dialog-open');
     dialogContent.replaceChildren();
     if (dialogTrigger) dialogTrigger.focus();
   });

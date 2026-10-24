@@ -18,3 +18,5 @@ jobs:
           node scripts/check.mjs
           node --check dossier-decisions/interface.js
           node scripts/check-decisions.mjs
+          node scripts/check-atelier.mjs
+          node --check atelier-editorial/atelier.js

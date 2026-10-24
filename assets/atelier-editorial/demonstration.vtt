@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:01.947 --> 00:00:05.019
+01 / Charger un exemple documenté : le brief, les publics et trois supports restent modifiables.
+
+2
+00:00:05.019 --> 00:00:09.334
+02 / Relire la source : la note précise le périmètre contrôlé. La validation reste humaine.
+
+3
+00:00:09.334 --> 00:00:13.005
+03 / Affecter un responsable. Enregistrer crée une nouvelle version du support.
+
+4
+00:00:13.005 --> 00:00:17.451
+04 / Demander une relecture, puis consigner une décision explicite sur cette version.
+
+5
+00:00:17.451 --> 00:00:21.634
+05 / Modifier le texte retire la validation. La version précédente et sa décision restent consultables.
+
+6
+00:00:21.634 --> 00:00:25.770
+06 / Consulter les dates, puis exporter le tableau. Le support modifié reste à relire.
+
+7
+00:00:25.770 --> 00:00:29.245
+Conception : Farès Benamar. Prototype local, validations déclaratives. Aucun gain de temps mesuré.

@@ -38,8 +38,8 @@ try{
   assert.equal(await page.locator('#projet-fnk .project-image-link').getAttribute('href'),'https://fnklocation.com');
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.webp');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
-  assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760);
-  if(width<=760){
+  assert.equal(await page.locator('.menu-toggle').isVisible(),width<=960);
+  if(width<=960){
    await page.locator('.menu-toggle').focus();
    await page.keyboard.press('Enter');
    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'true');

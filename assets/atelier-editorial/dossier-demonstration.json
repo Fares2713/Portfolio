@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "title": "Réduire les animations : informer et accompagner",
+  "brief": {
+    "subject": "Respecter la préférence de réduction des animations",
+    "goal": "Préparer une information compréhensible pour les visiteurs et un passage de relais entre communication et équipe web.",
+    "message": "Certaines personnes préfèrent limiter les animations. Une interface peut tenir compte de la préférence de réduction des mouvements du système. Ce réglage ne constitue pas à lui seul un audit complet d’accessibilité.",
+    "audiences": [
+      "Visiteurs du site",
+      "Équipe communication",
+      "Équipe web"
+    ],
+    "start": "2026-11-02"
+  },
+  "sources": [
+    {
+      "id": "source-w3c",
+      "title": "W3C · Media Queries Level 5, prefers-reduced-motion",
+      "url": "https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion",
+      "claim": "La caractéristique permet de détecter une demande de réduction des mouvements non essentiels. La valeur reduce exprime une préférence pour retirer ou remplacer certaines animations.",
+      "note": "Relecture de démonstration : la préférence concerne les mouvements non essentiels ; elle ne suffit pas à établir une conformité complète.",
+      "checked": true,
+      "version": 2,
+      "history": [
+        {
+          "id": "source-w3c",
+          "title": "W3C · Media Queries Level 5, prefers-reduced-motion",
+          "url": "https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion",
+          "claim": "La caractéristique permet de détecter une demande de réduction des mouvements non essentiels. La valeur reduce exprime une préférence pour retirer ou remplacer certaines animations.",
+          "note": "Lecture de préparation : section prefers-reduced-motion du brouillon de spécification du CSS Working Group, consultée le 24 octobre 2026. Confirmer le périmètre avant reprise.",
+          "checked": false,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "source-mdn",
+      "title": "MDN · Window.matchMedia()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia",
+      "claim": "matchMedia() fournit un objet MediaQueryList pour tester une requête média ; la propriété matches renseigne l’état et l’événement change permet de suivre ses évolutions.",
+      "note": "Documentation consultée le 24 octobre 2026. Vérifier les navigateurs et le code réellement utilisés avant toute promesse de prise en charge.",
+      "checked": false,
+      "version": 1,
+      "history": []
+    }
+  ],
+  "items": [
+    {
+      "id": "support-1",
+      "title": "Informer les visiteurs",
+      "public": "Visiteurs du site",
+      "format": "Publication courte",
+      "angle": "Expliquer le bénéfice sans promettre une accessibilité totale.",
+      "content": "Vous préférez limiter les animations ? La préférence de réduction des mouvements de votre appareil peut être prise en compte par un site. Notre message doit préciser les fonctions effectivement adaptées, après vérification par l’équipe web. Ce réglage ne remplace pas une démarche complète d’accessibilité.\n\nLa communication doit aussi indiquer comment signaler une animation gênante.",
+      "date": "2026-11-02",
+      "owner": "Responsable éditorial — démonstration",
+      "sourceIds": [
+        "source-w3c"
+      ],
+      "version": 3,
+      "status": "brouillon",
+      "approval": null,
+      "history": [
+        {
+          "id": "support-1",
+          "title": "Informer les visiteurs",
+          "public": "Visiteurs du site",
+          "format": "Publication courte",
+          "angle": "Expliquer le bénéfice sans promettre une accessibilité totale.",
+          "content": "Vous préférez limiter les animations ? La préférence de réduction des mouvements de votre appareil peut être prise en compte par un site. Notre message doit préciser les fonctions effectivement adaptées, après vérification par l’équipe web. Ce réglage ne remplace pas une démarche complète d’accessibilité.",
+          "date": "2026-11-02",
+          "owner": "",
+          "sourceIds": [
+            "source-w3c"
+          ],
+          "version": 1,
+          "status": "brouillon",
+          "approval": null
+        },
+        {
+          "id": "support-1",
+          "title": "Informer les visiteurs",
+          "public": "Visiteurs du site",
+          "format": "Publication courte",
+          "angle": "Expliquer le bénéfice sans promettre une accessibilité totale.",
+          "content": "Vous préférez limiter les animations ? La préférence de réduction des mouvements de votre appareil peut être prise en compte par un site. Notre message doit préciser les fonctions effectivement adaptées, après vérification par l’équipe web. Ce réglage ne remplace pas une démarche complète d’accessibilité.",
+          "date": "2026-11-02",
+          "owner": "Responsable éditorial — démonstration",
+          "sourceIds": [
+            "source-w3c"
+          ],
+          "version": 2,
+          "status": "valide",
+          "approval": {
+            "reviewer": "Relecture de démonstration",
+            "note": "Source, périmètre et formulation relus pour cet exemple. Ce n’est pas une validation institutionnelle.",
+            "at": "2026-10-24T19:25:18.457Z",
+            "version": 2,
+            "sourceVersions": [
+              {
+                "id": "source-w3c",
+                "version": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "support-2",
+      "title": "Aligner la communication",
+      "public": "Équipe communication",
+      "format": "E-mail",
+      "angle": "Employer une formulation vérifiable et organiser le retour des usagers.",
+      "content": "Objet : réduction des animations — cadrer notre message\n\nAvant d’annoncer cette adaptation, faisons confirmer par l’équipe web les animations réellement concernées. Expliquons le bénéfice et la façon de signaler une difficulté, sans annoncer que le site est entièrement accessible. La version du message et ses limites doivent rester communes à l’accueil et aux supports publics.",
+      "date": "2026-11-03",
+      "owner": "",
+      "sourceIds": [
+        "source-w3c"
+      ],
+      "version": 1,
+      "status": "brouillon",
+      "approval": null,
+      "history": []
+    },
+    {
+      "id": "support-3",
+      "title": "Préparer la vérification technique",
+      "public": "Équipe web",
+      "format": "Fiche pratique",
+      "angle": "Transformer la recommandation en points de contrôle concrets.",
+      "content": "Vérifier la préférence prefers-reduced-motion dans les styles et les interactions. Contrôler la valeur initiale avec matchMedia(), puis tester la réaction à un changement de préférence. Comparer les animations attendues et observées, consigner les écarts et transmettre à la communication le périmètre réellement testé. Ne pas assimiler ces essais à un audit complet d’accessibilité.",
+      "date": "2026-11-04",
+      "owner": "",
+      "sourceIds": [
+        "source-w3c",
+        "source-mdn"
+      ],
+      "version": 1,
+      "status": "brouillon",
+      "approval": null,
+      "history": []
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-24T12:00:00.000Z",
+      "action": "Exemple préparé",
+      "details": "Sujet public documenté. Campagne, dates et affectations de démonstration ; aucune diffusion réelle."
+    },
+    {
+      "at": "2026-10-24T19:25:11.188Z",
+      "action": "Source mise à jour",
+      "details": "W3C · Media Queries Level 5, prefers-reduced-motion · v2"
+    },
+    {
+      "at": "2026-10-24T19:25:14.504Z",
+      "action": "Nouvelle version",
+      "details": "Informer les visiteurs · v2 · validation à refaire"
+    },
+    {
+      "at": "2026-10-24T19:25:16.369Z",
+      "action": "Relecture demandée",
+      "details": "Informer les visiteurs · v2"
+    },
+    {
+      "at": "2026-10-24T19:25:18.457Z",
+      "action": "Validation déclarée",
+      "details": "Informer les visiteurs · v2 · Relecture de démonstration"
+    },
+    {
+      "at": "2026-10-24T19:25:22.377Z",
+      "action": "Nouvelle version",
+      "details": "Informer les visiteurs · v3 · validation à refaire"
+    }
+  ]
+}

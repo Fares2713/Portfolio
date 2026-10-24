@@ -36,7 +36,7 @@ try{
  await page.goto(origin+'/dossier-decisions/');await page.locator('#choices').waitFor({state:'visible'});await page.screenshot({path:output+'/hero-'+width+'.png'});
  await page.locator('.content-preview').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/support-'+width+'.png'});
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
- await page.goto(origin+'/');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Portfolio integration has no overflow');await page.locator('#decisions').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/portfolio-entry-'+width+'.png'});assert.equal(await page.locator('#decisions a').getAttribute('href'),'dossier-decisions/');
+ await page.goto(origin+'/');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Portfolio integration has no overflow');await page.locator('#decisions').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/portfolio-entry-'+width+'.png'});assert.equal(await page.locator('#decisions a[href="dossier-decisions/"]').getAttribute('href'),'dossier-decisions/');
  assert.deepEqual(errors,[]);console.log('PASS '+width+'px: form, decisions, export, deep links, history, keyboard, layout and axe');await context.close();
  }
  const page=await browser.newPage({javaScriptEnabled:false});await page.goto(origin+'/dossier-decisions/');await page.locator('.fallback summary').click();assert.equal(await page.locator('.fallback article:visible').count(),3);

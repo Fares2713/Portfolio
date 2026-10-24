@@ -118,3 +118,23 @@ python3 scripts/build-decisions.py
 Prérequis de génération uniquement : Node.js, reportlab, python-docx et polices DejaVu (`/usr/share/fonts/truetype/dejavu`). Aucun de ces outils Python n’est requis pour consulter le site statique. Les textes alternatifs, l’en-tête des PDF et les documents rappellent le statut fictif.
 
 Vérification dédiée : `node scripts/check-decisions.mjs`. Pour le navigateur, copier `scripts/browser-decisions.mjs` dans `/workspace/portfolio-tools/`, puis l’exécuter depuis la racine du dépôt avec Node et `PORTFOLIO_CHROMIUM_PATH=/usr/bin/chromium`. Pour conserver les captures hors du dépôt, définir `PORTFOLIO_DECISIONS_OUTPUT=/workspace/portfolio-tools/decisions-validation`. En CI, elles sont générées par défaut dans `screenshots/decisions/`.
+
+## Navigation et lecture du portfolio
+
+La page conserve les douze réalisations et propose une vue synthèse par défaut, une vue avec visuels et un index d’accès direct. La préférence de présentation est conservée localement ; les filtres continuent à porter sur toutes les réalisations. Les liens d’ancrage placent le focus sur le titre cible, y compris après fermeture du menu mobile (jusqu’à 960 px). Le suivi de rubrique utilise la position des sections, même lorsqu’elles sont très longues. Les études de cas proposent précédent/suivant dans le filtre actif ; la fermeture revient au projet lu. Le défilement de fond est bloqué pendant l’ouverture d’une fenêtre. Sans JavaScript, tous les contenus et l’index natif restent disponibles ; l’en-tête mobile ne masque pas les cibles.
+
+La rubrique « Ma démarche » regroupe le dossier de décisions et l’atelier éditorial. Les accès aux choix et aux documents du dossier restent visibles sur mobile.
+
+## Atelier éditorial utilisable
+
+`atelier-editorial/` est une application statique locale : brief, sources et notes de revue, supports par public, calendrier, historique des versions et décisions de validation déclaratives. Le plan déterministe reprend le message fourni ; il ne génère pas de nouveaux faits. Toute validation demande une relecture préalable, une source revue, un contenu, un angle, un public, une date, un responsable et une décision renseignée. Modifier le contenu, le brief ou une source invalide les validations concernées ; les décisions antérieures restent dans l’historique.
+
+Le stockage est local au navigateur, avec avertissement si la sauvegarde échoue ou si un autre onglet modifie le dossier. Les formulaires s’enregistrent explicitement. Les exports JSON conservent versions et journal ; CSV fournit le tableau de production ; Markdown constitue le document éditorial. Le CSV neutralise les cellules qui pourraient être interprétées comme des formules. Une réimportation exige une nouvelle revue. Limites de cette démonstration : 100 supports, 40 sources et fichiers JSON de 3 Mo ; pas d’authentification, de collaboration simultanée, de publication ou de vérification distante automatique. Aucun gain de temps annoncé ou mesuré.
+
+L’exemple sur la réduction des animations utilise deux références publiques consultées le 24 octobre 2026 : [CSS Working Group, Media Queries Level 5, brouillon](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion) et [MDN, Window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia). Les sources originales ont été consultées via leurs dépôts publics W3C et MDN. Les dates de campagne, affectations et décisions de l’exemple sont fictives. Les sources restent à revoir par l’utilisateur.
+
+`assets/atelier-editorial/` conserve la vidéo réelle de l’outil (WebM, sans audio), ses sous-titres VTT, sa capture d’aperçu et les exports CSV/JSON/Markdown de l’état montré en fin de vidéo. La transcription est disponible dans la page. La vidéo montre la revue d’une source, une affectation, une validation puis sa perte après modification, et l’export du calendrier.
+
+Contrôles : `node scripts/check-atelier.mjs` et `scripts/browser-navigation.mjs` (Playwright et axe). Le contrôle navigateur couvre aussi les ancres, le focus, le menu mobile, les modes de lecture, les filtres et les fenêtres du portfolio.
+
+Pour recréer la vidéo depuis la racine du dépôt, exécuter `scripts/record-atelier.mjs` avec Playwright et son FFmpeg installés, ou le FFmpeg système fourni au cache de travail. Définir `PORTFOLIO_CHROMIUM_PATH` si l’on utilise le Chromium système. Le script nécessite aussi la commande `ffmpeg` pour l’aperçu WebP. Dans l’environnement cloud, les dépendances restent hors dépôt dans `/workspace/portfolio-tools` ; copier le script dans ce dossier et l’exécuter depuis la racine du dépôt. Ne pas désactiver la vérification TLS lors de l’installation des outils.
