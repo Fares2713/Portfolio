@@ -18,7 +18,7 @@ Pour produire un fichier HTML autonome à ouvrir dans un navigateur, avec les im
 node scripts/preview.mjs
 ```
 
-Le fichier est écrit dans `../portfolio-apercu.html`, hors du dépôt. Les liens vers les sites publics restent des liens externes. La génération de cet aperçu ne publie rien.
+Le fichier est écrit dans `../portfolio-apercu.html`, hors du dépôt. Les liens vers les sites publics restent des liens externes. La génération de cet aperçu ne publie rien. Le dossier de décisions est une page distincte : pour tester son interactivité, servir le dépôt par HTTP avec la commande ci-dessus.
 
 ## Validation
 
@@ -102,3 +102,19 @@ Références : [performances des animations, web.dev](https://web.dev/articles/a
 ## Mémoire de Master 2
 
 Mémoire de recherche 2024–2025 de Farès Benamar sur le rôle de l’intelligence émotionnelle dans les dynamiques collectives des fonctions supports. Le PDF original fourni est conservé dans `assets/memoire-m2-fares-benamar.pdf` (111 pages) ; la couverture WebP est issue de sa première page. La fiche présente la méthodologie qualitative (11 entretiens semi-directifs, dont huit professionnels du siège d’Inria et trois participants extérieurs), ses limites et l’accès au document complet. La note de 18/20, la durée de l’oral de 30 minutes et les trois personnes présentes ont été indiquées par Farès. La fonction de Gilles Rouet reprend la page de garde : directeur de l’ISM-IAE de l’UVSQ et directeur du mémoire.
+
+## Dossier de décisions interactif
+
+`dossier-decisions/` propose un exercice de conception personnel, distinct des missions réalisées : annoncer un service, expliquer une controverse, rectifier une information. L’institution et les pièces sont fictives ; aucun mandat ni résultat mesuré n’est revendiqué. Le visiteur choisit un public, un canal et une contrainte. Les 81 parcours reposent sur des règles éditoriales locales ; aucune API ni génération distante n’est utilisée. Un canal public choisi pour des agents est réorienté vers un briefing interne, avec justification. Une validation manquante change le message et peut différer l’annonce.
+
+`contenus.json` contient les faits, cas et critères ; `moteur.mjs` est partagé par l’interface, les exports et les vérifications. Les paramètres d’URL conservent les quatre choix. Export du parcours en Markdown et impression en PDF depuis le navigateur ; pas de collecte ni d’analyse d’audience. Sans JavaScript, les résumés et les documents restent consultables. Les PDF fixes décrivent le parcours usagers / e-mail / deux heures pour agir et des variantes explicites.
+
+Les documents générés sont dans `assets/dossier-decisions/` : dossier intégral, trois fiches, méthode éditoriale, DOCX modifiable, CSV d’évaluation aux observations vierges, textes Markdown et ZIP. Pour les régénérer depuis la même base :
+
+```sh
+python3 scripts/build-decisions.py
+```
+
+Prérequis de génération uniquement : Node.js, reportlab, python-docx et polices DejaVu (`/usr/share/fonts/truetype/dejavu`). Aucun de ces outils Python n’est requis pour consulter le site statique. Les textes alternatifs, l’en-tête des PDF et les documents rappellent le statut fictif.
+
+Vérification dédiée : `node scripts/check-decisions.mjs`. Pour le navigateur, copier `scripts/browser-decisions.mjs` dans `/workspace/portfolio-tools/`, puis l’exécuter depuis la racine du dépôt avec Node et `PORTFOLIO_CHROMIUM_PATH=/usr/bin/chromium`. Pour conserver les captures hors du dépôt, définir `PORTFOLIO_DECISIONS_OUTPUT=/workspace/portfolio-tools/decisions-validation`. En CI, elles sont générées par défaut dans `screenshots/decisions/`.

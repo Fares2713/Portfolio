@@ -16,3 +16,5 @@ jobs:
         run: |
           node --check script.js
           node scripts/check.mjs
+          node --check dossier-decisions/interface.js
+          node scripts/check-decisions.mjs

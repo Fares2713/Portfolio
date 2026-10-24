@@ -366,3 +366,7 @@ html:not(.motion-reduced) .project.filter-enter{animation:hero-enter .5s var(--e
 
 /* Preserve the original research document cover within the project image ratio. */
 #projet-memoire .project-visual img{object-fit:contain;padding:20px;background:#e8ecef}
+
+/* Independent fictional decision exercise, separate from completed projects. */
+.decision-entry{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;padding:50px;background:#e9edff;border:1px solid #d0d9f4;margin-top:0;margin-bottom:30px}.decision-entry h2{font-size:46px}.decision-entry-intro>p:not(.eyebrow){font-size:14px;color:var(--muted);max-width:470px;margin-top:24px}.decision-entry .button{margin-top:10px}.decision-entry-cases{align-self:center}.decision-entry-cases>p{border-bottom:1px solid #c8d2ef;padding:18px 0;font-size:16px;line-height:1.5;margin:0;display:flex;gap:20px;align-items:center}.decision-entry-cases>p>span{font:italic 24px var(--serif);color:var(--blue)}.decision-entry-cases small{display:block;font-size:11px;line-height:1.7;color:var(--muted);margin-top:24px}
+@media(max-width:760px){.decision-entry{grid-template-columns:1fr;gap:26px;padding:30px 24px}.decision-entry h2{font-size:36px}.decision-entry-cases>p{font-size:14px}.decision-entry .button{font-size:12px;padding-inline:18px}}
