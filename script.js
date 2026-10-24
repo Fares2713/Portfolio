@@ -182,6 +182,13 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       figure.append(image, caption);
       dialogContent.append(figure);
     } else {
+      const cover = document.createElement('figure');
+      cover.className = 'case-cover';
+      cover.dataset.visualKind = card.dataset.visualKind || 'photo';
+      const coverImage = card.querySelector('.project-visual img').cloneNode();
+      coverImage.loading = 'eager';
+      cover.append(coverImage, card.querySelector('figcaption').cloneNode(true));
+      dialogContent.append(cover);
       const content = card.querySelector('.case-content').cloneNode(true);
       content.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
       dialogContent.append(content);
@@ -199,7 +206,13 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
           + projectDialog.scrollTop - bar.getBoundingClientRect().height - 24;
       }
     }
+    document.dispatchEvent(new CustomEvent('portfolio:caseopen', {detail:{card, dialog:projectDialog, carousel}}));
   }
+  function closeProjectDialog() {
+    document.dispatchEvent(new CustomEvent('portfolio:caseclose', {detail:{card:currentCard, dialog:projectDialog}}));
+    projectDialog.close();
+  }
+  projectDialog.addEventListener('cancel', event => { event.preventDefault(); closeProjectDialog(); });
   cards.forEach(card => {
     const summary = card.querySelector('summary');
     summary.setAttribute('aria-haspopup', 'dialog');
@@ -225,7 +238,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       });
     });
   });
-  dialogClose.addEventListener('click', () => projectDialog.close());
+  dialogClose.addEventListener('click', closeProjectDialog);
   projectDialog.addEventListener('keydown', event => {
     if (event.key !== 'Tab') return;
     const focusable = [...projectDialog.querySelectorAll('button, a[href], input, select, textarea, [tabindex]')]
@@ -244,7 +257,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   projectDialog.addEventListener('click', event => {
     if (event.target !== projectDialog) return;
     const bounds = projectDialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) projectDialog.close();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeProjectDialog();
   });
   projectDialog.addEventListener('close', () => {
     document.documentElement.classList.remove('dialog-open');
