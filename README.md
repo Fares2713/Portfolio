@@ -152,3 +152,13 @@ Le calendrier propose un échelonnement avant application. L’espacement est r�
 Les exports restent fondés sur les données enregistrées. Le JSON conserve aussi les archives ; CSV et Markdown portent sur la production active. Une synthèse du dossier peut être imprimée ou enregistrée en PDF depuis le navigateur. Les anciens dossiers JSON du schéma 1 sont conservés : l’absence d’archives est interprétée comme une liste vide. La vidéo et ses exports sont actualisés pour la nouvelle interface.
 
 Vérification complémentaire : `scripts/browser-experience.mjs` couvre le transfert protégé, les déclinaisons, la comparaison, l’archivage/restauration, la recherche, la prévisualisation du calendrier, l’application des dates, les exports et les six vues à 320, 768 et 1440 px avec axe. En cloud, copier ce script dans le dossier d’outils externe, puis l’exécuter depuis le dépôt avec `PORTFOLIO_CHROMIUM_PATH=/usr/bin/chromium`. `PORTFOLIO_EXPERIENCE_OUTPUT` permet de placer les captures hors du dépôt.
+
+## Hero animé · Flux bleu
+
+`assets/hero/background-video.mp4` est une animation abstraite originale de 12 secondes (960 × 540, 24 images/s, H.264, sans piste audio, environ 151 Kio). Le poster WebP assure le rendu sans JavaScript ou sans lecture vidéo. Les formes bleues sont générées localement ; aucun stock externe, visage ou texte n’est intégré à la vidéo. Les paramètres de mouvement sont périodiques pour une boucle continue.
+
+Le contrôleur `hero-motion.js` attache la source vidéo uniquement lorsque les conditions autorisent la lecture. Il respecte la préférence système et le réglage local de réduction des animations. Si le navigateur expose une économie de données ou une connexion 2G, aucune vidéo n’est chargée. La lecture se met en pause hors écran, dans un onglet masqué ou derrière une étude de cas. La pause choisie avec le bouton du Hero est mémorisée et reste réversible au rechargement. En cas de refus d’autoplay ou d’échec du chargement, le poster reste affiché. Le fond est décoratif et ignoré par les technologies d’assistance ; le bouton de pause est utilisable au clavier.
+
+`hero-motion.css` conserve un masque clair sous le texte, une arrivée progressive des éléments et des survols discrets sur les boutons. Le portrait conserve sa parallaxe légère sur ordinateur, désactivée lorsque les animations sont réduites. La vidéo n’est pas imprimée.
+
+Régénération : `python3 scripts/build-hero-video.py` (NumPy, Pillow, FFmpeg avec libx264). Tests : `node scripts/browser-hero.mjs` (Playwright/axe), avec lectures réelles, pause persistante, visibilité, changements de préférence, absence de téléchargement en mode statique et échec de chargement. Le fichier `assets/hero/source.json` documente la création.

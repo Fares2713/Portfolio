@@ -15,6 +15,7 @@ jobs:
       - name: Check syntax and portfolio behavior
         run: |
           node --check script.js
+          node --check hero-motion.js
           node scripts/check.mjs
           node --check dossier-decisions/interface.js
           node scripts/check-decisions.mjs

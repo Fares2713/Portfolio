@@ -1,0 +1,20 @@
+{
+  "title": "Flux bleu",
+  "author": "Farès Benamar · Portfolio",
+  "creation": "2026-10-25",
+  "type": "Animation abstraite procédurale originale créée pour le portfolio",
+  "generator": "scripts/build-hero-video.py",
+  "duration_seconds": 12,
+  "fps": 24,
+  "resolution": [
+    960,
+    540
+  ],
+  "audio": false,
+  "loop": "Paramètres périodiques ; pas de fondu noir ni de texte intégré",
+  "dependencies": [
+    "NumPy",
+    "Pillow",
+    "FFmpeg/libx264"
+  ]
+}
