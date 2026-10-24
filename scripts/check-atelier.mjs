@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {emptyWorkspace,structure,blockers,reviseItem,reviseSource,reviseBrief,requestReview,approve,toCSV,toDocument,importWorkspace,readWorkspace,calendar} from '../atelier-editorial/modele.mjs';
+import {emptyWorkspace,structure,blockers,reviseItem,reviseSource,reviseBrief,requestReview,approve,toCSV,toDocument,importWorkspace,readWorkspace,calendar,health,guidance,duplicateItem,archiveItem,restoreItem,versionDiff,proposeSchedule,applySchedule} from '../atelier-editorial/modele.mjs';
 const demo=()=>readWorkspace(readFileSync('atelier-editorial/exemple.json','utf8'));
 let w=demo(),item=w.items[0];
 assert.throws(()=>approve(w,item.id,'Relecteur','Contrôle'),/Vérifier la source/);
@@ -19,5 +19,7 @@ w.items[0].title='=HYPERLINK("https://example.com")';assert.match(toCSV(w),/"'=H
 assert.throws(()=>readWorkspace('{"schema":2}'),/non reconnu/);const bad=demo();bad.sources[0].url='javascript:alert(1)';assert.throws(()=>readWorkspace(JSON.stringify(bad)),/Source non valide/);
 const malformed=demo();malformed.items[0].history=[null];assert.throws(()=>readWorkspace(JSON.stringify(malformed)),/Historique/);const invalidEvent=demo();invalidEvent.events[0].at='pas une date';assert.throws(()=>readWorkspace(JSON.stringify(invalidEvent)),/Journal/);
 const order=calendar(demo());assert.ok(order[0].date<=order[1].date);
+w=demo();assert.equal(health(w).total,3);assert.equal(health(w).sourceReview,2);const copy=duplicateItem(w,w.items[0].id);assert.equal(copy.version,1);assert.equal(copy.approval,null);assert.equal(copy.status,'brouillon');copy.public='Un autre public';assert.ok(guidance(w,copy).some(h=>h.label.includes('plusieurs publics')));archiveItem(w,copy.id);assert.equal(w.archivedItems.length,1);assert.equal(w.items.length,3);restoreItem(w,copy.id);assert.equal(w.items.length,4);assert.equal(w.archivedItems.length,0);archiveItem(w,copy.id);const roundtrip=readWorkspace(JSON.stringify(w));assert.equal(roundtrip.archivedItems[0].derivedFrom,w.items[0].id);
+const plan=proposeSchedule(w,'2026-11-07',1,true);assert.equal(plan[0].date,'2026-11-09');assert.equal(plan[1].date,'2026-11-10');const oldVersion=w.items[0].version;applySchedule(w,plan);assert.equal(w.items[0].version,oldVersion+1);assert.equal(w.items[0].date,'2026-11-09');const original=JSON.stringify(w);assert.throws(()=>applySchedule(w,[{id:'absent',date:'2026-11-09'}]),/non valide/);assert.equal(JSON.stringify(w),original);assert.throws(()=>proposeSchedule(w,'2026-02-31',1,true),/date valide/);const diff=versionDiff(w.items[0].history.at(-1),w.items[0]);assert.deepEqual(diff.map(d=>d.key),['date']);
 const atelierHTML=readFileSync('atelier-editorial/index.html','utf8');for(const m of atelierHTML.matchAll(/(?:href|src)="([^"#]+)"/g)){if(/^(https?:|mailto:)/.test(m[1]))continue;assert.ok(existsSync('atelier-editorial/'+m[1]),'Atelier resource: '+m[1]);}
 console.log('PASS atelier: gated approval, version snapshots, dependency invalidation, source review, safe import/CSV, scheduling and deterministic brief structure.');

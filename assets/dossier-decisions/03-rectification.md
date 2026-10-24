@@ -6,7 +6,7 @@ Exercice de conception personnel. La Maison des services Les Rives, les situatio
 
 
 
-Auteur : Farès Benamar · Version 1.0
+Auteur : Farès Benamar · Version 2.0
 
 
 
@@ -35,6 +35,16 @@ Corriger une information dans son lieu de circulation, avec une preuve et un poi
 Corriger dans le périmètre où l’information circule déjà.
 
 Une correction utile commence par le fait établi et sa référence. Une nouvelle campagne générale pourrait exposer à la rumeur des personnes qui ne l’avaient jamais vue. Donner une marche à suivre courte et une possibilité de contact humain.
+
+
+
+## Les options évaluées
+
+- Démentir partout. Intérêt : Donner rapidement une réponse très visible. Risque : Faire découvrir la rumeur à des publics qui ne l’avaient pas vue. Condition : Une diffusion plus large se justifie par une circulation plus large constatée.
+
+- Corriger dans l’espace concerné — option retenue. Intérêt : Atteindre les personnes exposées avec un fait vérifiable. Risque : Laisser un autre espace sans réponse si la veille est incomplète. Condition : Barème confirmé et périmètre observé de la circulation vérifié.
+
+- Accuser réception puis vérifier. Intérêt : Reconnaître la demande sans improviser un démenti. Risque : Entretenir le doute si l’on ne revient pas avec la réponse. Condition : Donner une suite dans le même espace après confirmation du barème.
 
 
 
@@ -74,13 +84,13 @@ Vérifier la pertinence de la liste et le cadre de l’envoi avec le responsable
 
 ## Ordre de publication
 
-- 0–30 min · Vérifier : Vérifier le barème et le message initial ; définir le périmètre réellement observé.
+- 0–30 min · Vérifier : Vérifier le barème et le message initial ; définir le périmètre réellement observé. Responsable : Responsable de service. Livrable attendu : Un barème confirmé et un périmètre observé.
 
-- 30–60 min · Aligner : Aligner l’accueil et préparer une réponse factuelle avec la référence consultable. Préparer l’accueil avant toute diffusion aux usagers.
+- 30–60 min · Aligner : Aligner l’accueil et préparer une réponse factuelle avec la référence consultable. Préparer l’accueil avant toute diffusion aux usagers. Responsable : Communication et accueil. Livrable attendu : Une réponse de référence cohérente.
 
-- 60–120 min · Diffuser : Répondre dans l’espace concerné, sans relancer une diffusion générale non justifiée.
+- 60–120 min · Diffuser : Répondre dans l’espace concerné, sans relancer une diffusion générale non justifiée. Responsable : Communication. Livrable attendu : Une correction visible dans l’espace concerné.
 
-- À J+1 · Relire : Vérifier que la réponse est visible ; mettre à jour la même référence et garder la trace des corrections.
+- À J+1 · Relire : Vérifier que la réponse est visible ; mettre à jour la même référence et garder la trace des corrections. Responsable : Communication. Livrable attendu : Une trace des corrections et des questions restantes.
 
 
 

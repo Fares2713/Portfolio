@@ -6,7 +6,7 @@ Exercice de conception personnel. La Maison des services Les Rives, les situatio
 
 
 
-Auteur : Farès Benamar · Version 1.0
+Auteur : Farès Benamar · Version 2.0
 
 
 
@@ -35,6 +35,16 @@ Expliquer une proposition contestée tout en reconnaissant une difficulté d’a
 Ouvrir l’explication et le recueil des contraintes avant de défendre une solution.
 
 Une difficulté d’accès n’est pas un simple problème de perception. Le message doit laisser une place à ce qui pourrait modifier la décision. Donner une marche à suivre courte et une possibilité de contact humain.
+
+
+
+## Les options évaluées
+
+- Défendre immédiatement la réduction. Intérêt : Présenter les arguments de la direction. Risque : Faire croire qu’une consultation est déjà tranchée. Condition : Ne convient pas au statut non décidé de ce cas.
+
+- Expliquer et recueillir les contraintes — option retenue. Intérêt : Clarifier ce qui reste ouvert et faire remonter les usages. Risque : Créer une fausse attente si le circuit de traitement des avis n’existe pas. Condition : La direction confirme le recueil effectif et sa prise en compte dans l’arbitrage.
+
+- Attendre une justification complète. Intérêt : Éviter d’avancer des motifs non validés. Risque : Laisser croire que les horaires ont déjà changé. Condition : Même en attente, rappeler le statut de proposition et les horaires actuels.
 
 
 
@@ -74,13 +84,13 @@ Vérifier la pertinence de la liste et le cadre de l’envoi avec le responsable
 
 ## Ordre de publication
 
-- 0–30 min · Vérifier : Établir une référence distinguant proposition, horaires en vigueur et points ouverts.
+- 0–30 min · Vérifier : Établir une référence distinguant proposition, horaires en vigueur et points ouverts. Responsable : Direction du site. Livrable attendu : Une note séparant proposition et décision.
 
-- 30–60 min · Aligner : Briefer l’accueil sur les objections et sur la manière de consigner une contribution. Préparer l’accueil avant toute diffusion aux usagers.
+- 30–60 min · Aligner : Briefer l’accueil sur les objections et sur la manière de consigner une contribution. Préparer l’accueil avant toute diffusion aux usagers. Responsable : Responsable de la consultation. Livrable attendu : Un circuit pour consigner les contributions.
 
-- 60–120 min · Diffuser : Expliquer la proposition avec le canal choisi ; ouvrir le recueil des contraintes sans promettre une décision collective.
+- 60–120 min · Diffuser : Expliquer la proposition avec le canal choisi ; ouvrir le recueil des contraintes sans promettre une décision collective. Responsable : Communication et accueil. Livrable attendu : Une explication et une voie de contribution.
 
-- À J+1 · Relire : Prévoir une restitution des thèmes recueillis et une explication de l’arbitrage une fois celui-ci rendu.
+- À J+1 · Relire : Prévoir une restitution des thèmes recueillis et une explication de l’arbitrage une fois celui-ci rendu. Responsable : Direction du site. Livrable attendu : Une synthèse et une réponse aux thèmes soulevés.
 
 
 

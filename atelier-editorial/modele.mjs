@@ -1,6 +1,6 @@
 export const SCHEMA=1;
 export const FORMATS=['E-mail','Publication courte','Fiche pratique','Affiche'];
-export function emptyWorkspace(){return {schema:SCHEMA,title:'Mon dossier éditorial',brief:{subject:'',goal:'',message:'',audiences:[],start:''},sources:[],items:[],events:[]};}
+export function emptyWorkspace(){return {schema:SCHEMA,title:'Mon dossier éditorial',brief:{subject:'',goal:'',message:'',audiences:[],start:''},sources:[],items:[],archivedItems:[],events:[]};}
 export function log(workspace,action,details){workspace.events.push({at:new Date().toISOString(),action,details});}
 export function blockers(workspace,item){
  const list=[];
@@ -50,17 +50,57 @@ export function structure(workspace){
 }
 export function calendar(workspace){return [...workspace.items].sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||a.title.localeCompare(b.title,'fr'));}
 function safeCell(value){let s=String(value??'');if(/^[\s]*[=+\-@]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
-export function toCSV(workspace){const rows=[['Support','Public','Format','Angle','Contenu','Date prévue','Responsable','Statut','Version','Sources','Relecteur déclaré','Validation déclarée le'],...calendar(workspace).map(i=>[i.title,i.public,i.format,i.angle,i.content,i.date,i.owner,i.status,i.version,i.sourceIds.map(id=>workspace.sources.find(s=>s.id===id)?.title||id).join(' | '),i.approval?.reviewer||'',i.approval?.at||''])];return '\ufeff'+rows.map(row=>row.map(safeCell).join(';')).join('\r\n');}
-export function toDocument(workspace){return ['# '+workspace.title,'','Atelier éditorial de Farès Benamar — espace de travail local. Les validations sont déclaratives et ne constituent pas une signature authentifiée.','','## Brief',workspace.brief.subject,'Objectif : '+workspace.brief.goal,'Message de départ : '+workspace.brief.message,'Publics : '+workspace.brief.audiences.join(', '),'','## Sources',...workspace.sources.map(s=>`### ${s.title}\n${s.url}\nCe qu’elle étaye : ${s.claim}\nÉtat : ${s.checked?'revue déclarée':'à vérifier'} · v${s.version}\nNote : ${s.note||'non renseignée'}`),'','## Production',...calendar(workspace).map(i=>`### ${i.title}\nPublic : ${i.public}\nFormat : ${i.format}\nAngle : ${i.angle}\nPrévu : ${i.date||'à planifier'} · Responsable : ${i.owner||'à nommer'}\nStatut : ${i.status} · v${i.version}\n\n${i.content}\n\nSources : ${i.sourceIds.map(id=>workspace.sources.find(s=>s.id===id)?.title||id).join(', ')}\nValidation : ${i.approval?i.approval.reviewer+' — '+i.approval.note+' — '+i.approval.at:'non validé'}\nVersions précédentes : ${i.history.map(v=>'v'+v.version+' '+v.title).join(', ')||'aucune'}`),'','## Journal',...workspace.events.map(e=>`${e.at} — ${e.action} : ${e.details}`),''].join('\n\n');}
+export function toCSV(workspace){const rows=[['Support','Public','Format','Angle','Contenu','Date prévue','Responsable','Statut','Version','Sources','Relecteur déclaré','Validation déclarée le'],...calendar(workspace).map(i=>[i.title,i.public,i.format,i.angle,i.content,i.date,i.owner,i.status,i.version,i.sourceIds.map(id=>workspace.sources.find(s=>s.id===id)?.title||id).join(' | '),i.approval?.reviewer||'',i.approval?.at||''])];return '\ufeff'+rows.map(row=>row.map(safeCell).join(';')).join('\n');}
+export function toDocument(workspace){return ['# '+workspace.title,'','Atelier éditorial de Farès Benamar — espace de travail local. Les validations sont déclaratives et ne constituent pas une signature authentifiée.','',workspace.origin?.notice||'','## Brief',workspace.brief.subject,'Objectif : '+workspace.brief.goal,'Message de départ : '+workspace.brief.message,'Publics : '+workspace.brief.audiences.join(', '),'','## Sources',...workspace.sources.map(s=>`### ${s.title}\n${s.url}\nCe qu’elle étaye : ${s.claim}\nÉtat : ${s.checked?'revue déclarée':'à vérifier'} · v${s.version}\nNote : ${s.note||'non renseignée'}`),'','## Production',...calendar(workspace).map(i=>`### ${i.title}\nPublic : ${i.public}\nFormat : ${i.format}\nAngle : ${i.angle}\nPrévu : ${i.date||'à planifier'} · Responsable : ${i.owner||'à nommer'}\nStatut : ${i.status} · v${i.version}\n\n${i.content}\n\nSources : ${i.sourceIds.map(id=>workspace.sources.find(s=>s.id===id)?.title||id).join(', ')}\nValidation : ${i.approval?i.approval.reviewer+' — '+i.approval.note+' — '+i.approval.at:'non validé'}\nVersions précédentes : ${i.history.map(v=>'v'+v.version+' '+v.title).join(', ')||'aucune'}`),'','## Archives',...(workspace.archivedItems||[]).map(i=>`- ${i.title} · v${i.version} · ${i.history.length} version(s) précédente(s). Contenu et décisions conservés dans le JSON.`),'','## Journal',...workspace.events.map(e=>`${e.at} — ${e.action} : ${e.details}`),''].join('\n\n');}
 export function readWorkspace(text){
  if(text.length>3000000)throw new Error('Le fichier dépasse la limite de 3 Mo.');
  const data=JSON.parse(text);
  if(data?.schema!==SCHEMA||!data.brief||!Array.isArray(data.sources)||!Array.isArray(data.items)||!Array.isArray(data.events))throw new Error('Format de dossier non reconnu.');
- if(data.sources.length>40||data.items.length>100||data.events.length>5000)throw new Error('Le dossier dépasse les limites de cette démonstration.');
+ if(data.archivedItems===undefined)data.archivedItems=[];
+ if(!Array.isArray(data.archivedItems))throw new Error('Archives non valides.');
+ if(data.sources.length>40||data.items.length>100||data.archivedItems.length>200||data.events.length>5000)throw new Error('Le dossier dépasse les limites de cette démonstration.');
  const str=v=>typeof v==='string'&&v.length<=20000;
  if(!['subject','goal','message','start'].every(k=>str(data.brief[k]))||!Array.isArray(data.brief.audiences)||data.brief.audiences.length>10||!data.brief.audiences.every(str)||!str(data.title))throw new Error('Brief non valide.');
  const ids=new Set();for(const s of data.sources){if(!str(s.id)||ids.has(s.id)||!str(s.title)||!str(s.url)||!str(s.claim)||!str(s.note)||!/^https?:\/\//.test(s.url)||typeof s.checked!=='boolean'||!Number.isInteger(s.version)||!Array.isArray(s.history))throw new Error('Source non valide.');if(!s.history.every(h=>h&&['title','url','claim','note'].every(k=>str(h[k]))&&Number.isInteger(h.version)))throw new Error('Historique de source non valide.');ids.add(s.id);}
- const itemIds=new Set();for(const i of data.items){if(!['id','title','public','format','angle','content','date','owner','status'].every(k=>str(i[k]))||itemIds.has(i.id)||!['brouillon','en-relecture','valide'].includes(i.status)||!Array.isArray(i.history)||!Array.isArray(i.sourceIds)||!i.sourceIds.every(id=>ids.has(id))||!Number.isInteger(i.version)||i.version<1)throw new Error('Support non valide.');if(!i.history.every(h=>h&&['title','public','format','angle','content','date','owner','status'].every(k=>str(h[k]))&&Number.isInteger(h.version)))throw new Error('Historique de support non valide.');itemIds.add(i.id);}
+ const itemIds=new Set();for(const i of [...data.items,...data.archivedItems]){if(!['id','title','public','format','angle','content','date','owner','status'].every(k=>str(i[k]))||itemIds.has(i.id)||!['brouillon','en-relecture','valide'].includes(i.status)||!Array.isArray(i.history)||!Array.isArray(i.sourceIds)||!i.sourceIds.every(id=>ids.has(id))||!Number.isInteger(i.version)||i.version<1)throw new Error('Support non valide.');if(!i.history.every(h=>h&&['title','public','format','angle','content','date','owner','status'].every(k=>str(h[k]))&&Number.isInteger(h.version)))throw new Error('Historique de support non valide.');itemIds.add(i.id);}
  if(!data.events.every(e=>e&&['at','action','details'].every(k=>str(e[k]))&&Number.isFinite(Date.parse(e.at))))throw new Error('Journal non valide.');return data;
 }
-export function importWorkspace(text){const data=readWorkspace(text);for(const item of data.items)invalidate(item);for(const source of data.sources){if(source.checked){source.history.push(structuredClone({...source,history:undefined}));source.version++;}source.checked=false;}log(data,'Dossier importé','Les sources et supports sont à revoir dans ce nouvel espace.');return data;}
+export function importWorkspace(text){const data=readWorkspace(text);for(const item of [...data.items,...data.archivedItems])invalidate(item);for(const source of data.sources){if(source.checked){source.history.push(structuredClone({...source,history:undefined}));source.version++;}source.checked=false;}log(data,'Dossier importé','Les sources et supports sont à revoir dans ce nouvel espace.');return data;}
+
+export function health(workspace){
+ return {total:workspace.items.length,sourceReview:workspace.sources.filter(s=>!s.checked).length,review:workspace.items.filter(i=>i.status==='en-relecture').length,validated:workspace.items.filter(i=>i.status==='valide').length,unassigned:workspace.items.filter(i=>!i.owner.trim()).length,unplanned:workspace.items.filter(i=>!i.date).length,readyForReview:workspace.items.filter(i=>i.status==='brouillon'&&!blockers(workspace,i).length).length,archived:(workspace.archivedItems||[]).length};
+}
+export function guidance(workspace,item){
+ const hints=[],length=Array.from(item.content).length;
+ if(item.format==='Publication courte'&&length>600)hints.push({label:'Un texte long pour ce format',text:length+' caractères : vérifiez si une version plus courte et une référence séparée seraient plus lisibles. Le seuil de 600 est un repère de travail, pas une limite de plateforme.'});
+ if(workspace.items.some(i=>i.id!==item.id&&i.public!==item.public&&i.content.trim()&&i.content.trim()===item.content.trim()))hints.push({label:'Un même texte pour plusieurs publics',text:'Vérifiez que l’angle et la prochaine étape répondent au besoin de chaque public. La similarité ne prouve pas une erreur.'});
+ if(item.owner&&item.date&&workspace.items.some(i=>i.id!==item.id&&i.owner===item.owner&&i.date===item.date))hints.push({label:'Une charge à vérifier',text:'D’autres supports sont prévus pour ce responsable le même jour. Ce repère ne mesure pas sa disponibilité.'});
+ return hints;
+}
+export function duplicateItem(workspace,id){
+ if(workspace.items.length>=100)throw new Error('Limite : 100 supports actifs.');const original=workspace.items.find(i=>i.id===id);if(!original)throw new Error('Support introuvable.');
+ const copy={...structuredClone(original),id:'support-'+crypto.randomUUID(),title:original.title+' — déclinaison',version:1,status:'brouillon',approval:null,history:[],derivedFrom:original.id};workspace.items.push(copy);log(workspace,'Déclinaison créée',copy.title+' : brouillon à adapter.');return copy;
+}
+export function archiveItem(workspace,id){
+ workspace.archivedItems ||= [];if(workspace.archivedItems.length>=200)throw new Error('Limite : 200 supports archivés. Exportez votre dossier avant de poursuivre.');const index=workspace.items.findIndex(i=>i.id===id);if(index<0)throw new Error('Support introuvable.');const[item]=workspace.items.splice(index,1);workspace.archivedItems.push(item);log(workspace,'Support archivé',item.title+' : versions conservées dans le JSON.');
+}
+export function restoreItem(workspace,id){
+ if(workspace.items.length>=100)throw new Error('Limite : 100 supports actifs.');const index=(workspace.archivedItems||[]).findIndex(i=>i.id===id);if(index<0)throw new Error('Archive introuvable.');const[item]=workspace.archivedItems.splice(index,1);invalidate(item);workspace.items.push(item);log(workspace,'Support restauré',item.title+' : nouvelle revue nécessaire.');return item;
+}
+export function versionDiff(previous,current){
+ const fields={title:'Titre',public:'Public',format:'Format',angle:'Angle',content:'Contenu',date:'Date prévue',owner:'Responsable',sourceIds:'Sources mobilisées'};
+ return Object.entries(fields).filter(([key])=>JSON.stringify(previous[key])!==JSON.stringify(current[key])).map(([key,label])=>({key,label,before:Array.isArray(previous[key])?previous[key].join(', '):String(previous[key]||'Non renseigné'),after:Array.isArray(current[key])?current[key].join(', '):String(current[key]||'Non renseigné')}));
+}
+function validDate(value){return /^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value))&&new Date(value).toISOString().slice(0,10)===value;}
+export function proposeSchedule(workspace,start,spacing=1,weekdays=true){
+ if(!validDate(start)||!Number.isInteger(spacing)||spacing<1||spacing>14)throw new Error('Choisissez une date valide et un espacement de 1 à 14 jours.');
+ let date=new Date(start+'T12:00:00Z');const proposals=[];
+ for(const item of calendar(workspace)){
+  if(weekdays)while([0,6].includes(date.getUTCDay()))date.setUTCDate(date.getUTCDate()+1);
+  proposals.push({id:item.id,title:item.title,before:item.date,date:date.toISOString().slice(0,10)});date.setUTCDate(date.getUTCDate()+spacing);
+ }return proposals;
+}
+export function applySchedule(workspace,proposals){
+ if(!Array.isArray(proposals)||!proposals.every(p=>workspace.items.some(i=>i.id===p.id)&&validDate(p.date))||new Set(proposals.map(p=>p.id)).size!==proposals.length)throw new Error('Proposition de calendrier non valide.');
+ for(const proposal of proposals)reviseItem(workspace,proposal.id,{date:proposal.date});log(workspace,'Calendrier appliqué',proposals.length+' dates proposées appliquées ; validations concernées à refaire.');
+}

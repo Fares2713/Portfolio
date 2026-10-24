@@ -2,7 +2,7 @@
 
 Exercice de conception personnel. La Maison des services Les Rives, les situations, les pièces de référence et les contenus sont fictifs. Aucun mandat, déploiement, résultat de campagne ou validation réelle n’est revendiqué.
 
-Conception : Farès Benamar. Version 1.0.
+Conception : Farès Benamar. Version 2.0.
 
 ## Les fichiers
 
@@ -16,7 +16,7 @@ Conception : Farès Benamar. Version 1.0.
 
 ## Explorer
 
-Ouvrir dossier-decisions/ depuis le portfolio servi par HTTP. Choisir une situation, un public, un canal et une contrainte puis afficher l’arbitrage. Le lien du parcours conserve les quatre choix. Un export Markdown ou l’impression en PDF reprend la sélection affichée.
+Ouvrir dossier-decisions/ depuis le portfolio servi par HTTP. Choisir une situation, un public, un canal et une contrainte : le dossier s’actualise immédiatement. Les vues distinguent l’essentiel, les supports, le plan d’action et les preuves. Épingler un parcours permet une comparaison. Le transfert vers l’atelier crée trois brouillons avec sources fictives, dates et responsables à revoir ; un dossier existant est protégé par une confirmation. Le lien du parcours conserve les quatre choix. Un export Markdown ou l’impression en PDF reprend la sélection affichée.
 
 Les 81 parcours résultent de règles éditoriales explicites, pas d’une génération par une IA lors de la visite. Les supports partagent les faits du cas. Certaines demandes sont réorientées, notamment le choix d’un canal public pour un briefing interne.
 

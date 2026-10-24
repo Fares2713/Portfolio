@@ -6,7 +6,7 @@ Exercice de conception personnel. La Maison des services Les Rives, les situatio
 
 
 
-Auteur : Farès Benamar · Version 1.0
+Auteur : Farès Benamar · Version 2.0
 
 
 
@@ -35,6 +35,16 @@ Faire connaître une offre utile sans créer d’attentes que le service ne peut
 Annoncer une offre concrète, avec une prochaine étape claire.
 
 L’utilité, les conditions d’accès et la limite du service doivent être comprises avant de chercher à attirer davantage de visiteurs. Donner une marche à suivre courte et une possibilité de contact humain.
+
+
+
+## Les options évaluées
+
+- Lancer une campagne large. Intérêt : Rendre le service rapidement visible. Risque : Générer des demandes avant que l’accueil soit prêt. Condition : À envisager après validation du service et des modalités.
+
+- Annoncer avec une marche à suivre — option retenue. Intérêt : Relier l’utilité du service à une action réalisable. Risque : Laisser une ambiguïté si les limites ne sont pas écrites. Condition : Périmètre et planning confirmés ; réponse d’accueil prête.
+
+- Préparer sans annoncer l’ouverture. Intérêt : Éviter de transformer une hypothèse en promesse. Risque : Laisser une demande sans réponse si l’on garde le silence. Condition : Répondre aux demandes reçues et demander la validation manquante.
 
 
 
@@ -74,13 +84,13 @@ Vérifier la pertinence de la liste et le cadre de l’envoi avec le responsable
 
 ## Ordre de publication
 
-- 0–30 min · Vérifier : Valider une fiche de référence : utilité, gratuité, modalités, limites et contact.
+- 0–30 min · Vérifier : Valider une fiche de référence : utilité, gratuité, modalités, limites et contact. Responsable : Responsable de service. Livrable attendu : Une fiche de référence validée.
 
-- 30–60 min · Aligner : Donner à l’accueil la réponse commune et les questions à faire remonter. Préparer l’accueil avant toute diffusion aux usagers.
+- 30–60 min · Aligner : Donner à l’accueil la réponse commune et les questions à faire remonter. Préparer l’accueil avant toute diffusion aux usagers. Responsable : Responsable de l’accueil. Livrable attendu : Une réponse d’accueil commune.
 
-- 60–120 min · Diffuser : Diffuser le support choisi puis vérifier que le point de contact répond correctement.
+- 60–120 min · Diffuser : Diffuser le support choisi puis vérifier que le point de contact répond correctement. Responsable : Communication. Livrable attendu : Le support et le point de contact opérationnels.
 
-- À J+1 · Relire : Recueillir les questions récurrentes et corriger la fiche avant la vague suivante.
+- À J+1 · Relire : Recueillir les questions récurrentes et corriger la fiche avant la vague suivante. Responsable : Accueil et communication. Livrable attendu : Une liste des confusions à corriger.
 
 
 

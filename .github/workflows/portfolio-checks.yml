@@ -20,3 +20,4 @@ jobs:
           node scripts/check-decisions.mjs
           node scripts/check-atelier.mjs
           node --check atelier-editorial/atelier.js
+          node --check atelier-editorial/experience.js

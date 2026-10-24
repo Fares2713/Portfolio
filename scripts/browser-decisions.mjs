@@ -13,31 +13,21 @@ const server=http.createServer(async(req,res)=>{
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
 const browser=await chromium.launch(process.env.PORTFOLIO_CHROMIUM_PATH?{executablePath:process.env.PORTFOLIO_CHROMIUM_PATH}:{});await mkdir(output,{recursive:true});
 try{
- for(const width of [360,768,1440]){
- const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(origin+'/dossier-decisions/');await page.locator('#choices').waitFor({state:'visible'});
- assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
- assert.match(await page.locator('#result-title').innerText(),/Annoncer/);
- await page.locator('#contrainte').selectOption('incomplet');await page.locator('button[type=submit]').click();
- assert.match(await page.locator('#result-title').innerText(),/Différer/);
- assert.ok(await page.locator('#result-title').evaluate(el=>el===document.activeElement));
- assert.doesNotMatch(await page.locator('.preview-body').innerText(),/4 mai|Prenez rendez-vous/);
- const [download]=await Promise.all([page.waitForEvent('download'),page.locator('[data-action=download]').click()]);
- const markdown=(await readFile(await download.path())).toString();assert.match(markdown,/Différer l’annonce/);assert.match(markdown,/Exercice de conception/);
- await page.locator('input[value=rectification]').check();await page.locator('#public').selectOption('agents');await page.locator('#canal').selectOption('social');await page.locator('button[type=submit]').click();
- assert.match(await page.locator('#result').innerText(),/Je remplace le réseau social/);assert.match(await page.locator('.preview-body').innerText(),/vérifions/);
- const url=page.url();await page.reload();await page.locator('#choices').waitFor({state:'visible'});assert.equal(await page.locator('#public').inputValue(),'agents');assert.equal(await page.locator('#canal').inputValue(),'social');assert.equal(page.url(),url);
- // Independent case navigation must also work with native keyboard controls.
- await page.locator('input[value=controverse]').focus();await page.keyboard.press('Space');await page.locator('#public').selectOption('usagers');await page.locator('#canal').selectOption('affiche');await page.locator('#contrainte').selectOption('accessibilite');await page.locator('button[type=submit]').click();
- assert.match(await page.locator('#result-title').innerText(),/Ouvrir l’explication/);assert.match(await page.locator('.access-note').innerText(),/réponse orale/);
- await page.goBack();assert.equal(await page.locator('#public').inputValue(),'agents');assert.match(await page.locator('#result-title').innerText(),/vérifier/);
- await page.locator('[data-action=choose]').click();assert.ok(await page.locator('input[value=rectification]').evaluate(el=>el===document.activeElement));
- const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
- await page.goto(origin+'/dossier-decisions/');await page.locator('#choices').waitFor({state:'visible'});await page.screenshot({path:output+'/hero-'+width+'.png'});
- await page.locator('.content-preview').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/support-'+width+'.png'});
- assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
- await page.goto(origin+'/');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Portfolio integration has no overflow');await page.locator('#decisions').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/portfolio-entry-'+width+'.png'});assert.equal(await page.locator('#decisions a[href="dossier-decisions/"]').getAttribute('href'),'dossier-decisions/');
- assert.deepEqual(errors,[]);console.log('PASS '+width+'px: form, decisions, export, deep links, history, keyboard, layout and axe');await context.close();
+ for(const width of [320,768,1440]){
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(origin+'/dossier-decisions/');await page.locator('#choices').waitFor({state:'visible'});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.match(await page.locator('#result-title').innerText(),/Annoncer/);
+  await page.locator('[data-action=pin]').click();await page.locator('#contrainte').selectOption('incomplet');assert.match(await page.locator('#result-title').innerText(),/Différer/);assert.match(await page.locator('.comparison').innerText(),/Parcours épinglé/i);assert.match(await page.locator('.comparison').innerText(),/Différer/);
+  await page.locator('#report-tab-synthese').focus();await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#report-tab-supports').getAttribute('aria-selected'),'true');assert.ok(await page.locator('#report-panel-supports').isVisible());assert.doesNotMatch(await page.locator('.preview-body').innerText(),/4 mai|Prenez rendez-vous/);
+  const [download]=await Promise.all([page.waitForEvent('download'),page.locator('[data-action=download]').click()]);const markdown=(await readFile(await download.path())).toString();assert.match(markdown,/Différer l’annonce/);assert.match(markdown,/Les options évaluées/);assert.match(markdown,/Livrable attendu/);
+  await page.locator('input[value=rectification]').check();await page.locator('#public').selectOption('agents');await page.locator('#canal').selectOption('social');assert.match(await page.locator('#report-panel-supports').innerText(),/Je remplace le réseau social/);assert.match(await page.locator('.preview-body').innerText(),/vérifions/);
+  const url=page.url();await page.reload();await page.locator('#choices').waitFor({state:'visible'});assert.equal(await page.locator('#public').inputValue(),'agents');assert.equal(await page.locator('#canal').inputValue(),'social');assert.equal(page.url(),url);assert.ok(await page.locator('#report-panel-supports').isVisible());
+  await page.locator('input[value=controverse]').focus();await page.keyboard.press('Space');await page.locator('#public').selectOption('usagers');await page.locator('#canal').selectOption('affiche');await page.locator('#contrainte').selectOption('accessibilite');assert.match(await page.locator('#result-title').innerText(),/Ouvrir l’explication/);
+  await page.locator('#report-tab-plan').click();assert.match(await page.locator('.access-note').last().innerText(),/réponse orale/);assert.equal(await page.locator('.step-owner').count(),4);await page.goBack();assert.equal(await page.locator('#contrainte').inputValue(),'incomplet');
+  await page.locator('[data-action=choose]').click();assert.ok(await page.locator('input[value=controverse]').evaluate(el=>el===document.activeElement));await page.locator('#report-tab-synthese').click();await page.locator('[data-action=unpin]').click();assert.equal(await page.locator('.comparison').count(),0);
+  const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
+  await page.goto(origin+'/dossier-decisions/');await page.locator('#choices').waitFor({state:'visible'});await page.screenshot({path:output+'/hero-'+width+'.png'});await page.locator('#report-tab-supports').click();await page.locator('.content-preview').scrollIntoViewIfNeeded();await page.screenshot({path:output+'/support-'+width+'.png'});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  await page.goto(origin+'/#decisions');await page.waitForFunction(()=>document.getElementById('decisions-title').getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().height);assert.ok(await page.evaluate(()=>document.getElementById('decisions-title').getBoundingClientRect().top<document.querySelector('.site-header').getBoundingClientRect().height+90));await page.screenshot({path:output+'/portfolio-entry-'+width+'.png'});assert.equal(await page.locator('#decisions a[href="dossier-decisions/"]').getAttribute('href'),'dossier-decisions/');
+  assert.deepEqual(errors,[]);console.log('PASS '+width+'px: immediate updates, pinned comparison, keyboard tabs, exports, deep links, history, safe copy and axe');await context.close();
  }
  const page=await browser.newPage({javaScriptEnabled:false});await page.goto(origin+'/dossier-decisions/');await page.locator('.fallback summary').click();assert.equal(await page.locator('.fallback article:visible').count(),3);
  for(const href of await page.locator('#ressources a').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')))){

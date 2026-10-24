@@ -21,6 +21,7 @@ jobs:
       - run: node scripts/browser-check.mjs
       - run: node scripts/browser-decisions.mjs
       - run: node scripts/browser-navigation.mjs
+      - run: node scripts/browser-experience.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

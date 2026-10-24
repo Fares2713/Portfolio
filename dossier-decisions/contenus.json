@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "author": "Farès Benamar",
   "notice": "Exercice de conception personnel. La Maison des services Les Rives, les situations, les pièces de référence et les contenus sont fictifs. Aucun mandat, déploiement, résultat de campagne ou validation réelle n’est revendiqué.",
   "organization": "Maison des services Les Rives",
@@ -174,7 +174,39 @@
           "rule": "Si une confusion se répète, adapter la référence et le support concerné."
         }
       ],
-      "learning": "Transformer une offre de service en information pratique, avec un périmètre explicite."
+      "learning": "Transformer une offre de service en information pratique, avec un périmètre explicite.",
+      "options": [
+        {
+          "label": "Lancer une campagne large",
+          "benefit": "Rendre le service rapidement visible.",
+          "risk": "Générer des demandes avant que l’accueil soit prêt.",
+          "condition": "À envisager après validation du service et des modalités."
+        },
+        {
+          "label": "Annoncer avec une marche à suivre",
+          "benefit": "Relier l’utilité du service à une action réalisable.",
+          "risk": "Laisser une ambiguïté si les limites ne sont pas écrites.",
+          "condition": "Périmètre et planning confirmés ; réponse d’accueil prête."
+        },
+        {
+          "label": "Préparer sans annoncer l’ouverture",
+          "benefit": "Éviter de transformer une hypothèse en promesse.",
+          "risk": "Laisser une demande sans réponse si l’on garde le silence.",
+          "condition": "Répondre aux demandes reçues et demander la validation manquante."
+        }
+      ],
+      "owners": [
+        "Responsable de service",
+        "Responsable de l’accueil",
+        "Communication",
+        "Accueil et communication"
+      ],
+      "deliverables": [
+        "Une fiche de référence validée",
+        "Une réponse d’accueil commune",
+        "Le support et le point de contact opérationnels",
+        "Une liste des confusions à corriger"
+      ]
     },
     {
       "id": "controverse",
@@ -253,7 +285,39 @@
           "rule": "Un thème sans réponse reste explicitement ouvert ; ne pas le compter comme résolu."
         }
       ],
-      "learning": "Traiter un désaccord comme une information sur les usages et rendre le processus de décision lisible."
+      "learning": "Traiter un désaccord comme une information sur les usages et rendre le processus de décision lisible.",
+      "options": [
+        {
+          "label": "Défendre immédiatement la réduction",
+          "benefit": "Présenter les arguments de la direction.",
+          "risk": "Faire croire qu’une consultation est déjà tranchée.",
+          "condition": "Ne convient pas au statut non décidé de ce cas."
+        },
+        {
+          "label": "Expliquer et recueillir les contraintes",
+          "benefit": "Clarifier ce qui reste ouvert et faire remonter les usages.",
+          "risk": "Créer une fausse attente si le circuit de traitement des avis n’existe pas.",
+          "condition": "La direction confirme le recueil effectif et sa prise en compte dans l’arbitrage."
+        },
+        {
+          "label": "Attendre une justification complète",
+          "benefit": "Éviter d’avancer des motifs non validés.",
+          "risk": "Laisser croire que les horaires ont déjà changé.",
+          "condition": "Même en attente, rappeler le statut de proposition et les horaires actuels."
+        }
+      ],
+      "owners": [
+        "Direction du site",
+        "Responsable de la consultation",
+        "Communication et accueil",
+        "Direction du site"
+      ],
+      "deliverables": [
+        "Une note séparant proposition et décision",
+        "Un circuit pour consigner les contributions",
+        "Une explication et une voie de contribution",
+        "Une synthèse et une réponse aux thèmes soulevés"
+      ]
     },
     {
       "id": "rectification",
@@ -332,7 +396,39 @@
           "rule": "Si la confusion persiste, clarifier le périmètre gratuit avant d’augmenter la diffusion."
         }
       ],
-      "learning": "Distinguer vitesse de réaction, preuve disponible et proportionnalité de la diffusion."
+      "learning": "Distinguer vitesse de réaction, preuve disponible et proportionnalité de la diffusion.",
+      "options": [
+        {
+          "label": "Démentir partout",
+          "benefit": "Donner rapidement une réponse très visible.",
+          "risk": "Faire découvrir la rumeur à des publics qui ne l’avaient pas vue.",
+          "condition": "Une diffusion plus large se justifie par une circulation plus large constatée."
+        },
+        {
+          "label": "Corriger dans l’espace concerné",
+          "benefit": "Atteindre les personnes exposées avec un fait vérifiable.",
+          "risk": "Laisser un autre espace sans réponse si la veille est incomplète.",
+          "condition": "Barème confirmé et périmètre observé de la circulation vérifié."
+        },
+        {
+          "label": "Accuser réception puis vérifier",
+          "benefit": "Reconnaître la demande sans improviser un démenti.",
+          "risk": "Entretenir le doute si l’on ne revient pas avec la réponse.",
+          "condition": "Donner une suite dans le même espace après confirmation du barème."
+        }
+      ],
+      "owners": [
+        "Responsable de service",
+        "Communication et accueil",
+        "Communication",
+        "Communication"
+      ],
+      "deliverables": [
+        "Un barème confirmé et un périmètre observé",
+        "Une réponse de référence cohérente",
+        "Une correction visible dans l’espace concerné",
+        "Une trace des corrections et des questions restantes"
+      ]
     }
   ]
 }

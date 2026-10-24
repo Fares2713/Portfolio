@@ -86,6 +86,13 @@ function focusHashTarget(hash) {
   focusTarget.focus({preventScroll:true});
   return target;
 }
+function scrollHashTarget(target, instant = false) {
+  const heading = target.closest('.project') ? target.closest('.project') : target.matches('h1,h2,h3') ? target : target.querySelector('h1,h2,h3') || target;
+  const header = document.querySelector('.site-header');
+  const top = heading.getBoundingClientRect().top + window.scrollY - header.getBoundingClientRect().height - 24;
+  const reduced = document.documentElement.classList.contains('motion-reduced');
+  window.scrollTo({top:Math.max(0,top),behavior:instant || reduced ? 'instant' : 'smooth'});
+}
 document.addEventListener('click', event => {
   const step = event.target.closest('[data-carousel-step]');
   if (step) {
@@ -101,7 +108,7 @@ document.addEventListener('click', event => {
     const target = focusHashTarget(hash);
     if (target) {
       event.preventDefault();
-      target.scrollIntoView({block:'start'});
+      scrollHashTarget(target);
       if (window.location.hash !== hash) window.history.pushState(null,'',hash);
     }
   }
@@ -109,7 +116,7 @@ document.addEventListener('click', event => {
 if (window.addEventListener) {
   window.addEventListener('hashchange', () => revealAnchor(window.location.hash));
   window.addEventListener('popstate', () => { revealAnchor(window.location.hash); focusHashTarget(window.location.hash); });
-  window.addEventListener('load', () => { if (window.location.hash) focusHashTarget(window.location.hash); });
+  window.addEventListener('load', () => { if (window.location.hash) window.requestAnimationFrame(() => { const target = focusHashTarget(window.location.hash); if (target) scrollHashTarget(target,true); }); });
   revealAnchor(window.location.hash);
 }
 // Track the section at the reading line, including sections taller than the viewport.
