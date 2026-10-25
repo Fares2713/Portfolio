@@ -4,12 +4,6 @@
 .hero-ambient::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#f7f6f2 0%,#f7f6f2ef 19%,#f7f6f2a6 46%,#f7f6f21a 80%),linear-gradient(0deg,#f7f6f2 0%,#f7f6f200 25%,#f7f6f200 80%,#f7f6f2b3 100%)}
 .hero-ambient video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease}
 .hero-video-ready .hero-ambient video{opacity:1}
-.hero-motion-control{position:relative;display:inline-flex;margin-top:8px;align-items:center;gap:8px;min-height:44px;padding:8px 12px;border:1px solid #182c2933;background:#f7f6f2d9;color:var(--ink);font-size:10px;line-height:1.4;border-radius:24px;z-index:1;transition:background .2s,border-color .2s}
-.hero-motion-control:hover{background:#fffef9;border-color:var(--ink)}
-.ambient-indicator{display:block;width:7px;height:7px;border-radius:50%;background:var(--blue)}
-.hero-video-paused .ambient-indicator{background:transparent;border:1px solid var(--muted)}
-.hero-copy>.hero-motion-control{animation:none!important}
-.hero-motion-control:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
 /* Leave the action labels steady while the arrow and button respond to the pointer. */
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
  html:not(.motion-reduced) .hero-actions .button:hover{transform:translateY(-2px) scale(1.015)}
@@ -31,7 +25,5 @@
  .hero-ambient{background-position:65% center;opacity:.4}
  .hero-ambient::after{background:linear-gradient(180deg,#f7f6f2f5 0%,#f7f6f2cc 30%,#f7f6f226 64%,#f7f6f2 100%)}
  .hero-ambient video{object-position:65% center}
- .hero-motion-control{font-size:10px;padding-inline:12px}
 }
 @media(prefers-reduced-motion:reduce){.hero-ambient video{display:none}}
-@media print{.hero-ambient,.hero-motion-control{display:none!important}.hero-scene{background:white;overflow:visible}.hero-scroll{padding-right:0!important}}
