@@ -32,7 +32,7 @@ try{
   assert.equal(await page.locator('.experience-row').count(),4,'Two employment experiences and two independent projects');
   assert.match(await page.locator('.experience-row').first().innerText(),/FNK Location/);
   assert.equal(await page.locator('a[download][href*="cv-fares"]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
-  assert.equal(await page.locator('.project-contribution').count(),12,'Exact role visible on each selected project');
+  assert.equal(await page.locator('.project-contribution').count(),10,'Exact role visible on each selected project');
   assert.ok(await page.locator('#projet-fnk').isVisible(),'FNK mission added without fabricated visuals');
   assert.equal(await page.locator('#projet-fnk .project-visual img').getAttribute('src'),'assets/fnk-agence.jpg','FNK agency visual');
   assert.equal(await page.locator('#projet-fnk .project-image-link').getAttribute('href'),'https://fnklocation.com');
@@ -55,7 +55,7 @@ try{
    assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
   }
   await page.screenshot({path:'screenshots/hero-'+width+'.png'});
-  for(const [filter,expected] of [['communication',6],['evenementiel',5],['audiovisuel',1],['digital',5],['all',12]]){
+  for(const [filter,expected] of [['communication',6],['evenementiel',3],['audiovisuel',1],['digital',5],['all',10]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
@@ -176,7 +176,7 @@ try{
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await plain.goto(origin);
  assert.ok(await plain.locator('#navigation').isVisible());
- assert.equal(await plain.locator('.project:visible').count(),12);
+ assert.equal(await plain.locator('.project:visible').count(),10);
  await plain.locator('.project summary').first().click();
  assert.ok(await plain.locator('.project .case-content').first().isVisible());
  await plain.locator('#projet-fnk summary').click();

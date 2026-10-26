@@ -18,6 +18,7 @@ jobs:
           node --check hero-motion.js
           node --check editorial.js
           node scripts/check.mjs
+          node scripts/check-supports.mjs
           node --check dossier-decisions/interface.js
           node scripts/check-decisions.mjs
           node scripts/check-atelier.mjs

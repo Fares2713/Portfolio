@@ -174,3 +174,22 @@ Les études de cas présentent un aperçu avec sa légende avant le texte. Deux 
 La section contact reprend discrètement le poster du Hero et ajoute une copie locale de l’adresse e-mail. Le lien `mailto:` fonctionne sans JavaScript. Si le presse-papiers est refusé, l’interface propose le lien existant ; aucune donnée n’est envoyée.
 
 Validation : `node scripts/browser-editorial.mjs` vérifie les trois largeurs (320, 768, 1440 px), les polices, l’absence de débordement, le clavier, les transitions et leur nettoyage, le marqueur du parcours, le presse-papiers et son refus, le fonctionnement sans JavaScript et axe. Les suites existantes vérifient les galeries, le Hero et les deux démonstrations. Les captures des tests sont conservées hors dépôt dans l’environnement cloud, ou dans `screenshots/` en CI.
+
+## Contenus et hiérarchie · Octobre 2026
+
+L’accueil annonce le métier de chargé de communication et les domaines communication institutionnelle, contenus et coordination. Trois repères Inria sont désormais intégrés dans le Hero. Quatre projets principaux précèdent les contributions complémentaires et les travaux de formation.
+
+Les conférences scientifiques et la journée du siège sont intégrées dans l’étude de cas des événements institutionnels. Les dix cartes conservent les autres projets ; les anciennes ancres `#projet-conferences` et `#projet-journee-siege` conduisent aux deux exemples dans cette étude. Les formulations précisent les contributions et les périmètres de façon affirmative ; les attributions, les dates et l’état de préparation des projets restent explicites.
+
+`assets/supports-editoriaux/` contient cinq créations éditoriales réalisées pour le portfolio le 26 octobre 2026 : newsletter, proposition de programme, proposition de publication, affiche et note de préparation. Elles sont présentées comme une série originale indépendante sur la communication de la recherche, avec une attribution et une date sur chaque support ; elles ne constituent pas des archives de missions Inria. Les fichiers HTML sont lisibles sur mobile ; les cinq PDF et les sources sont réunis dans une archive ZIP autonome. Le script `scripts/build-supports.py` produit les PDF et les pages depuis une même base de contenu. Les aperçus sont des captures des pages réellement générées, pas des publications diffusées sur un réseau social.
+
+Génération : `python3 scripts/build-supports.py` (ReportLab). Captures : `PORTFOLIO_CAPTURE_SUPPORTS=1 node scripts/browser-portfolio-content.mjs`. Sans cette variable, le test écrit ses captures dans le dossier de test, pas dans les ressources du site. Les titres des supports, les documents et les aperçus partagent la même série ; aucun résultat de diffusion n’est ajouté.
+
+## Outils temporairement indisponibles
+
+Le dossier de décisions et l’atelier éditorial sont suspendus à la demande de Farès. Leurs boutons d’accueil sont désactivés et leurs deux pages d’entrée affichent une page de maintenance statique, sans charger les applications. Les modèles, ressources et données de navigateur restent conservés. Les pages complètes sont archivées comme sources inactives dans `scripts/paused-apps/*.html.source`.
+
+- Suspendre : `python3 scripts/set-tools-availability.py pause`.
+- Réactiver : `python3 scripts/set-tools-availability.py activate`.
+
+Le fichier `tools-availability.json` reflète cet état. Les tests de modèles restent exécutés ; les suites navigateur des applications actives passent par `scripts/check-app-browsers.mjs` et sont explicitement suspendues pendant la maintenance. `browser-portfolio-content.mjs` vérifie alors les deux pages d’indisponibilité, les boutons désactivés et les supports éditoriaux. La partie atelier de `browser-navigation.mjs` est conditionnée au même état ; les vérifications de navigation du portfolio restent exécutées.

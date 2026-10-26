@@ -40,7 +40,9 @@ function applyFilter(filter) {
     card.hidden = !visible;
     if (visible) count++;
   });
-  filterStatus.textContent = count + (count > 1 ? ' réalisations affichées.' : ' réalisation affichée.');
+  filterStatus.textContent = count + (count > 1 ? ' études de projet affichées.' : ' étude de projet affichée.');
+  const secondaryHeading = document.querySelector('[data-secondary-heading]');
+  if (secondaryHeading) secondaryHeading.hidden = !cards.some(card => !card.hidden && card.dataset.priority === 'secondary');
 }
 // Density is a reading preference; no project or filter result is removed.
 const projectViews = document.querySelector('.project-views');
@@ -81,13 +83,13 @@ function focusHashTarget(hash) {
   let target;
   try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return null; }
   if (!target) return null;
-  const focusTarget = target.matches('h1,h2,h3,button,a,input,select,textarea') ? target : target.querySelector('h1,h2,h3') || target;
+  const focusTarget = target.matches('h1,h2,h3,h4,h5,h6,button,a,input,select,textarea') ? target : target.querySelector('h1,h2,h3,h4,h5,h6') || target;
   if (!focusTarget.matches('button,a,input,select,textarea')) focusTarget.setAttribute('tabindex','-1');
   focusTarget.focus({preventScroll:true});
   return target;
 }
 function scrollHashTarget(target, instant = false) {
-  const heading = target.closest('.project') ? target.closest('.project') : target.matches('h1,h2,h3') ? target : target.querySelector('h1,h2,h3') || target;
+  const heading = target.matches('.case-example') ? target : target.closest('.project') ? target.closest('.project') : target.matches('h1,h2,h3') ? target : target.querySelector('h1,h2,h3') || target;
   const header = document.querySelector('.site-header');
   const top = heading.getBoundingClientRect().top + window.scrollY - header.getBoundingClientRect().height - 24;
   const reduced = document.documentElement.classList.contains('motion-reduced');
