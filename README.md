@@ -181,9 +181,6 @@ L’accueil annonce le métier de chargé de communication et les domaines commu
 
 Les conférences scientifiques et la journée du siège sont intégrées dans l’étude de cas des événements institutionnels. Les dix cartes conservent les autres projets ; les anciennes ancres `#projet-conferences` et `#projet-journee-siege` conduisent aux deux exemples dans cette étude. Les formulations précisent les contributions et les périmètres de façon affirmative ; les attributions, les dates et l’état de préparation des projets restent explicites.
 
-`assets/supports-editoriaux/` contient cinq créations éditoriales réalisées pour le portfolio le 26 octobre 2026 : newsletter, proposition de programme, proposition de publication, affiche et note de préparation. Elles sont présentées comme une série originale indépendante sur la communication de la recherche, avec une attribution et une date sur chaque support ; elles ne constituent pas des archives de missions Inria. Les fichiers HTML sont lisibles sur mobile ; les cinq PDF et les sources sont réunis dans une archive ZIP autonome. Le script `scripts/build-supports.py` produit les PDF et les pages depuis une même base de contenu. Les aperçus sont des captures des pages réellement générées, pas des publications diffusées sur un réseau social.
-
-Génération : `python3 scripts/build-supports.py` (ReportLab). Captures : `PORTFOLIO_CAPTURE_SUPPORTS=1 node scripts/browser-portfolio-content.mjs`. Sans cette variable, le test écrit ses captures dans le dossier de test, pas dans les ressources du site. Les titres des supports, les documents et les aperçus partagent la même série ; aucun résultat de diffusion n’est ajouté.
 
 ## Outils temporairement indisponibles
 
