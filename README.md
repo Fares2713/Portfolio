@@ -91,7 +91,7 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Direction visuelle et animations
 
-L’ouverture éditoriale « Communication, création & projets. » met en avant la création de contenus, le pilotage événementiel et la coordination d’équipes, en lien avec les expériences Inria et les projets média et digitaux. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+L’ouverture met en scène le nom Farès Benamar, son métier et les domaines « Communication, création & projets. », en lien avec les expériences Inria et les projets média et digitaux. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
 
 Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
 
@@ -157,7 +157,7 @@ Vérification complémentaire : `scripts/browser-experience.mjs` couvre le trans
 
 `assets/hero/background-video.mp4` est une animation abstraite originale de 12 secondes (960 × 540, 24 images/s, H.264, sans piste audio, environ 151 Kio). Le poster WebP assure le rendu sans JavaScript ou sans lecture vidéo. Les formes bleues sont générées localement ; aucun stock externe, visage ou texte n’est intégré à la vidéo. Les paramètres de mouvement sont périodiques pour une boucle continue.
 
-Le contrôleur `hero-motion.js` attache la source vidéo uniquement lorsque les conditions autorisent la lecture. Il respecte la préférence système et le réglage local de réduction des animations. Si le navigateur expose une économie de données ou une connexion 2G, aucune vidéo n’est chargée. La lecture se met en pause hors écran, dans un onglet masqué ou derrière une étude de cas. Le bouton de pause du Hero a été retiré ; le réglage global « Réduire les animations » reste disponible en bas de page. L’ancienne préférence de pause propre au Hero est ignorée. En cas de refus d’autoplay ou d’échec du chargement, le poster reste affiché. Le fond est décoratif et ignoré par les technologies d’assistance ; le réglage global est utilisable au clavier.
+Le contrôleur `hero-motion.js` attache la source vidéo uniquement lorsque les conditions autorisent la lecture. Il respecte la préférence système et le réglage local de réduction des animations. Si le navigateur expose une économie de données ou une connexion 2G, aucune vidéo n’est chargée. La lecture se met en pause hors écran, derrière le menu fixe, dans un onglet masqué ou derrière une étude de cas. Le bouton de pause du Hero a été retiré ; le réglage global « Réduire les animations » reste disponible en bas de page. L’ancienne préférence de pause propre au Hero est ignorée. En cas de refus d’autoplay ou d’échec du chargement, le poster reste affiché. Le fond est décoratif et ignoré par les technologies d’assistance ; le réglage global est utilisable au clavier.
 
 `hero-motion.css` conserve un masque clair sous le texte, une arrivée progressive des éléments et des survols discrets sur les boutons. Le portrait conserve sa parallaxe légère sur ordinateur, désactivée lorsque les animations sont réduites. La vidéo n’est pas imprimée.
 
@@ -193,7 +193,7 @@ Le fichier `tools-availability.json` reflète cet état. Les tests de modèles r
 
 ## Ouverture panoramique
 
-La mise en page utilise une largeur maximale de 1 600 px, un titre de grande taille et un portrait rectangulaire encadré d’un liseré clair. Le portrait est aligné avec le titre plutôt que centré sur toute la présentation. L’introduction est raccourcie ; le profil complet reste dans la section Formation & profil. Les réalisations principales suivent directement les raccourcis de visite, sans répéter une sélection de vignettes dans le hero.
+La mise en page utilise une largeur maximale de 1 600 px, un titre de grande taille et un portrait rectangulaire encadré d’un liseré clair. Le portrait accompagne les domaines d’intervention et les aperçus des projets, sous le nom affiché en pleine largeur. L’introduction est raccourcie ; le profil complet reste dans la section Formation & profil. Les réalisations principales suivent directement les raccourcis de visite, sans répéter une sélection de vignettes dans le hero.
 
 `assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
 
@@ -224,3 +224,11 @@ La section compétences présente six domaines complémentaires : communication 
 ## Évaluation de la communication interne Inria
 
 Farès a confirmé avoir réalisé un sondage auprès des agents pour mesurer la qualité globale de la communication interne. Cette mission est mentionnée dans l’étude de cas, l’expérience Inria et les compétences éditoriales. Aucun nombre de répondants, résultat de satisfaction ou effet mesuré n’est ajouté. Les indicateurs préexistants ne sont pas présentés comme des résultats de ce sondage.
+
+## Hero signature personnel
+
+L’ouverture utilise désormais le nom Farès Benamar comme titre principal, sur un fond vert profond accordé à la section compétences. Le métier et les domaines d’intervention restent explicites. Deux aperçus des projets existants, Inria et L’Enjeu, donnent un accès direct aux réalisations ; le portrait est intégré au même niveau de lecture. Les chiffres et leurs périmètres figurent dans une bande horizontale sous cette composition.
+
+`hero-signature.css` règle cette composition et sa déclinaison mobile. L’entrée du nom utilise des masques typographiques, suivis d’une apparition courte des contenus et des aperçus. Sur ordinateur avec pointeur précis, les deux aperçus réagissent au pointeur avec un déplacement borné à 7 px horizontalement et 5 px verticalement. Le calcul est regroupé dans requestAnimationFrame, sans boucle permanente. Les effets s’arrêtent selon les préférences système, le réglage global et la visibilité de la page. Aucun défilement forcé ni écran de chargement n’est ajouté.
+
+Les aperçus et le portrait sont les fichiers existants ; aucun résultat ni distinction professionnelle supplémentaire n’est revendiqué. Les liens, les informations essentielles et la composition statique restent accessibles sans JavaScript ou avec réduction des animations.

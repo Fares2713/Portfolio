@@ -17,6 +17,18 @@ try{
   assert.equal(await page.locator('.hero-actions a').count(),2);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   // Wait for the finite entrance animation before inspecting the completed composition.
   await page.locator('.portrait-stage').evaluate(el=>Promise.all(el.getAnimations().map(a=>a.finished)));
+  if(width===1440){
+   await page.locator('.hero-work-lenjeu').evaluate(el=>Promise.all(el.getAnimations().map(a=>a.finished)));
+   const bounds=await page.locator('.hero--signature').boundingBox();
+   await page.mouse.move(bounds.x+bounds.width-40,bounds.y+160);
+   await page.waitForFunction(()=>document.querySelector('.hero-workstage').style.getPropertyValue('--hero-drift-x')!=='');
+   const drift=await page.locator('.hero-workstage').evaluate(el=>[parseFloat(el.style.getPropertyValue('--hero-drift-x')),parseFloat(el.style.getPropertyValue('--hero-drift-y'))]);
+   assert.ok(Math.abs(drift[0])<=7&&Math.abs(drift[1])<=5,'Pointer depth remains bounded');
+   await page.emulateMedia({reducedMotion:'reduce'});
+   await page.waitForFunction(()=>document.querySelector('.hero-workstage').style.getPropertyValue('--hero-drift-x')==='');
+   await page.emulateMedia({reducedMotion:'no-preference'});await playing(page);
+   await page.mouse.move(2,2);
+  }
   await page.screenshot({path:out+'/hero-'+width+'.png'});
   assert.equal(await page.locator('.hero-motion-control').count(),0,'No pause button in the Hero');
   await page.evaluate(()=>localStorage.setItem('portfolio-hero-paused','true'));
