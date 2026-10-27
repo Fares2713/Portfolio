@@ -227,8 +227,12 @@ Farès a confirmé avoir réalisé un sondage auprès des agents pour mesurer la
 
 ## Hero signature personnel
 
-L’ouverture utilise désormais le nom Farès Benamar comme titre principal, sur un fond vert profond accordé à la section compétences. Le métier et les domaines d’intervention restent explicites. Deux aperçus des projets existants, Inria et L’Enjeu, donnent un accès direct aux réalisations ; le portrait est intégré au même niveau de lecture. Les chiffres et leurs périmètres figurent dans une bande horizontale sous cette composition.
+L’ouverture utilise désormais le nom Farès Benamar comme titre principal, sur un fond bleu nuit, avec des accents cobalt raccordés aux liens et aux actions du portfolio. Le métier et les domaines d’intervention restent explicites. Deux aperçus des projets existants, Inria et L’Enjeu, donnent un accès direct aux réalisations ; le portrait est intégré au même niveau de lecture. Les chiffres et leurs périmètres figurent dans une bande horizontale sous cette composition.
 
 `hero-signature.css` règle cette composition et sa déclinaison mobile. L’entrée du nom utilise des masques typographiques, suivis d’une apparition courte des contenus et des aperçus. Sur ordinateur avec pointeur précis, les deux aperçus réagissent au pointeur avec un déplacement borné à 7 px horizontalement et 5 px verticalement. Le calcul est regroupé dans requestAnimationFrame, sans boucle permanente. Les effets s’arrêtent selon les préférences système, le réglage global et la visibilité de la page. Aucun défilement forcé ni écran de chargement n’est ajouté.
 
 Les aperçus et le portrait sont les fichiers existants ; aucun résultat ni distinction professionnelle supplémentaire n’est revendiqué. Les liens, les informations essentielles et la composition statique restent accessibles sans JavaScript ou avec réduction des animations.
+
+Le prénom a été réduit par rapport au nom et l’échelle typographique générale a été resserrée. Le montage des archives orales passe au premier plan, devant L’Enjeu. Le flux bleu animé reste visible en fond, avec les mêmes modes statiques et préférences de réduction des animations.
+
+Les grands aplats du hero et des compétences utilisent le même bleu nuit. Les accents et les appels à l’action reprennent le cobalt du portfolio. Les archives orales occupent le premier plan par défaut ; chaque aperçu reste accessible au clavier et peut passer devant au survol ou au focus.

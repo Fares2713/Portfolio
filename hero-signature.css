@@ -1,70 +1,71 @@
 /* Personal masthead, real work and a compact, accessible entrance sequence. */
 @media screen {
-  .hero-scene { background: #142b25; color: #f5f5e9; }
-  .hero-ambient { opacity: .24; background-position: center; }
-  .hero-ambient::after { background: linear-gradient(90deg,#142b25f5 0%,#142b25e0 45%,#142b25bf 100%); }
+  .hero-scene { background: #101e3c; color: #f5f7ff; }
+  .hero-ambient { opacity: .72; background-position: center; }
+  .hero-ambient::after { background: linear-gradient(110deg,#101e3cf5 0%,#101e3ce8 45%,#183879d9 100%); }
   .hero--signature {
     display: flex; flex-direction: column; align-items: stretch; gap: 0;
     min-height: 0; padding-block: 28px 22px; position: relative;
   }
-  .hero-masthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 18px; border-bottom: 1px solid #e6edda30; }
-  .hero--signature .hero-kicker { color: #d7ebaa; margin: 0; font-size: 10px; letter-spacing: .13em; }
-  .hero--signature .hero-kicker::before { background: #d7ebaa; box-shadow: none; }
-  .hero-masthead-meta { margin: 0; font-size: 10px; letter-spacing: .035em; color: #c6d3c7; }
-  .hero-masthead-meta > span { margin-inline: 20px; color: #8da397; }
+  .hero-masthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 18px; border-bottom: 1px solid #dce6ff30; }
+  .hero--signature .hero-kicker { color: #a9c3ff; margin: 0; font-size: 10px; letter-spacing: .13em; }
+  .hero--signature .hero-kicker::before { background: #a9c3ff; box-shadow: none; }
+  .hero-masthead-meta { margin: 0; font-size: 10px; letter-spacing: .035em; color: #c3cee3; }
+  .hero-masthead-meta > span { margin-inline: 20px; color: #7f96bc; }
   .hero--signature .hero-name {
     display: flex; align-items: baseline; gap: .16em; margin: 16px 0 24px;
-    font-size: clamp(100px, 14.6vw, 226px); line-height: 1.02; letter-spacing: -.075em;
-    font-weight: 550; max-width: none; color: #f5f5e9;
+    font-size: clamp(92px, 12.4vw, 192px); line-height: 1.02; letter-spacing: -.075em;
+    font-weight: 550; max-width: none; color: #f5f7ff;
   }
   .hero-name-word { display: block; overflow: clip; padding-bottom: .17em; margin-bottom: -.17em; white-space: nowrap; }
   .hero-name-word > span, .hero-name-word > em { display: block; }
-  .hero--signature .hero-name em { font-family: var(--serif); font-size: 1.1em; line-height: .95; font-weight: 400; letter-spacing: -.055em; color: #d7ebaa; }
+  .hero-name-word:first-child { font-size: .84em; }
+  .hero--signature .hero-name em { font-family: var(--serif); font-size: 1.08em; line-height: .95; font-weight: 400; letter-spacing: -.055em; color: #a9c3ff; }
   .hero-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, .6fr); gap: 38px; align-items: center; }
   .hero--signature .hero-copy { min-width: 0; padding-bottom: 6px; }
-  .hero--signature .hero-role { font-size: clamp(25px, 2.1vw, 34px); font-weight: 500; letter-spacing: -.04em; line-height: 1.18; color: #f5f5e9; margin: 0 0 18px; max-width: none; }
-  .hero-role em { font-family: var(--serif); font-size: 1.18em; font-weight: 400; color: #d7ebaa; }
-  .hero--signature .hero-description { font-size: 13px; line-height: 1.85; max-width: 42ch; color: #c6d3c7; margin: 0 0 24px; }
+  .hero--signature .hero-role { font-size: clamp(25px, 2.1vw, 34px); font-weight: 500; letter-spacing: -.04em; line-height: 1.18; color: #f5f7ff; margin: 0 0 18px; max-width: none; }
+  .hero-role em { font-family: var(--serif); font-size: 1.18em; font-weight: 400; color: #a9c3ff; }
+  .hero--signature .hero-description { font-size: 13px; line-height: 1.85; max-width: 42ch; color: #c3cee3; margin: 0 0 24px; }
   .hero--signature .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
   .hero--signature .button { min-height: 48px; padding: 12px 17px; font-size: 11px; gap: 14px; border-radius: 4px; }
-  .hero--signature .button-primary { background: #d7ebaa; color: #142b25; box-shadow: none; }
-  .hero--signature .button-primary:hover { background: #e8f4cd; }
-  .hero--signature .button-outline { color: #f5f5e9; border-color: #d9e5cf66; }
-  .hero--signature .button-outline:hover { background: #f5f5e9; color: #142b25; }
-  .hero--signature .hero-location { font-size: 9px; color: #c6d3c7; margin-top: 18px; }
+  .hero--signature .button-primary { background: var(--blue); color: #fff; box-shadow: none; }
+  .hero--signature .button-primary:hover { background: #345dee; }
+  .hero--signature .button-outline { color: #f5f7ff; border-color: #c8d7ff66; }
+  .hero--signature .button-outline:hover { background: #f5f7ff; color: #101e3c; }
+  .hero--signature .hero-location { font-size: 9px; color: #c3cee3; margin-top: 18px; }
   .hero--signature .portrait-stage { width: 100%; max-width: 270px; margin: 0; padding: 0; align-self: center; justify-self: end; }
   .hero--signature .portrait-stage::before { display: none; }
-  .hero--signature .hero-portrait { width: 100%; max-width: none; padding: 0; border: 1px solid #e6edda35; border-radius: 2px; background: #263d33; box-shadow: none; }
+  .hero--signature .hero-portrait { width: 100%; max-width: none; padding: 0; border: 1px solid #dce6ff35; border-radius: 2px; background: #182d54; box-shadow: none; }
   .hero--signature .hero-portrait img { aspect-ratio: 4 / 5; border-radius: 0; filter: saturate(.8); object-position: center; }
   .hero-workstage { position: relative; min-width: 0; height: 285px; isolation: isolate; }
-  .hero-workstage::before { content: ''; position: absolute; inset: 26px 26px 12px; border: 1px solid #d7ebaa25; border-radius: 50%; }
-  .hero-work { position: absolute; width: 76%; max-width: 360px; border: 1px solid #f5f5e970; border-radius: 3px; overflow: hidden; box-shadow: 0 18px 45px #0004; background: #f1f0e5; color: #172c26; transform-origin: center; }
+  .hero-workstage::before { content: ''; position: absolute; inset: 26px 26px 12px; border: 1px solid #a9c3ff25; border-radius: 50%; }
+  .hero-work { position: absolute; width: 76%; max-width: 360px; border: 1px solid #f5f7ff70; border-radius: 3px; overflow: hidden; box-shadow: 0 18px 45px #0004; background: #f1f0e5; color: #172c26; transform-origin: center; }
   .hero-work-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 13px; font-size: 11px; font-weight: 650; letter-spacing: -.01em; border-bottom: 1px solid #172c2614; }
   .hero-work-label > span { font-size: 16px; line-height: 1; }
   .hero-work img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
   .hero-work-caption { display: block; padding: 9px 13px; font-size: 9px; color: #4b5c51; line-height: 1.5; }
-  .hero-work-inria { left: -6px; top: 8px; z-index: 1; transform: translate3d(calc(var(--hero-drift-x,0px) * -.5),calc(var(--hero-drift-y,0px) * -.5),0) rotate(-9deg); }
+  .hero-work-inria { left: -6px; top: 8px; z-index: 2; transform: translate3d(var(--hero-drift-x,0px),var(--hero-drift-y,0px),0) rotate(-6deg); }
   .hero-work-inria img { object-fit: contain; background: #476f48; }
-  .hero-work-lenjeu { right: 0; bottom: 0; z-index: 2; transform: translate3d(var(--hero-drift-x,0px),var(--hero-drift-y,0px),0) rotate(7deg); background: #e8dfc4; }
-  .hero--signature .hero-proof { display: flex; align-items: center; gap: 40px; max-width: none; margin: 34px 0 0; padding: 20px 0; border-block: 1px solid #e6edda30; }
-  .hero--signature .hero-proof > p { flex: 0 0 190px; margin: 0; font-size: 10px; line-height: 1.8; color: #c6d3c7; }
+  .hero-work-lenjeu { right: 0; bottom: 0; z-index: 1; transform: translate3d(calc(var(--hero-drift-x,0px) * -.5),calc(var(--hero-drift-y,0px) * -.5),0) rotate(7deg); background: #e8dfc4; }
+  .hero--signature .hero-proof { display: flex; align-items: center; gap: 40px; max-width: none; margin: 34px 0 0; padding: 20px 0; border-block: 1px solid #dce6ff30; }
+  .hero--signature .hero-proof > p { flex: 0 0 190px; margin: 0; font-size: 10px; line-height: 1.8; color: #c3cee3; }
   .hero--signature .hero-proof dl { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 28px; flex: 1; margin: 0; padding: 0; border: 0; }
-  .hero--signature .hero-proof dl > div { padding-left: 24px; border-left: 1px solid #e6edda30; }
-  .hero--signature .hero-proof dt { font-family: var(--sans); font-size: 30px; letter-spacing: -.055em; font-weight: 500; line-height: 1.1; color: #d7ebaa; }
-  .hero--signature .hero-proof dd { font-size: 10px; line-height: 1.7; color: #c6d3c7; margin: 7px 0 0; }
-  .hero--signature .hero-scroll { display: flex; margin-top: 0; padding-top: 16px; border: 0; color: #e7ecdc; font-size: 9px; }
-  .hero--signature .hero-scroll > span:first-child { border-color: #e6edda45; width: 28px; height: 28px; font-size: 16px; }
-  .hero--signature .hero-scroll-index { color: #c6d3c7; }
-  .hero--signature :focus-visible { outline-color: #d7ebaa; }
+  .hero--signature .hero-proof dl > div { padding-left: 24px; border-left: 1px solid #dce6ff30; }
+  .hero--signature .hero-proof dt { font-family: var(--sans); font-size: 30px; letter-spacing: -.055em; font-weight: 500; line-height: 1.1; color: #a9c3ff; }
+  .hero--signature .hero-proof dd { font-size: 10px; line-height: 1.7; color: #c3cee3; margin: 7px 0 0; }
+  .hero--signature .hero-scroll { display: flex; margin-top: 0; padding-top: 16px; border: 0; color: #e3e9f5; font-size: 9px; }
+  .hero--signature .hero-scroll > span:first-child { border-color: #dce6ff45; width: 28px; height: 28px; font-size: 16px; }
+  .hero--signature .hero-scroll-index { color: #c3cee3; }
+  .hero--signature :focus-visible { outline-color: #a9c3ff; }
   .hero--signature .hero-work:focus-visible { z-index: 3; outline-offset: 5px; }
 }
 @media screen and (min-width: 1700px) {
-  .hero--signature .hero-name { font-size: 240px; margin-block: 20px 30px; }
+  .hero--signature .hero-name { font-size: 200px; margin-block: 20px 30px; }
   .hero-body { gap: 60px; }
   .hero-workstage { height: 310px; }
 }
 @media screen and (min-width: 761px) and (max-width: 1100px) {
-  .hero--signature .hero-name { font-size: clamp(100px, 14vw, 150px); margin-block: 18px 26px; }
+  .hero--signature .hero-name { font-size: clamp(84px, 12vw, 132px); margin-block: 18px 26px; }
   .hero-body { grid-template-columns: minmax(0,1.25fr) minmax(0,1fr) 160px; gap: 24px; }
   .hero--signature .hero-role { font-size: 25px; }
   .hero--signature .hero-description { font-size: 12px; }
@@ -86,7 +87,7 @@
   .hero--signature .hero-kicker { font-size: 8px; letter-spacing: .08em; gap: 8px; }
   .hero-masthead-meta { font-size: 8px; max-width: 110px; text-align: right; line-height: 1.8; }
   .hero-masthead-meta > span { margin-inline: 5px; }
-  .hero--signature .hero-name { font-size: clamp(64px, 18vw, 130px); gap: .12em; flex-wrap: wrap; margin-block: 20px 28px; line-height: .95; }
+  .hero--signature .hero-name { font-size: clamp(60px, 16.5vw, 112px); gap: .12em; flex-wrap: wrap; margin-block: 20px 28px; line-height: .95; }
   .hero--signature .hero-name em { font-size: 1.1em; }
   .hero-body { grid-template-columns: minmax(0,1fr) 104px; align-items: center; column-gap: 22px; row-gap: 28px; }
   .hero--signature .hero-copy { grid-column: 1 / -1; padding: 0; }
@@ -123,15 +124,24 @@
   html:not(.motion-reduced) .hero-name-word > span { animation: signature-name 1s var(--ease) .08s both; }
   html:not(.motion-reduced) .hero-name-word > em { animation: signature-name 1.1s var(--ease) .18s both; }
   html:not(.motion-reduced) .hero--signature .hero-copy { animation: signature-detail .75s var(--ease) .28s both; }
-  html:not(.motion-reduced) .hero-work-inria { animation: signature-inria 1.1s var(--ease) .26s backwards; }
-  html:not(.motion-reduced) .hero-work-lenjeu { animation: signature-lenjeu 1.15s var(--ease) .38s backwards; }
+  html:not(.motion-reduced) .hero-work-inria { animation: signature-inria 1.1s var(--ease) .34s backwards; }
+  html:not(.motion-reduced) .hero-work-lenjeu { animation: signature-lenjeu 1.15s var(--ease) .22s backwards; }
   html:not(.motion-reduced) .hero--signature .portrait-stage { animation: signature-detail .95s var(--ease) .38s both; }
   html:not(.motion-reduced) .hero--signature .hero-proof { animation: signature-detail .75s var(--ease) .45s both; }
   .hero-work { transition: box-shadow .35s, border-color .35s; }
-  .hero-work:hover { z-index: 3; box-shadow: 0 24px 55px #0006; border-color: #d7ebaa; }
+  .hero-work:hover { z-index: 3; box-shadow: 0 24px 55px #0006; border-color: #a9c3ff; }
 }
 @keyframes signature-name { from { transform: translateY(110%); } to { transform: translateY(0); } }
 @keyframes signature-detail { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-@keyframes signature-inria { from { opacity: 0; transform: translate(35px,28px) rotate(3deg); } to { opacity: 1; transform: translate(0,0) rotate(-9deg); } }
+@keyframes signature-inria { from { opacity: 0; transform: translate(35px,28px) rotate(3deg); } to { opacity: 1; transform: translate(0,0) rotate(-6deg); } }
 @keyframes signature-lenjeu { from { opacity: 0; transform: translate(-26px,32px) rotate(-4deg); } to { opacity: 1; transform: translate(0,0) rotate(7deg); } }
 @media print { .hero-workstage,.hero-masthead-meta { display: none; } .hero-scene { background: white; } }
+
+/* Shared blue accents keep the opening and the rest of the portfolio in tune. */
+@media screen{
+.monogram,nav .nav-contact{background:#101e3c}
+.expertise-section{background:#101e3c}
+.expertise-section h2 em,.expertise-section .eyebrow,.expertise-index,.expertise-grid .text-link{color:#a9c3ff}
+.expertise-grid article:hover h3{color:#d8e3ff}
+.contact-section h2 em{color:#d8e3ff}
+}
