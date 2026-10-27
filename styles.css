@@ -428,3 +428,5 @@ html.dialog-open{overflow:hidden}
 .project-dialog .dialog-bar{top:0}
 
 .project-grid.is-compact>.project{margin-top:0}.is-compact .project-contribution strong,.is-compact .project-featured .project-contribution strong{font-size:13px}.is-compact .project-contribution>span{font-size:10px}.is-compact .project-outcome>span{font-size:12px}.is-compact .project-body>.eyebrow{font-size:10px}.is-compact .project-actions>.text-link,.is-compact .project-actions>details>summary{font-size:12px}
+
+.experience-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px}

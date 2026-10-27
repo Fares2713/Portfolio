@@ -200,3 +200,9 @@ La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grand
 ## Retrait de la section Ma démarche
 
 La section « Des décisions. Un système de travail. » et ses deux cartes ont été retirées du portfolio, avec les liens du menu et du parcours de visite. Les raccourcis de visite proposent désormais les réalisations et le parcours. Les pages autonomes des outils conservent leur état de maintenance.
+
+## Réseaux sociaux chez FNK Location
+
+Le périmètre confirmé par Farès comprend le calendrier éditorial, la création de visuels et vidéos, la programmation et la publication, les messages et commentaires, la publicité et l’analyse des statistiques. Il est détaillé dans l’étude de cas et résumé dans le parcours. Aucune plateforme, aucun budget publicitaire ni résultat chiffré non précisé n’est ajouté.
+
+Les expériences indépendantes L’Enjeu et VigySafety proposent chacune un lien « Voir le site » à côté de l’étude de cas, avec ouverture du site public dans un nouvel onglet.
