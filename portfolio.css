@@ -48,11 +48,12 @@
     color: inherit; font-size: 10px; line-height: 1.6; border-top: 1px solid #ffffff18;
   }
   .project-grid:not(.is-compact) #projet-1 .project-visual {
-    background: #0c192d url('assets/art-direction/archives-ribbon.webp') center / cover no-repeat; color: #e1e8f3;
+    background: #e8ece3; color: #29483c;
   }
+  .project-grid:not(.is-compact) #projet-1 .project-visual::after { color: #29483c; }
   .project-grid:not(.is-compact) #projet-1 .project-visual img {
     aspect-ratio: 16 / 9; object-fit: contain; padding: 8px; background: #f2f3eb;
-    transform: rotate(-3deg); box-shadow: 0 24px 60px #0006;
+    transform: rotate(-3deg); box-shadow: 0 20px 45px #1b332624;
   }
   .project-grid:not(.is-compact) #projet-1 .project-image-link:hover img { transform: rotate(-1deg) scale(1.025); }
   .project-grid:not(.is-compact) > #projet-2, .project-grid:not(.is-compact) > #projet-10 { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }

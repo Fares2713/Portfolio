@@ -215,7 +215,7 @@ Le portrait d’ouverture ne comporte plus de légende ni de signature « fb. »
 
 Les études de cas commencent par un grand visuel et une synthèse du rôle et du repère chiffré ou du périmètre. Les images, textes détaillés, attributions et ressources restent disponibles. Sans JavaScript, les liens directs et les accordéons natifs restent accessibles. Les effets respectent la préférence système et le réglage de réduction des animations.
 
-Le décor abstrait `assets/art-direction/archives-ribbon.webp` a été généré avec l’outil d’image, puis optimisé en WebP (environ 51 Ko). Il sert de fond à la photographie originale du tournage et ne représente pas une production Inria. Le fichier `source.json` documente sa provenance. Les autres mises en scène utilisent les photos et captures existantes, sans les régénérer.
+Le décor abstrait `assets/art-direction/archives-ribbon.webp` a été généré avec l’outil d’image, puis optimisé en WebP (environ 51 Ko). Il a été retiré de l’affichage au profit d’un fond uni clair, accordé au vert du montage ; le fichier est conservé comme archive de création et ne représente pas une production Inria. Le fichier `source.json` documente sa provenance. Les autres mises en scène utilisent les photos et captures existantes, sans les régénérer.
 
 Références de structure et de présentation consultées : [COLLINS](https://wearecollins.com/case-studies/), [Pentagram](https://www.pentagram.com/work), [Locomotive](https://locomotive.ca/en). Leurs projets et leurs médias ne sont pas repris dans le portfolio.
 
