@@ -193,7 +193,7 @@ Le fichier `tools-availability.json` reflète cet état. Les tests de modèles r
 
 ## Ouverture panoramique
 
-La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grande taille et un portrait rectangulaire encadré d’un liseré clair, avec une ombre douce et un contour fin décalé. Trois liens visuels introduisent les archives orales Inria, le média L’Enjeu et le projet de conception des Rencontres. Les légendes distinguent le travail réalisé du projet envisagé. Sur mobile, cette sélection se présente en lignes compactes ; le bandeau des repères adopte un fond sombre.
+La mise en page utilise une largeur maximale de 1 600 px, un titre de grande taille et un portrait rectangulaire encadré d’un liseré clair. Le portrait est aligné avec le titre plutôt que centré sur toute la présentation. L’introduction est raccourcie ; le profil complet reste dans la section Formation & profil. Les réalisations principales suivent directement les raccourcis de visite, sans répéter une sélection de vignettes dans le hero.
 
 `assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
 
@@ -208,3 +208,15 @@ Le périmètre confirmé par Farès comprend le calendrier éditorial, la créat
 Les expériences indépendantes L’Enjeu et VigySafety proposent chacune un lien « Voir le site » à côté de l’étude de cas, avec ouverture du site public dans un nouvel onglet.
 
 Le portrait d’ouverture ne comporte plus de légende ni de signature « fb. ». La photo conserve son fichier original et son texte alternatif ; son cadrage vertical 4:5, le contour clair et les angles légèrement arrondis structurent sa présentation.
+
+## Présentation visuelle des réalisations
+
+`portfolio.css` présente par défaut quatre projets majeurs en grand format : archives orales, événementiel Inria, L’Enjeu et VigySafety. Les autres contributions restent compactes. La vue synthèse, les filtres, l’index des projets et les liens externes restent disponibles. La préférence de présentation est enregistrée uniquement après un choix explicite, dans `portfolio-project-layout-v2`. Le nouveau nom évite de reprendre l’ancien mode compact qui était enregistré automatiquement.
+
+Les études de cas commencent par un grand visuel et une synthèse du rôle et du repère chiffré ou du périmètre. Les images, textes détaillés, attributions et ressources restent disponibles. Sans JavaScript, les liens directs et les accordéons natifs restent accessibles. Les effets respectent la préférence système et le réglage de réduction des animations.
+
+Le décor abstrait `assets/art-direction/archives-ribbon.webp` a été généré avec l’outil d’image, puis optimisé en WebP (environ 51 Ko). Il sert de fond à la photographie originale du tournage et ne représente pas une production Inria. Le fichier `source.json` documente sa provenance. Les autres mises en scène utilisent les photos et captures existantes, sans les régénérer.
+
+Références de structure et de présentation consultées : [COLLINS](https://wearecollins.com/case-studies/), [Pentagram](https://www.pentagram.com/work), [Locomotive](https://locomotive.ca/en). Leurs projets et leurs médias ne sont pas repris dans le portfolio.
+
+La section compétences présente six domaines complémentaires : communication éditoriale, création graphique et audiovisuelle, événementiel et coordination, réseaux sociaux et campagnes, sites web/SEO/audience, communication commerciale. Chaque domaine renvoie à une contribution existante ; aucun niveau de maîtrise, outil non confirmé ni résultat supplémentaire n’est inventé.

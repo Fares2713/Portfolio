@@ -48,18 +48,20 @@ function applyFilter(filter) {
 const projectViews = document.querySelector('.project-views');
 const projectGrid = document.querySelector('.project-grid');
 if (projectViews && projectGrid) {
-  let savedView = 'compact';
-  try { if (localStorage.getItem('portfolio-project-view') === 'visual') savedView = 'visual'; } catch {}
+  let savedView = 'visual';
+  try { if (localStorage.getItem('portfolio-project-layout-v2') === 'compact') savedView = 'compact'; } catch {}
   function setProjectView(view) {
     projectGrid.classList.toggle('is-compact', view === 'compact');
     projectViews.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.projectView === view)));
-    try { localStorage.setItem('portfolio-project-view', view); } catch {}
   }
   projectViews.hidden = false;
   setProjectView(savedView);
   projectViews.addEventListener('click', event => {
     const button = event.target.closest('[data-project-view]');
-    if (button) setProjectView(button.dataset.projectView);
+    if (button) {
+      setProjectView(button.dataset.projectView);
+      try { localStorage.setItem('portfolio-project-layout-v2', button.dataset.projectView); } catch {}
+    }
   });
 }
 filters.addEventListener('click', event => {
@@ -191,6 +193,21 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       coverImage.loading = 'eager';
       cover.append(coverImage, card.querySelector('figcaption').cloneNode(true));
       dialogContent.append(cover);
+      const snapshot = document.createElement('dl');
+      snapshot.className = 'case-snapshot';
+      for (const [label, value] of [
+        ['Ma contribution', card.querySelector('.project-contribution strong').textContent],
+        ['Le projet en bref', [...card.querySelector('.project-outcome').children].map(item => item.textContent.trim()).join(' · ')]
+      ]) {
+        const field = document.createElement('div');
+        const term = document.createElement('dt');
+        const description = document.createElement('dd');
+        term.textContent = label;
+        description.textContent = value;
+        field.append(term, description);
+        snapshot.append(field);
+      }
+      dialogContent.append(snapshot);
       const content = card.querySelector('.case-content').cloneNode(true);
       content.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
       dialogContent.append(content);

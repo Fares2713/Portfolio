@@ -50,7 +50,7 @@ try{
   assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=341);
   const portraitImage=await page.locator('.hero-portrait img').boundingBox();
   assert.ok(portraitImage.height<=portraitImage.width*1.25,'Portrait keeps a natural crop');
-  for(const image of await page.locator('.project:not(.project-featured) .project-visual img').all()) {
+  for(const image of await page.locator('.project[data-priority=secondary] .project-visual img').all()) {
    const bounds=await image.boundingBox();
    assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
   }
@@ -97,14 +97,14 @@ try{
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/fnk-agence.jpg');
   await page.keyboard.press('Escape');
   await page.locator('#projet-fnk summary').click();
-  assert.match(await dialog.innerText(),/visuel présenté provient du site public/);
+  assert.match(await dialog.innerText(),/Photographie de présentation de l’agence issue du site public/);
   assert.equal(await dialog.locator('.case-content > ul > li').count(),6,'All FNK missions are represented');
   await page.mouse.click(3,3);
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
   await page.locator('#projet-lenjeu summary').click();
-  assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Contexte & objectif','Case starts with context');
+  assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Le besoin','Case starts with context');
   assert.ok(await dialog.locator('.case-content').evaluate(el=>{
     const result=[...el.querySelectorAll(':scope > h4')].find(h=>h.textContent==='Résultats & périmètre');
     return Boolean(result.compareDocumentPosition(el.querySelector('.editorial-carousel'))&Node.DOCUMENT_POSITION_FOLLOWING);
@@ -136,7 +136,7 @@ try{
 
   await page.locator('#projet-rencontres-enjeu summary').click();
   assert.match(await dialog.innerText(),/avril 2027/);
-  assert.match(await dialog.innerText(),/hypothèses de travail/);
+  assert.match(await dialog.innerText(),/Objectifs de conception : 80 participants, enveloppe prévisionnelle/);
   const resourcesAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
   assert.deepEqual(resourcesAudit.violations.map(x=>x.id),[],'Accessible project documents');
   const [download]=await Promise.all([page.waitForEvent('download'),dialog.locator('a[download="01-dossier-conception.pdf"]').click()]);

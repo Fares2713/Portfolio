@@ -21,7 +21,7 @@ try{
   await page.locator('[data-project-view=visual]').click();await topOf(page,'#projets');await page.locator('#projet-1 img').evaluate(img=>img.decode());await settle(page);await page.screenshot({path:out+'/realisations-'+width+'.png'});
   const source=page.locator('#projet-2');await topOf(page,'#projet-2');await source.locator('img').evaluate(img=>img.decode());
   // Opening from a visible thumbnail produces a bounded visual flight in the native dialog.
-  await source.locator('summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('#project-dialog').isVisible());assert.equal(await page.locator('.case-cover img').getAttribute('src'),'assets/inria-evenement.webp');
+  await source.locator('summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('#project-dialog').isVisible());assert.equal(await page.locator('.case-cover img').getAttribute('src'),'assets/inria-evenement.webp');assert.equal(await page.locator('.case-snapshot dd').count(),2);assert.match(await page.locator('.case-snapshot').innerText(),/Coordination événementielle/);
   assert.ok(await page.locator('.shared-image-flight').count()>=1,'Shared image transition starts');await page.waitForFunction(()=>!document.querySelector('.shared-image-flight'));
   await settle(page);await page.screenshot({path:out+'/projet-'+width+'.png'});await page.keyboard.press('Escape');assert.ok(!(await page.locator('#project-dialog').isVisible()));await page.waitForFunction(()=>!document.querySelector('.shared-image-flight'));assert.ok(await source.locator('summary').evaluate(el=>el===document.activeElement));
   // Closing while an entrance is running must not leave fixed images or lock scrolling.
