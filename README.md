@@ -196,3 +196,7 @@ Le fichier `tools-availability.json` reflète cet état. Les tests de modèles r
 La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grande taille et un portrait rectangulaire sur un aplat bleu décalé. Trois liens visuels introduisent les archives orales Inria, le média L’Enjeu et le projet de conception des Rencontres. Les légendes distinguent le travail réalisé du projet envisagé. Sur mobile, cette sélection se présente en lignes compactes ; le bandeau des repères adopte un fond sombre.
 
 `assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
+
+## Retrait de la section Ma démarche
+
+La section « Des décisions. Un système de travail. » et ses deux cartes ont été retirées du portfolio, avec les liens du menu et du parcours de visite. Les raccourcis de visite proposent désormais les réalisations et le parcours. Les pages autonomes des outils conservent leur état de maintenance.

@@ -43,10 +43,6 @@ h2 em{font-size:1.11;letter-spacing:-.025em;line-height:1}
 .is-compact .project-outcome strong{font-size:27px}
 .project-actions>.text-link{position:relative}.project-actions>.text-link::after{content:'';position:absolute;left:0;bottom:13px;width:calc(100% - 5px);height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .project-actions>.text-link:hover::after{transform:scaleX(1)}
-.methods-section{padding:50px 34px 40px;border-block:1px solid var(--line);border-radius:7px;background:linear-gradient(135deg,#eef0e7,#f7f6f2 65%);margin-bottom:35px}
-.methods-section .section-heading{padding-top:15px}.methods-section .section-mark{right:8px;top:-20px}
-.method-card{border-radius:7px;padding:34px}.method-card h3{font-weight:550;font-size:31px}
-.method-preview{background:#fffefbbd}
 .experience-section{padding-top:90px}
 .experience-group-title{font-size:10px;font-weight:700;letter-spacing:.13em;margin-top:38px}
 .experience-list{border-top:0}
@@ -100,7 +96,7 @@ h2 em{font-size:1.11;letter-spacing:-.025em;line-height:1}
 }
 @keyframes editorial-dialog-in{from{opacity:.25}to{opacity:1}}
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){html:not(.motion-reduced) .is-compact .project:hover .project-visual img{transform:translateY(-2px) scale(1.035)}}
-@media(max-width:1100px){.experience-row{grid-template-columns:140px minmax(0,1fr) 185px;gap:24px}.contact-inner{gap:45px}.methods-section{padding-inline:25px}.hero h1{font-size:clamp(49px,6vw,70px)}}
+@media(max-width:1100px){.experience-row{grid-template-columns:140px minmax(0,1fr) 185px;gap:24px}.contact-inner{gap:45px}.hero h1{font-size:clamp(49px,6vw,70px)}}
 @media(max-width:760px){
  .hero h1{font-size:clamp(37px,8.9vw,64px);letter-spacing:-.065em}.hero-description{font-size:14px}.hero-role{font-size:10px}.hero h1 em{font-size:1.18}
  .hero-actions .button{font-size:10px}.section-heading{padding-top:10px;gap:20px}.section-mark{font-size:110px;top:-12px;right:0}
@@ -108,10 +104,9 @@ h2 em{font-size:1.11;letter-spacing:-.025em;line-height:1}
  h2,.projects-heading h2{font-size:38px}.projects-heading{margin-bottom:28px}.credentials strong{font-size:35px}
  .project-grid:not(.is-compact){gap:25px}.project-grid:not(.is-compact) .project-featured{display:block}.project-grid:not(.is-compact) .project h3,.project-grid:not(.is-compact) .project-featured h3{font-size:27px}
  .project-grid:not(.is-compact) .project-body{padding:23px 22px 0}.is-compact .project h3,.is-compact .project-featured h3{font-size:20px}.is-compact .project-outcome strong{font-size:24px}
- .methods-section{padding:35px 22px 25px;margin-bottom:0}.methods-section h2{font-size:35px}.method-card{padding:25px}.method-card h3{font-size:28px}
  .experience-row{grid-template-columns:1fr;gap:14px;padding:28px 0 28px 25px}.experience-row::before{left:3px}.experience-date{position:relative;top:auto;padding-left:0;font-size:11px}.experience-date::before{left:-27px;top:4px}.experience-date>span{font-size:10px}.experience-content h4{font-size:28px}.experience-focus{padding:18px}
  .contact-inner{grid-template-columns:1fr;gap:35px;padding-block:75px}.contact-section h2{font-size:clamp(40px,8vw,58px)}.contact-links>a:first-child strong{font-size:20px}.contact-links strong{font-size:17px}.contact-links>a{padding-block:20px}
  .project-dialog{padding:20px 22px 24px}.project-dialog h2{font-size:28px}.case-cover img{aspect-ratio:16/10;max-height:230px}.case-cover figcaption{padding:10px 13px;font-size:9px}.project-dialog .case-content{font-size:13px}.case-cover[data-visual-kind=document] img{max-height:210px}
 }
-@media(max-width:400px){.contact-links>a:first-child strong{font-size:17px}.contact-section h2{font-size:39px}.methods-section{padding-inline:18px}.method-card{padding:22px}.hero h1>span{letter-spacing:-.07em}}
-@media print{.section-mark,.copy-email,.copy-feedback,.shared-image-flight{display:none!important}.experience-date{position:static;top:auto}.experience-row::before,.experience-date::before{display:none}.experience-row{padding-left:0}.heading-line{overflow:visible}.heading-ink{transform:none!important;opacity:1!important}.methods-section{background:white;padding:15px 0}.contact-section::before,.contact-section::after{display:none}.contact-inner{padding-block:25px}.contact-section h2 em{color:black}}
+@media(max-width:400px){.contact-links>a:first-child strong{font-size:17px}.contact-section h2{font-size:39px}.hero h1>span{letter-spacing:-.07em}}
+@media print{.section-mark,.copy-email,.copy-feedback,.shared-image-flight{display:none!important}.experience-date{position:static;top:auto}.experience-row::before,.experience-date::before{display:none}.experience-row{padding-left:0}.heading-line{overflow:visible}.heading-ink{transform:none!important;opacity:1!important}.contact-section::before,.contact-section::after{display:none}.contact-inner{padding-block:25px}.contact-section h2 em{color:black}}
