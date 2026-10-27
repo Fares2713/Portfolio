@@ -220,3 +220,7 @@ Le décor abstrait `assets/art-direction/archives-ribbon.webp` a été généré
 Références de structure et de présentation consultées : [COLLINS](https://wearecollins.com/case-studies/), [Pentagram](https://www.pentagram.com/work), [Locomotive](https://locomotive.ca/en). Leurs projets et leurs médias ne sont pas repris dans le portfolio.
 
 La section compétences présente six domaines complémentaires : communication éditoriale, création graphique et audiovisuelle, événementiel et coordination, réseaux sociaux et campagnes, sites web/SEO/audience, communication commerciale. Chaque domaine renvoie à une contribution existante ; aucun niveau de maîtrise, outil non confirmé ni résultat supplémentaire n’est inventé.
+
+## Évaluation de la communication interne Inria
+
+Farès a confirmé avoir réalisé un sondage auprès des agents pour mesurer la qualité globale de la communication interne. Cette mission est mentionnée dans l’étude de cas, l’expérience Inria et les compétences éditoriales. Aucun nombre de répondants, résultat de satisfaction ou effet mesuré n’est ajouté. Les indicateurs préexistants ne sont pas présentés comme des résultats de ce sondage.
