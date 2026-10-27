@@ -11,7 +11,7 @@ const browser=await chromium.launch(process.env.PORTFOLIO_CHROMIUM_PATH?{executa
 try{
  for(const width of [320,768,1440]){
   const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(origin,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
-  assert.match(await page.locator('h1').innerText(),/Des idées fortes\.\s+Du concret\./);assert.equal(await page.locator('.hero-proof dt').count(),3);assert.ok((await page.locator('.hero-proof').boundingBox()).y<1000);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  assert.match(await page.locator('h1').innerText(),/Communication,\s+création & projets\./);assert.equal(await page.locator('.hero-proof dt').count(),3);assert.ok((await page.locator('.hero-proof').boundingBox()).y<1000);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   assert.equal(await page.locator('.project').count(),10);assert.equal(await page.locator('.project[data-priority=primary]').count(),4);assert.equal(await page.locator('#project-index li').count(),10);assert.equal(await page.locator('#supports,.portfolio-supports').count(),0,'Removed editorial-support section stays absent from the home page');
   assert.equal(await page.locator('.method-card button[disabled]').count(),2);assert.equal(await page.locator('.method-card a[href^="dossier-decisions"],.method-card a[href^="atelier-editorial"]').count(),0);
   await page.screenshot({path:out+'/hero-'+width+'.png'});await page.locator('#projets').scrollIntoViewIfNeeded();await page.screenshot({path:out+'/projects-'+width+'.png'});

@@ -91,7 +91,7 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Direction visuelle et animations
 
-L’ouverture éditoriale « Des idées fortes. Du concret. » met en avant la création de contenus, le pilotage événementiel et la coordination d’équipes, en lien avec les expériences Inria et les projets média et digitaux. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+L’ouverture éditoriale « Communication, création & projets. » met en avant la création de contenus, le pilotage événementiel et la coordination d’équipes, en lien avec les expériences Inria et les projets média et digitaux. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
 
 Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
 
