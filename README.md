@@ -193,7 +193,7 @@ Le fichier `tools-availability.json` reflète cet état. Les tests de modèles r
 
 ## Ouverture panoramique
 
-La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grande taille et un portrait rectangulaire sur un aplat bleu décalé. Trois liens visuels introduisent les archives orales Inria, le média L’Enjeu et le projet de conception des Rencontres. Les légendes distinguent le travail réalisé du projet envisagé. Sur mobile, cette sélection se présente en lignes compactes ; le bandeau des repères adopte un fond sombre.
+La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grande taille et un portrait rectangulaire encadré d’un liseré clair, avec une ombre douce et un contour fin décalé. Trois liens visuels introduisent les archives orales Inria, le média L’Enjeu et le projet de conception des Rencontres. Les légendes distinguent le travail réalisé du projet envisagé. Sur mobile, cette sélection se présente en lignes compactes ; le bandeau des repères adopte un fond sombre.
 
 `assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
 
@@ -206,3 +206,5 @@ La section « Des décisions. Un système de travail. » et ses deux cartes ont 
 Le périmètre confirmé par Farès comprend le calendrier éditorial, la création de visuels et vidéos, la programmation et la publication, les messages et commentaires, la publicité et l’analyse des statistiques. Il est détaillé dans l’étude de cas et résumé dans le parcours. Aucune plateforme, aucun budget publicitaire ni résultat chiffré non précisé n’est ajouté.
 
 Les expériences indépendantes L’Enjeu et VigySafety proposent chacune un lien « Voir le site » à côté de l’étude de cas, avec ouverture du site public dans un nouvel onglet.
+
+Le portrait d’ouverture ne comporte plus de légende ni de signature « fb. ». La photo conserve son fichier original et son texte alternatif ; son cadrage vertical 4:5, le contour clair et les angles légèrement arrondis structurent sa présentation.
