@@ -44,6 +44,11 @@ function applyFilter(filter) {
   const secondaryHeading = document.querySelector('[data-secondary-heading]');
   if (secondaryHeading) secondaryHeading.hidden = !cards.some(card => !card.hidden && card.dataset.priority === 'secondary');
 }
+// Hero category links share the project filters; counts follow the actual portfolio.
+document.querySelectorAll('[data-project-filter]').forEach(link => {
+  const count = link.querySelector('[data-project-count]');
+  if (count) count.textContent = cards.filter(card => card.dataset.category.split(' ').includes(link.dataset.projectFilter)).length;
+});
 // Density is a reading preference; no project or filter result is removed.
 const projectViews = document.querySelector('.project-views');
 const projectGrid = document.querySelector('.project-grid');
@@ -108,6 +113,7 @@ document.addEventListener('click', event => {
   const link = event.target.closest('a[href^="#"]');
   if (link && !event.defaultPrevented && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
     const hash = link.getAttribute('href');
+    if (link.dataset.projectFilter) applyFilter(link.dataset.projectFilter);
     revealAnchor(hash);
     const target = focusHashTarget(hash);
     if (target) {

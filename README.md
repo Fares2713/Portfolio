@@ -193,7 +193,7 @@ Le fichier `tools-availability.json` reflète cet état. Les tests de modèles r
 
 ## Ouverture panoramique
 
-La mise en page utilise une largeur maximale de 1 600 px, un titre de grande taille et un portrait rectangulaire encadré d’un liseré clair. Le portrait accompagne les domaines d’intervention et les aperçus des projets, sous le nom affiché en pleine largeur. L’introduction est raccourcie ; le profil complet reste dans la section Formation & profil. Les réalisations principales suivent directement les raccourcis de visite, sans répéter une sélection de vignettes dans le hero.
+La mise en page utilise une largeur maximale de 1 600 px, un titre de grande taille et un portrait rectangulaire encadré d’un liseré clair. Le portrait accompagne les domaines d’intervention et la présentation du profil. L’introduction est raccourcie ; le profil complet reste dans la section Formation & profil. Les réalisations principales suivent directement les raccourcis de visite, sans répéter une sélection de vignettes dans le hero.
 
 `assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
 
@@ -225,14 +225,12 @@ La section compétences présente six domaines complémentaires : communication 
 
 Farès a confirmé avoir réalisé un sondage auprès des agents pour mesurer la qualité globale de la communication interne. Cette mission est mentionnée dans l’étude de cas, l’expérience Inria et les compétences éditoriales. Aucun nombre de répondants, résultat de satisfaction ou effet mesuré n’est ajouté. Les indicateurs préexistants ne sont pas présentés comme des résultats de ce sondage.
 
-## Hero signature personnel
+## Ouverture et parcours de visite
 
-L’ouverture utilise désormais le nom Farès Benamar comme titre principal, sur un fond bleu nuit, avec des accents cobalt raccordés aux liens et aux actions du portfolio. Le métier et les domaines d’intervention restent explicites. Deux aperçus des projets existants, Inria et L’Enjeu, donnent un accès direct aux réalisations ; le portrait est intégré au même niveau de lecture. Les chiffres et leurs périmètres figurent dans une bande horizontale sous cette composition.
+Le nom reste dans l’en-tête. Le hero présente trois terrains d’intervention — communication, digital et événementiel — qui activent directement les filtres de la section Réalisations. Les nombres sont calculés depuis les catégories des projets. Le lien « Voir mes réalisations » rétablit la sélection complète ; les filtres et le statut annoncé sont communs à ces parcours.
 
-`hero-signature.css` règle cette composition et sa déclinaison mobile. L’entrée du nom utilise des masques typographiques, suivis d’une apparition courte des contenus et des aperçus. Sur ordinateur avec pointeur précis, les deux aperçus réagissent au pointeur avec un déplacement borné à 7 px horizontalement et 5 px verticalement. Le calcul est regroupé dans requestAnimationFrame, sans boucle permanente. Les effets s’arrêtent selon les préférences système, le réglage global et la visibilité de la page. Aucun défilement forcé ni écran de chargement n’est ajouté.
+Le portrait et les formations présentent le profil, sans recopier les aperçus des réalisations. Le paragraphe d’introduction décrit les contenus, les sites et réseaux sociaux, l’événementiel, la coordination, les budgets et le développement commercial. Les réalisations apparaissent ensuite une seule fois, dans leur section dédiée. Le bloc intermédiaire de raccourcis a été retiré.
 
-Les aperçus et le portrait sont les fichiers existants ; aucun résultat ni distinction professionnelle supplémentaire n’est revendiqué. Les liens, les informations essentielles et la composition statique restent accessibles sans JavaScript ou avec réduction des animations.
+`hero-signature.css` conserve le bleu nuit et les accents cobalt. L’entrée des trois lignes, les soulignements et les flèches répondent au survol et au focus. Le fond vidéo respecte les modes de réduction des animations, l’économie de données et la visibilité réelle sous le menu fixe ; il se met en pause lorsque moins de 10 % du hero est visible. Les anciens aperçus superposés et leur effet de profondeur au pointeur ont été retirés.
 
-Le prénom a été réduit par rapport au nom et l’échelle typographique générale a été resserrée. Le montage des archives orales passe au premier plan, devant L’Enjeu. Le flux bleu animé reste visible en fond, avec les mêmes modes statiques et préférences de réduction des animations.
-
-Les grands aplats du hero et des compétences utilisent le même bleu nuit. Les accents et les appels à l’action reprennent le cobalt du portfolio. Les archives orales occupent le premier plan par défaut ; chaque aperçu reste accessible au clavier et peut passer devant au survol ou au focus.
+Les liens restent natifs sans JavaScript : ils rejoignent la section complète des réalisations. La navigation au clavier, le focus sur la destination et les études de cas gardent leurs comportements existants.
