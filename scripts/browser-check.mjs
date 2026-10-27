@@ -90,6 +90,7 @@ try{
   assert.ok(await media.evaluate(el=>el===document.activeElement),'Gallery restores focus');
   await page.locator('#projet-petites-mains .project-image-link').click();
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/petites-mains-equipe.jpg');
+  await dialog.locator('.dialog-media img').evaluate(img=>img.decode());
   assert.ok(await dialog.locator('.dialog-media img').evaluate(img=>img.complete&&img.naturalWidth===1240),'Original team photo loads in the gallery');
   await page.keyboard.press('Escape');
   await page.locator('#projet-fnk .project-media-action').click();

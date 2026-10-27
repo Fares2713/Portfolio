@@ -91,7 +91,7 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Direction visuelle et animations
 
-L’ouverture éditoriale « Donner du sens. Créer du lien. » accompagne le rôle professionnel existant. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+L’ouverture éditoriale « Des idées fortes. Du concret. » met en avant la création de contenus, le pilotage événementiel et la coordination d’équipes, en lien avec les expériences Inria et les projets média et digitaux. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
 
 Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
 
@@ -190,3 +190,9 @@ Le dossier de décisions et l’atelier éditorial sont suspendus à la demande 
 - Réactiver : `python3 scripts/set-tools-availability.py activate`.
 
 Le fichier `tools-availability.json` reflète cet état. Les tests de modèles restent exécutés ; les suites navigateur des applications actives passent par `scripts/check-app-browsers.mjs` et sont explicitement suspendues pendant la maintenance. `browser-portfolio-content.mjs` vérifie alors les deux pages d’indisponibilité, les boutons désactivés et les supports éditoriaux. La partie atelier de `browser-navigation.mjs` est conditionnée au même état ; les vérifications de navigation du portfolio restent exécutées.
+
+## Ouverture panoramique
+
+La mise en page utilise une largeur maximale de 1 600 px, un titre de plus grande taille et un portrait rectangulaire sur un aplat bleu décalé. Trois liens visuels introduisent les archives orales Inria, le média L’Enjeu et le projet de conception des Rencontres. Les légendes distinguent le travail réalisé du projet envisagé. Sur mobile, cette sélection se présente en lignes compactes ; le bandeau des repères adopte un fond sombre.
+
+`assets/rencontres-enjeu/affiche-apercu.webp` est une version allégée de l’affiche existante, réservée à cet aperçu. Le PNG original et les documents téléchargeables restent disponibles.
