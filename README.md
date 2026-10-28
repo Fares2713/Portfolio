@@ -91,7 +91,7 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Refonte éditoriale · octobre 2026
 
-Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et ouverture sous forme de composition de projets. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
+Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et ouverture centrée sur Farès : nom en grand, portrait monochrome, description du rôle et accès direct aux réalisations. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
 
 Deux concepts personnels sont ajoutés : **Sillage**, étude d’identité pour une marque fictive de mobilité, et **Nocturne**, affiche manifeste pour un rendez-vous culturel fictif. Leurs affiches sont des SVG originaux ; les fiches décrivent l’intention et le livrable disponible sans revendiquer de commande ni de résultats. Les onze dossiers existants, galeries, ressources et attributions sont conservés.
 
