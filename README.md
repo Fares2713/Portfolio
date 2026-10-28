@@ -2,7 +2,7 @@
 
 Portfolio statique en français, sans framework ni compilation. Vercel publie la racine du dépôt lors d’un déploiement autorisé.
 
-Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Onze réalisations présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. Les filtres sont organisés par compétence : communication, événementiel, audiovisuel et digital. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
+Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Treize projets (onze réalisations existantes et deux concepts personnels) présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. La sélection initiale présente six projets. Les filtres donnent accès aux treize projets, aux quatre compétences et aux deux concepts. Le lecteur propose un accès au projet précédent et suivant parmi les résultats filtrés, avec liens directs par ancre. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
 
 ## Prévisualisation
 
@@ -12,13 +12,13 @@ Depuis la racine du dépôt :
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Pour produire un fichier HTML autonome à ouvrir dans un navigateur, avec les images, styles et interactions intégrés :
+Pour produire un fichier HTML autonome à ouvrir dans un navigateur, avec les images affichées, styles et interactions intégrés :
 
 ```sh
 node scripts/preview.mjs
 ```
 
-Le fichier est écrit dans `../portfolio-apercu.html`, hors du dépôt. Les liens vers les sites publics restent des liens externes. La génération de cet aperçu ne publie rien.
+Le fichier est écrit dans `../portfolio-apercu.html`, hors du dépôt. Les documents et fichiers originaux restent liés au dossier adjacent `Portfolio/assets/` pour éviter un aperçu de plus de 200 Mo. Les polices web ont une police de repli locale. Les liens vers les sites publics restent des liens externes. La génération de cet aperçu ne publie rien.
 
 ## Validation
 
@@ -89,12 +89,14 @@ Le troisième carrousel porte sur le football féminin : cinq slides en crème, 
 
 Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va l’argent ? » (ART, comptes 2024) et « L’espace nous apprend quoi ? » (présentation NASA de CRS-35). Chaque carrousel compte cinq slides avec sources, transcription, PDF et ZIP. Les éléments primaires ont été consultés ; aucun lancement ou résultat médical n’est présenté comme acquis, ni remboursement automatique des péages. Les cinq séries L’Enjeu restent accessibles avec la couverture historique. Exports : `python3 scripts/build_lenjeu_carousel.py lenjeu-autoroutes-carrousel` et `python3 scripts/build_lenjeu_carousel.py lenjeu-iss-carrousel`.
 
-## Direction visuelle et animations
+## Refonte éditoriale · octobre 2026
 
-L’ouverture éditoriale « Donner du sens. Créer du lien. » accompagne le rôle professionnel existant. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et ouverture sous forme de composition de projets. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
 
-Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
+Deux concepts personnels sont ajoutés : **Sillage**, étude d’identité pour une marque fictive de mobilité, et **Nocturne**, affiche manifeste pour un rendez-vous culturel fictif. Leurs affiches sont des SVG originaux ; les fiches décrivent l’intention et le livrable disponible sans revendiquer de commande ni de résultats. Les onze dossiers existants, galeries, ressources et attributions sont conservés.
 
-Le réglage « Réduire les animations » en bas de page est conservé localement quand le stockage est disponible. La préférence système `prefers-reduced-motion` reste prioritaire, y compris lorsqu’elle change pendant la visite. Sans JavaScript, le contenu et les liens restent disponibles. L’impression conserve sa mise en page dédiée.
+Le lecteur conserve les filtres, permet de passer au projet précédent / suivant et restitue le focus à la fermeture. Les liens directs ouvrent aussi un projet absent de la sélection initiale. Les études de cas et tous les projets restent accessibles sans JavaScript. La préférence système de réduction des animations est prioritaire ; le réglage manuel est conservé localement.
 
-Références : [performances des animations, web.dev](https://web.dev/articles/animations-and-performance) et [réduction des mouvements, W3C](https://www.w3.org/WAI/WCAG22/Techniques/css/C39.html).
+Vérification navigateur à 360, 768, 1440 et 1920 px : débordement, menu, filtres, images des treize projets, ouverture et fermeture des études de cas, retour du focus, navigation entre projets, liens directs, carrousels conservés et contrôles axe sur la page et le lecteur. Contrôle sans JavaScript également. Les captures de référence sont dans `screenshots/redesign-hero-*.png`.
+
+Cette version est préparée en local pour prévisualisation ; aucun déploiement n’est effectué.

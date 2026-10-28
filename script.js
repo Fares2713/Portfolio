@@ -1,260 +1,167 @@
 'use strict';
-// The content and case studies remain available when JavaScript is disabled.
-document.documentElement.classList.add('js');
-const toggle = document.querySelector('.menu-toggle');
+const root = document.documentElement;
+root.classList.add('js');
+const menu = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#navigation');
-toggle.hidden = false;
-function closeMenu() {
-  toggle.setAttribute('aria-expanded', 'false');
+menu.hidden = false;
+function closeMenu(restore = false) {
+  menu.setAttribute('aria-expanded', 'false');
   nav.classList.remove('is-open');
+  if (restore) menu.focus();
 }
-toggle.addEventListener('click', () => {
-  const open = toggle.getAttribute('aria-expanded') !== 'true';
-  toggle.setAttribute('aria-expanded', String(open));
+menu.addEventListener('click', () => {
+  const open = menu.getAttribute('aria-expanded') !== 'true';
+  menu.setAttribute('aria-expanded', String(open));
   nav.classList.toggle('is-open', open);
 });
-nav.addEventListener('click', event => {
-  if (event.target.closest('a')) closeMenu();
-});
+nav.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); });
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-    closeMenu();
-    toggle.focus();
-  }
+  if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') closeMenu(true);
 });
+document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
 
-const filters = document.querySelector('.filters');
 const cards = [...document.querySelectorAll('.project')];
-const filterStatus = document.querySelector('#filter-status');
-filters.hidden = false;
-function applyFilter(filter) {
-  filters.querySelectorAll('button').forEach(item => {
-    item.setAttribute('aria-pressed', String(item.dataset.filter === filter));
-  });
-  let count = 0;
+const filters = document.querySelector('.filters');
+const status = document.querySelector('#filter-status');
+let currentFilter = 'selection';
+function applyFilter(value) {
+  const valid = [...filters.querySelectorAll('button')].some(button => button.dataset.filter === value);
+  currentFilter = valid ? value : 'selection';
+  filters.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === currentFilter)));
   cards.forEach(card => {
-    const visible = filter === 'all' || card.dataset.category.split(' ').includes(filter);
-    card.hidden = !visible;
-    if (visible) count++;
+    card.hidden = currentFilter === 'selection' ? card.dataset.selected !== 'true' : currentFilter !== 'all' && !card.dataset.category.split(' ').includes(currentFilter);
   });
-  filterStatus.textContent = count + (count > 1 ? ' réalisations affichées.' : ' réalisation affichée.');
+  const count = cards.filter(card => !card.hidden).length;
+  status.textContent = `${String(count).padStart(2, '0')} projet${count > 1 ? 's' : ''} à explorer`;
 }
+filters.hidden = false;
+applyFilter('selection');
 filters.addEventListener('click', event => {
-  const button = event.target.closest('button[data-filter]');
+  const button = event.target.closest('[data-filter]');
   if (button) applyFilter(button.dataset.filter);
 });
-function revealAnchor(hash) {
-  if (!hash || hash === '#') return;
-  let target;
-  try { target = document.getElementById(decodeURIComponent(hash.slice(1))); }
-  catch { return; }
-  if (!target) return;
-  const project = target.closest('.project');
-  if (project && project.hidden) applyFilter('all');
-  // Reveal any case hidden by the active skill filter.
-  for (let parent = target.parentElement; parent; parent = parent.parentElement) {
-    if (parent.tagName === 'DETAILS') parent.open = true;
-  }
+
+const dialog = document.querySelector('#project-dialog');
+const content = document.querySelector('#project-dialog-content');
+const close = dialog.querySelector('.dialog-close');
+let activeCard = null;
+let trigger = null;
+let returnHash = '#projets';
+function stripIds(node) {
+  node.removeAttribute('id');
+  node.querySelectorAll('[id]').forEach(item => item.removeAttribute('id'));
+  return node;
 }
-document.addEventListener('click', event => {
-  const step = event.target.closest('[data-carousel-step]');
-  if (step) {
-    const track = step.closest('.editorial-carousel').querySelector('.carousel-track');
-    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.scrollBy({left: Number(step.dataset.carouselStep) * track.clientWidth, behavior: reduced ? 'auto' : 'smooth'});
+function renderProject(card, mode = 'case') {
+  activeCard = card;
+  document.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
+  document.querySelector('#project-dialog-kind').textContent = card.dataset.category.includes('concept') ? 'Exploration créative · Concept fictif' : 'Étude de cas · Réalisation';
+  const visible = cards.filter(item => !item.hidden);
+  document.querySelector('#dialog-counter').textContent = `${String(visible.indexOf(card) + 1).padStart(2, '0')} / ${String(visible.length).padStart(2, '0')}`;
+  document.querySelector('#dialog-role').textContent = card.querySelector('.project-contribution strong')?.textContent || '';
+  content.replaceChildren();
+  const hero = document.createElement('figure');
+  hero.className = 'dialog-hero';
+  const image = card.querySelector('.project-visual img').cloneNode();
+  image.loading = 'eager';
+  hero.append(image, card.querySelector('figcaption').cloneNode(true));
+  content.append(hero);
+  if (mode !== 'media') {
+    const study = stripIds(card.querySelector('.case-content').cloneNode(true));
+    // The reader has an h2 title; case subsections follow at h3.
+    study.querySelectorAll('h4').forEach(heading => {
+      const replacement = document.createElement('h3');
+      replacement.className = 'case-heading';
+      replacement.append(...heading.childNodes);
+      heading.replaceWith(replacement);
+    });
+    content.append(study);
   }
-  if (!event.target.closest('.site-header')) closeMenu();
-  const link = event.target.closest('a[href^="#"]');
-  if (link && !event.defaultPrevented) revealAnchor(link.getAttribute('href'));
+  dialog.scrollTop = 0;
+}
+function openProject(card, source, mode = 'case', setHistory = true) {
+  if (!dialog.showModal) { card.querySelector('details').open = true; return; }
+  if (card.hidden) applyFilter('all');
+  if (!dialog.open) {
+    trigger = source || card.querySelector('summary');
+    returnHash = location.hash && !cards.some(item => location.hash.startsWith('#' + item.id)) ? location.hash : '#projets';
+  }
+  renderProject(card, mode);
+  if (!dialog.open) dialog.showModal();
+  document.body.classList.add('dialog-open');
+  close.focus({preventScroll:true});
+  if (setHistory) history.pushState({project:card.id}, '', '#' + card.id);
+}
+function closeProject() { dialog.close(); }
+close.addEventListener('click', closeProject);
+dialog.querySelector('.dialog-return').addEventListener('click', event => { event.preventDefault(); closeProject(); });
+dialog.addEventListener('close', () => {
+  document.body.classList.remove('dialog-open');
+  if (cards.some(card => location.hash === '#' + card.id || location.hash === '#' + card.id + '-details')) history.replaceState(null, '', returnHash);
+  content.replaceChildren();
+  if (trigger?.isConnected && !trigger.closest('[hidden]')) trigger.focus({preventScroll:true});
+  activeCard = null;
 });
-if (window.addEventListener) {
-  window.addEventListener('hashchange', () => revealAnchor(window.location.hash));
-  revealAnchor(window.location.hash);
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const rect = dialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeProject();
+});
+function stepProject(step) {
+  const visible = cards.filter(card => !card.hidden);
+  const index = visible.indexOf(activeCard);
+  const next = visible[(index + step + visible.length) % visible.length];
+  if (!next) return;
+  renderProject(next);
+  history.replaceState({project:next.id}, '', '#' + next.id);
 }
-if ('IntersectionObserver' in window) {
-  const sections = document.querySelectorAll('main > section[id]');
-  const links = [...nav.querySelectorAll('a[href^="#"]')];
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      links.forEach(link => {
-        if (link.getAttribute('href') === '#' + entry.target.id) {
-          link.setAttribute('aria-current', 'location');
-        } else {
-          link.removeAttribute('aria-current');
-        }
-      });
-    }
-  }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-  sections.forEach(section => observer.observe(section));
+dialog.querySelectorAll('[data-project-step]').forEach(button => button.addEventListener('click', () => { stepProject(Number(button.dataset.projectStep)); close.focus({preventScroll:true}); }));
+document.addEventListener('click', event => {
+  const carouselButton = event.target.closest('[data-carousel-step]');
+  if (carouselButton) {
+    const track = carouselButton.closest('.editorial-carousel').querySelector('.carousel-track');
+    track.scrollBy({left:Number(carouselButton.dataset.carouselStep) * track.clientWidth,behavior:root.classList.contains('motion-reduced') ? 'instant' : 'smooth'});
+    return;
+  }
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  const summary = event.target.closest('.project summary');
+  const link = event.target.closest('a[href]');
+  let card = summary?.closest('.project');
+  let mode = 'case';
+  if (link && !dialog.contains(link)) {
+    const href = link.getAttribute('href');
+    if (href.startsWith('#')) card = cards.find(item => href === '#' + item.id || href === '#' + item.id + '-details') || card;
+    if (link.hasAttribute('data-case')) card = link.closest('.project');
+    if (link.hasAttribute('data-media')) { card = link.closest('.project'); mode = 'media'; }
+  }
+  if (card) { event.preventDefault(); openProject(card, summary || link, mode); }
+});
+function syncHash() {
+  const hash = location.hash;
+  const card = cards.find(item => hash === '#' + item.id || hash === '#' + item.id + '-details');
+  if (card) openProject(card, null, 'case', false);
+  else if (dialog.open) dialog.close();
 }
+window.addEventListener('popstate', syncHash);
+window.addEventListener('hashchange', syncHash);
+syncHash();
 
-// Native disclosures and image links remain the fallback without JavaScript.
-const projectDialog = document.querySelector('#project-dialog');
-if (projectDialog && typeof projectDialog.showModal === 'function') {
-  const dialogTitle = document.querySelector('#project-dialog-title');
-  const dialogContent = document.querySelector('#project-dialog-content');
-  const dialogKind = document.querySelector('#project-dialog-kind');
-  const dialogClose = projectDialog.querySelector('.dialog-close');
-  let dialogTrigger = null;
-  function openProjectDialog(card, trigger, media) {
-    dialogTrigger = trigger;
-    const carousel = trigger.hasAttribute('data-case');
-    dialogTitle.textContent = carousel ? (trigger.dataset.caseTitle || 'L’Enjeu · Carrousels éditoriaux') : card.querySelector('h3').textContent;
-    dialogKind.textContent = carousel ? (trigger.dataset.caseKind || 'Carrousel éditorial') : media ? 'Aperçu visuel' : 'Étude de cas';
-    dialogContent.replaceChildren();
-    if (media) {
-      const figure = document.createElement('figure');
-      figure.className = 'dialog-media';
-      const image = card.querySelector('.project-visual img').cloneNode();
-      image.loading = 'eager';
-      const caption = card.querySelector('figcaption').cloneNode(true);
-      figure.append(image, caption);
-      dialogContent.append(figure);
-    } else {
-      const content = card.querySelector('.case-content').cloneNode(true);
-      content.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
-      dialogContent.append(content);
-    }
-    projectDialog.showModal();
-    projectDialog.scrollTop = 0;
-    dialogClose.focus();
-    if (carousel) {
-      const gallery = dialogContent.querySelector('.editorial-carousel');
-      if (gallery) {
-        const bar = projectDialog.querySelector('.dialog-bar');
-        projectDialog.scrollTop = gallery.getBoundingClientRect().top - projectDialog.getBoundingClientRect().top
-          + projectDialog.scrollTop - bar.getBoundingClientRect().height - 24;
-      }
-    }
-  }
-  cards.forEach(card => {
-    const summary = card.querySelector('summary');
-    summary.setAttribute('aria-haspopup', 'dialog');
-    summary.addEventListener('click', event => {
-      event.preventDefault();
-      openProjectDialog(card, summary, false);
-    });
-    card.querySelectorAll('[data-case]').forEach(caseLink => {
-      caseLink.setAttribute('aria-haspopup', 'dialog');
-      caseLink.addEventListener('click', event => {
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-        event.preventDefault();
-        openProjectDialog(card, caseLink, false);
-      });
-    });
-    card.querySelectorAll('[data-media]').forEach(mediaLink => {
-      mediaLink.setAttribute('aria-haspopup', 'dialog');
-      mediaLink.addEventListener('click', event => {
-        // Preserve modified-click browser behavior for the original image URL.
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-        event.preventDefault();
-        openProjectDialog(card, mediaLink, true);
-      });
-    });
-  });
-  dialogClose.addEventListener('click', () => projectDialog.close());
-  projectDialog.addEventListener('keydown', event => {
-    if (event.key !== 'Tab') return;
-    const focusable = [...projectDialog.querySelectorAll('button, a[href], input, select, textarea, [tabindex]')]
-      .filter(element => !element.disabled && element.tabIndex >= 0 && element.getClientRects().length);
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (!first) return;
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
-  projectDialog.addEventListener('click', event => {
-    if (event.target !== projectDialog) return;
-    const bounds = projectDialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) projectDialog.close();
-  });
-  projectDialog.addEventListener('close', () => {
-    dialogContent.replaceChildren();
-    if (dialogTrigger) dialogTrigger.focus();
-  });
+const motion = document.querySelector('.motion-toggle');
+const system = window.matchMedia('(prefers-reduced-motion: reduce)');
+let savedReduction = false;
+try { savedReduction = localStorage.getItem('portfolio-reduce-motion') === 'true'; } catch {}
+function updateMotion() {
+  const reduced = system.matches || savedReduction;
+  root.classList.toggle('motion-reduced', reduced);
+  motion.setAttribute('aria-pressed', String(reduced));
+  motion.textContent = reduced ? 'Animations réduites' : 'Réduire les animations';
+  motion.disabled = system.matches;
 }
-
-// Motion enhances native scrolling; content remains usable without it.
-(() => {
-  if (!window.matchMedia || !window.requestAnimationFrame) return;
-  const root = document.documentElement;
-  const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const pointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const motionButton = document.querySelector('.motion-toggle');
-  const header = document.querySelector('.site-header');
-  const portrait = document.querySelector('.hero-portrait');
-  const hero = document.querySelector('.hero');
-  let savedReduction = false;
-  try { savedReduction = localStorage.getItem('portfolio-reduce-motion') === 'true'; } catch {}
-  let reduced = systemMotion.matches || savedReduction;
-  let frame = 0;
-  let revealObserver;
-  function updateMotion() {
-    reduced = systemMotion.matches || savedReduction;
-    root.classList.toggle('motion-reduced', reduced);
-    motionButton.setAttribute('aria-pressed', String(reduced));
-    motionButton.textContent = reduced ? 'Animations réduites' : 'Réduire les animations';
-    motionButton.disabled = systemMotion.matches;
-    if (reduced) {
-      document.querySelectorAll('.reveal-ready').forEach(item => item.classList.add('is-revealed'));
-      portrait.style.removeProperty('--portrait-shift');
-    }
-    requestUpdate();
-  }
-  function updateScroll() {
-    frame = 0;
-    const y = window.scrollY;
-    const max = root.scrollHeight - window.innerHeight;
-    root.style.setProperty('--read-progress', max > 0 ? Math.min(1, y / max) : 0);
-    header.classList.toggle('is-scrolled', y > 24);
-    if (!reduced && pointer.matches && hero.getBoundingClientRect().bottom > 0) {
-      portrait.style.setProperty('--portrait-shift', Math.min(y * .065, 26) + 'px');
-    }
-  }
-  function requestUpdate() {
-    if (!frame) frame = window.requestAnimationFrame(updateScroll);
-  }
-  motionButton.hidden = false;
-  motionButton.addEventListener('click', () => {
-    savedReduction = !reduced;
-    try { localStorage.setItem('portfolio-reduce-motion', String(savedReduction)); } catch {}
-    updateMotion();
-  });
-  systemMotion.addEventListener('change', updateMotion);
-  window.addEventListener('scroll', requestUpdate, {passive: true});
-  window.addEventListener('resize', requestUpdate, {passive: true});
-  if ('ResizeObserver' in window) new ResizeObserver(requestUpdate).observe(document.body);
-  if ('IntersectionObserver' in window && !reduced) {
-    revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, {threshold: .06, rootMargin: '0px 0px 36px 0px'});
-    document.querySelectorAll('.section-heading, .project, .experience-row, .expertise-grid article, .about-intro, .profile-panel, .contact-inner>div').forEach(item => {
-      item.classList.add('reveal-ready');
-      revealObserver.observe(item);
-      item.addEventListener('focusin', () => item.classList.add('is-revealed'));
-    });
-  }
-  filters.addEventListener('click', event => {
-    if (!event.target.closest('[data-filter]')) return;
-    cards.forEach(card => {
-      card.classList.remove('filter-enter');
-      if (!card.hidden) {
-        card.classList.add('is-revealed');
-        if (!reduced) card.classList.add('filter-enter');
-      }
-    });
-    requestUpdate();
-  });
+motion.hidden = false;
+motion.addEventListener('click', () => {
+  savedReduction = !savedReduction;
+  try { localStorage.setItem('portfolio-reduce-motion', String(savedReduction)); } catch {}
   updateMotion();
-})();
+});
+system.addEventListener('change', updateMotion);
+updateMotion();
