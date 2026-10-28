@@ -2,7 +2,7 @@
 
 Portfolio statique en français, sans framework ni compilation. Vercel publie la racine du dépôt lors d’un déploiement autorisé.
 
-Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Treize projets (onze réalisations existantes et deux concepts personnels) présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. La sélection initiale présente six projets. Les filtres donnent accès aux treize projets, aux quatre compétences et aux deux concepts. Le lecteur propose un accès au projet précédent et suivant parmi les résultats filtrés, avec liens directs par ancre. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
+Le portfolio présente un profil généraliste de chargé de communication et de projets. Le parcours distingue emplois, alternance et projets indépendants. Quinze projets (onze réalisations existantes et quatre concepts personnels) présentent le contexte, le rôle, les actions, les livrables et le périmètre des résultats. La communication interne Inria, le projet de Séoul et FNK Location font partie de la sélection. La sélection initiale présente six projets. Les filtres donnent accès aux quinze projets, aux quatre compétences et aux quatre concepts. Le lecteur propose un accès au projet précédent et suivant parmi les résultats filtrés, avec liens directs par ancre. Les cartes restent courtes ; les études de cas et les aperçus visuels s’ouvrent dans une fenêtre native avec retour du focus à la fermeture. Sans JavaScript, les études de cas utilisent des accordéons et les aperçus restent accessibles par des liens directs.
 
 ## Prévisualisation
 
@@ -91,12 +91,24 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Refonte éditoriale · octobre 2026
 
-Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et hero bleu d’origine « Donner du sens. Créer du lien. », avec portrait en arche, entrée animée et léger déplacement au défilement. Le hero affine cette base avec un soulignement tracé à l’entrée, un fond bleu diffus, un double filet autour du portrait et un lien direct vers L’Enjeu. Sur ordinateur, le portrait réagit légèrement au pointeur ; le mouvement se réinitialise à la sortie et respecte les préférences de réduction des animations. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
+Direction blanc, gris perle et bleu, panneaux arrondis et interfaces blanches, avec le hero bleu d’origine « Donner du sens. Créer du lien. », avec portrait en arche, entrée animée et léger déplacement au défilement. Le hero affine cette base avec un soulignement tracé à l’entrée, un fond bleu diffus, un double filet autour du portrait et un lien direct vers L’Enjeu. Sur ordinateur, le portrait réagit légèrement au pointeur ; le mouvement se réinitialise à la sortie et respecte les préférences de réduction des animations. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
 
-Deux concepts personnels sont ajoutés : **Sillage**, étude d’identité pour une marque fictive de mobilité, et **Nocturne**, affiche manifeste pour un rendez-vous culturel fictif. Leurs affiches sont des SVG originaux ; les fiches décrivent l’intention et le livrable disponible sans revendiquer de commande ni de résultats. Les onze dossiers existants, galeries, ressources et attributions sont conservés.
+Quatre concepts personnels sont ajoutés : **Clair**, studio éditorial interactif avec trois textes préécrits selon le public, **Tempo**, tableau de bord événementiel avec calcul du budget et progression, **Sillage**, étude d’identité pour une marque fictive de mobilité, et **Nocturne**, affiche manifeste pour un rendez-vous culturel fictif. Les affiches et les aperçus des interfaces sont des SVG originaux ; les fiches décrivent l’intention et le livrable disponible sans revendiquer de commande ni de résultats. Les onze dossiers existants, galeries, ressources et attributions sont conservés.
 
 Le lecteur conserve les filtres, permet de passer au projet précédent / suivant et restitue le focus à la fermeture. Les liens directs ouvrent aussi un projet absent de la sélection initiale. Les études de cas et tous les projets restent accessibles sans JavaScript. La préférence système de réduction des animations est prioritaire ; le réglage manuel est conservé localement.
 
-Vérification navigateur à 360, 768, 1440 et 1920 px : débordement, menu, filtres, images des treize projets, ouverture et fermeture des études de cas, retour du focus, navigation entre projets, liens directs, carrousels conservés et contrôles axe sur la page et le lecteur. Contrôle sans JavaScript également. Les captures de référence sont dans `screenshots/redesign-hero-*.png`.
+Vérification navigateur à 360, 768, 1440 et 1920 px : débordement, menu, filtres, images des quinze projets, ouverture et fermeture des études de cas, retour du focus, navigation entre projets, liens directs, carrousels conservés et contrôles axe sur la page et le lecteur. Contrôle sans JavaScript également. Les captures de référence sont dans `screenshots/redesign-hero-*.png`.
 
 Cette version est préparée en local pour prévisualisation ; aucun déploiement n’est effectué.
+
+## Atelier interactif : Clair et Tempo
+
+Les deux panneaux de l’atelier s’inspirent de la référence fournie : surfaces gris clair arrondies, fenêtres blanches, informations courtes et accents bleus. Clair change de format et de message selon le public sélectionné et permet de copier le texte. Les exemples sont rédigés à l’avance, sans génération par un modèle. Tempo propose trois étapes à cocher et trois dépenses modifiables ; total, réserve, dépassement et graphique se calculent réellement. Le scénario est explicitement fictif et les montants sont hypothétiques. Aucun indicateur de performance client n’est inventé.
+
+Les prototypes sont aussi disponibles séparément dans `assets/concepts/clair.html` et `assets/concepts/tempo.html`. Leurs sources sont les blocs balisés `prototype:clair` et `prototype:tempo` dans `index.html`, les styles dans `styles.css` et le bloc autonome en fin de `script.js`. Régénération des pages autonomes et des aperçus SVG :
+
+```sh
+node scripts/build-concepts.mjs
+```
+
+Les tests navigateur couvrent également le changement de public, les étapes, le recalcul du budget et le dépassement de l’enveloppe. Les concepts restent distincts des onze réalisations historiques.

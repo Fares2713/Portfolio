@@ -213,3 +213,77 @@ originalHero?.addEventListener('pointerleave', resetPortraitTilt);
 system.addEventListener('change', resetPortraitTilt);
 finePointer.addEventListener('change', resetPortraitTilt);
 motion.addEventListener('click', resetPortraitTilt);
+
+// Interactive concept prototypes. Kept self-contained for standalone exports.
+(() => {
+  const messages = {
+    public: {format:'Publication · Grand public', kicker:'UNE JOURNÉE POUR EXPLORER', title:'Le numérique,\npour tout le monde.', copy:'Et si on prenait le temps de comprendre ce qui change nos vies ? Samedi, de 10 h à 18 h, venez découvrir le numérique. C’est gratuit, et la curiosité suffit.', tags:['Ton accessible','Invitation']},
+    partners: {format:'Invitation · Partenaires', kicker:'FAISONS DÉCOUVRIR, ENSEMBLE', title:'Ouvrir le numérique.\nAvec vous.', copy:'Samedi, de 10 h à 18 h, une journée gratuite rend le numérique accessible au plus grand nombre. Nous vous proposons de relayer ce rendez-vous auprès de vos publics et de contribuer à cette découverte collective.', tags:['Ton fédérateur','Relais de communication']},
+    team: {format:'Note interne · Équipe', kicker:'UN CAP COMMUN POUR SAMEDI', title:'Une journée.\nUne équipe prête.', copy:'Notre rendez-vous numérique se tient samedi, de 10 h à 18 h. L’accès est gratuit. Avant l’ouverture, assurons-nous que chacun dispose du programme et des informations nécessaires pour accueillir et orienter les visiteurs.', tags:['Ton opérationnel','Mobilisation interne']}
+  };
+  document.querySelectorAll('[data-demo="clair"]').forEach(panel => {
+    let audience = 'public';
+    panel.querySelectorAll('[data-audience]').forEach(button => button.addEventListener('click', () => {
+      audience = button.dataset.audience;
+      const message = messages[audience];
+      panel.querySelectorAll('[data-audience]').forEach(item => {
+        const active = item === button;
+        item.setAttribute('aria-pressed', String(active));
+        item.querySelector('.lab-option-check').textContent = active ? '✓' : '+';
+      });
+      panel.querySelector('[data-demo-format]').textContent = message.format;
+      panel.querySelector('[data-demo-kicker]').textContent = message.kicker;
+      panel.querySelector('[data-demo-title]').textContent = message.title;
+      panel.querySelector('[data-demo-copy]').textContent = message.copy;
+      panel.querySelector('[data-demo-tags]').replaceChildren(...message.tags.map(tag => {
+        const span = document.createElement('span'); span.textContent = tag; return span;
+      }));
+      panel.querySelector('[data-demo-copy-status]').textContent = '';
+      panel.querySelector('[data-demo-copy-button]').firstChild.textContent = 'Copier le texte ';
+    }));
+    panel.querySelector('[data-demo-copy-button]').addEventListener('click', async () => {
+      const message = messages[audience];
+      const status = panel.querySelector('[data-demo-copy-status]');
+      try {
+        await navigator.clipboard.writeText(message.title.replace('\n',' ') + '\n\n' + message.copy);
+        status.textContent = 'Le message a été copié.';
+        panel.querySelector('[data-demo-copy-button]').firstChild.textContent = 'Texte copié ';
+      } catch {
+        status.textContent = 'Copie indisponible. Vous pouvez sélectionner le texte du message.';
+        panel.querySelector('[data-demo-copy-button]').firstChild.textContent = 'Copie indisponible ';
+      }
+    });
+  });
+  const euros = new Intl.NumberFormat('fr-FR', {style:'currency',currency:'EUR',maximumFractionDigits:0});
+  document.querySelectorAll('[data-demo="tempo"]').forEach(panel => {
+    const tasks = [...panel.querySelectorAll('[data-demo-task]')];
+    const expenses = [...panel.querySelectorAll('[data-demo-expense]')];
+    const updateTasks = () => {
+      const done = tasks.filter(task => task.checked).length;
+      panel.querySelector('[data-demo-completed]').textContent = `${done} / ${tasks.length} étapes`;
+      const progress = panel.querySelector('[role="progressbar"]');
+      progress.setAttribute('aria-valuenow',String(done));
+      progress.firstElementChild.style.width = `${done / tasks.length * 100}%`;
+      panel.querySelector('[data-demo-task-note]').textContent = done === 3 ? 'Toutes les étapes du scénario sont validées.' : done === 2 ? 'Encore une étape avant le jour J.' : `${tasks.length - done} étapes restent à préparer.`;
+    };
+    const updateBudget = () => {
+      const values = expenses.map(input => Math.max(0, Math.min(99999, Number(input.value) || 0)));
+      const total = values.reduce((sum,value) => sum + value,0);
+      const margin = 1800 - total;
+      panel.querySelector('[data-demo-total]').textContent = euros.format(total);
+      panel.querySelector('[data-demo-margin]').textContent = euros.format(Math.abs(margin));
+      panel.querySelector('[data-demo-margin-label]').textContent = margin < 0 ? 'Dépassement' : 'Disponible';
+      panel.querySelector('.lab-budget-reserve').classList.toggle('is-over',margin < 0);
+      const scale = Math.max(1800,total);
+      values.forEach((value,index) => panel.querySelector(`[data-demo-bar="${index}"]`).style.width = `${value / scale * 100}%`);
+      panel.querySelector('[data-demo-free]').style.width = `${Math.max(0,margin) / scale * 100}%`;
+      panel.querySelector('[data-demo-budget-status]').textContent = margin < 0 ? `Le scénario dépasse l’enveloppe de ${euros.format(-margin)}.` : margin === 0 ? 'L’enveloppe est entièrement engagée.' : `Le scénario conserve une réserve de ${euros.format(margin)}.`;
+    };
+    tasks.forEach(task => task.addEventListener('change',updateTasks));
+    expenses.forEach(input => {
+      input.addEventListener('input',updateBudget);
+      input.addEventListener('change',() => { input.value = String(Math.max(0,Math.min(99999,Number(input.value) || 0))); updateBudget(); });
+    });
+    updateTasks(); updateBudget();
+  });
+})();

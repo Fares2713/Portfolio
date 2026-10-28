@@ -35,11 +35,29 @@ try {
    assert.ok(await page.locator('.menu-toggle').evaluate(el => el === document.activeElement));
   }
   await page.screenshot({path:`screenshots/redesign-hero-${width}.png`});
-  for (const [filter,count] of [['all',13],['concept',2],['audiovisuel',1],['selection',6]]) {
+  for (const [filter,count] of [['all',15],['concept',4],['audiovisuel',1],['selection',6]]) {
    await page.locator(`[data-filter="${filter}"]`).click();
    assert.equal(await page.locator('.project:visible').count(),count);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
   }
+  const clair=page.locator('[data-demo="clair"]');
+  await clair.locator('[data-audience="partners"]').click();
+  assert.match(await clair.locator('[data-demo-title]').innerText(),/Avec vous/);
+  assert.equal(await clair.locator('[aria-pressed="true"]').count(),1);
+  await clair.locator('[data-audience="team"]').click();
+  assert.match(await clair.locator('[data-demo-copy]').innerText(),/accueillir et orienter/);
+  await clair.locator('[data-audience="public"]').click();
+  const tempo=page.locator('[data-demo="tempo"]');
+  await tempo.locator('[data-demo-task]').last().check();
+  assert.equal(await tempo.locator('[role="progressbar"]').getAttribute('aria-valuenow'),'3');
+  await tempo.locator('[data-demo-task]').last().uncheck();
+  await tempo.locator('[data-demo-expense]').first().fill('2000');
+  assert.match(await tempo.locator('[data-demo-budget-status]').innerText(),/dépasse/);
+  assert.match(await tempo.locator('[data-demo-total]').innerText(),/2.?650/);
+  await tempo.locator('[data-demo-expense]').first().fill('850');
+  assert.match(await tempo.locator('[data-demo-budget-status]').innerText(),/300/);
+  await page.locator('#atelier').scrollIntoViewIfNeeded();
+  await page.screenshot({path:`screenshots/atelier-${width}.png`});
   // Verify all real and concept cases, including the original downloadable materials.
   await page.locator('[data-filter="all"]').click();
   for (const card of await page.locator('.project').all()) {
@@ -80,7 +98,7 @@ try {
   assert.deepEqual(axe.violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[],'Accessible main page');
   assert.equal(errors.length,0,errors.join('\n'));
   await context.close();
-  console.log(`PASS ${width}px: layout, menu, 13 cases, filters, focus, carousel, navigation, deep links and axe`);
+  console.log(`PASS ${width}px: layout, menu, 15 cases, filters, focus, carousel, navigation, deep links and axe`);
  }
  const motionContext=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
  const motionPage=await motionContext.newPage();
@@ -99,7 +117,7 @@ try {
  const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:360,height:900}});
  const page=await noJS.newPage();
  await page.goto(origin);
- assert.equal(await page.locator('.project:visible').count(),13);
+ assert.equal(await page.locator('.project:visible').count(),15);
  await page.locator('#concept-sillage summary').click();
  assert.ok(await page.locator('#concept-sillage .case-content').isVisible(),'Cases are available without JavaScript');
  await noJS.close();
