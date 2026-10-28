@@ -82,6 +82,20 @@ try {
   await context.close();
   console.log(`PASS ${width}px: layout, menu, 13 cases, filters, focus, carousel, navigation, deep links and axe`);
  }
+ const motionContext=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
+ const motionPage=await motionContext.newPage();
+ await motionPage.goto(origin);
+ assert.equal(await motionPage.locator('.portrait-stage').evaluate(el=>getComputedStyle(el).animationName),'original-portrait-enter','Original portrait entrance is restored');
+ await motionPage.evaluate(()=>scrollTo(0,160));
+ await motionPage.waitForTimeout(100);
+ assert.ok(await motionPage.locator('.hero-portrait').evaluate(el=>parseFloat(el.style.getPropertyValue('--portrait-shift'))>0),'Portrait follows scrolling lightly');
+ await motionPage.locator('.motion-toggle').click();
+ await motionPage.waitForTimeout(50);
+ assert.equal(await motionPage.locator('.hero-portrait').evaluate(el=>getComputedStyle(el).transform),'none','Manual reduction disables portrait motion');
+ await motionPage.emulateMedia({reducedMotion:'reduce'});
+ assert.equal(await motionPage.locator('.portrait-stage').evaluate(el=>getComputedStyle(el).animationName),'none','System reduction disables the entrance');
+ await motionContext.close();
+ console.log('PASS original blue hero entrance, scroll movement and reduced motion');
  const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:360,height:900}});
  const page=await noJS.newPage();
  await page.goto(origin);

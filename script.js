@@ -165,3 +165,29 @@ motion.addEventListener('click', () => {
 });
 system.addEventListener('change', updateMotion);
 updateMotion();
+
+// Restore the original light portrait movement; system/manual reduction stays authoritative.
+const heroPortrait = document.querySelector('.hero-portrait');
+const originalHero = document.querySelector('.hero-original');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+let portraitFrame = 0;
+function updatePortrait() {
+  portraitFrame = 0;
+  if (!heroPortrait) return;
+  if (root.classList.contains('motion-reduced') || !finePointer.matches) {
+    heroPortrait.style.removeProperty('--portrait-shift');
+    return;
+  }
+  if (originalHero.getBoundingClientRect().bottom > 0) {
+    heroPortrait.style.setProperty('--portrait-shift', Math.min(window.scrollY * .065, 26) + 'px');
+  }
+}
+function requestPortraitUpdate() {
+  if (!portraitFrame) portraitFrame = requestAnimationFrame(updatePortrait);
+}
+window.addEventListener('scroll', requestPortraitUpdate, {passive:true});
+window.addEventListener('resize', requestPortraitUpdate, {passive:true});
+system.addEventListener('change', requestPortraitUpdate);
+finePointer.addEventListener('change', requestPortraitUpdate);
+motion.addEventListener('click', requestPortraitUpdate);
+requestPortraitUpdate();
