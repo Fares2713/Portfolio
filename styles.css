@@ -417,3 +417,43 @@ html:not(.js) nav>a{padding:5px 0}
 @media(max-width:400px){.hero-original .hero-actions{display:grid;grid-template-columns:1fr;width:100%}.hero-original .hero-actions .button{width:100%}}
 @media(prefers-reduced-motion:reduce){.hero-portrait{transform:none}}
 @media print{.portrait-stage,.hero-scroll{display:none}.hero-original{display:block;min-height:0;padding-block:20px}.hero-original h1{font-size:48px}}
+
+/* Refine the established blue direction without changing its identity. */
+.hero-refined{column-gap:60px;padding-top:72px;padding-bottom:30px;isolation:isolate}
+.hero-refined:before{content:'';position:absolute;width:540px;height:540px;right:-30px;top:12px;border-radius:50%;background:radial-gradient(circle,#dbe4ff88 0,#e5eafb33 48%,transparent 71%);z-index:-1;pointer-events:none}
+.hero-refined .hero-kicker{font-size:10px;letter-spacing:.18em}
+.hero-refined h1{font-size:clamp(60px,6.7vw,100px);line-height:1.1;letter-spacing:-.065em}
+.hero-refined h1 em{position:relative;display:inline-block;padding-bottom:14px}
+.hero-underline{position:absolute;left:0;bottom:-1px;width:100%;height:24px;overflow:visible}
+.hero-refined .hero-description{font-size:16px;line-height:1.85;max-width:455px;margin-top:24px;margin-bottom:28px}
+.hero-refined .button-primary{background:linear-gradient(120deg,#173ec4,#2855dc);box-shadow:0 8px 26px #173ec42b}
+.hero-refined .button-primary:hover{background:linear-gradient(120deg,#1233a5,#173ec4);box-shadow:0 12px 32px #173ec43b}
+.hero-refined .button-outline{border-color:#173ec43b;color:#173ec4}
+.hero-refined .button-outline:hover{background:#e7ecff;color:#173ec4}
+.hero-refined .portrait-stage{width:min(100%,420px);padding:36px 20px 72px 24px;perspective:1000px}
+.hero-refined .portrait-stage:before{inset:56px 0 93px 18px;border-radius:48% 48% 12px 12px;background:linear-gradient(155deg,#244ed6,#173ec4);transform:rotate(-7deg)}
+.hero-refined .hero-portrait{max-width:360px;border-radius:48% 48% 12px 12px;border:5px solid #fffef9;box-shadow:0 26px 60px #173ec41a;transform:translate3d(0,var(--portrait-shift,0px),0) rotateX(var(--portrait-rx,0deg)) rotateY(var(--portrait-ry,0deg));transition:transform .35s ease-out;will-change:transform}
+.hero-refined .hero-portrait img{aspect-ratio:4/4.65;filter:saturate(.9)}
+.hero-refined .hero-portrait figcaption{padding:19px 16px 20px}
+.hero-refined .hero-portrait figcaption strong{font-size:10px;line-height:1.6}
+.hero-refined .hero-portrait figcaption span{font-size:11px}
+.hero-refined .portrait-orbit{inset:9px -7px 72px -2px;border-color:#173ec43b;transform:rotate(12deg)}
+.hero-refined .portrait-orbit-secondary{inset:31px 0 85px 10px;transform:rotate(-8deg);border-color:#173ec41a}
+.portrait-coordinate{position:absolute;top:3px;right:18px;writing-mode:vertical-rl;transform:translateX(100%);font-size:8px;letter-spacing:.16em;color:#526185}
+.portrait-project{position:absolute;left:-28px;bottom:-12px;z-index:2;display:flex;align-items:center;gap:13px;width:295px;padding:11px 14px 11px 11px;background:#fffef9;border:1px solid #dbe1ef;border-radius:10px;box-shadow:0 12px 35px #173ec415;transform:rotate(-3deg);transition:transform .3s,box-shadow .3s}
+.portrait-project:hover{transform:rotate(0deg) translateY(-3px);box-shadow:0 16px 35px #173ec423}
+.portrait-project>img{width:40px;height:48px;object-fit:cover;border-radius:3px;flex-shrink:0}
+.portrait-project>span{flex:1;min-width:0}
+.portrait-project small{display:block;color:#647088;font-size:8px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:4px}
+.portrait-project strong{display:block;font-size:10px;line-height:1.6;color:#202a35;font-weight:600}
+.portrait-project>.inline-icon{color:#173ec4;width:17px;height:17px}
+.hero-refined .hero-scroll{margin-top:6px;color:#526185}
+.hero-refined .hero-scroll>span:first-child{border-color:#173ec43b;color:#173ec4}
+@media(prefers-reduced-motion:no-preference){html:not(.motion-reduced) .hero-underline path{stroke-dasharray:520;stroke-dashoffset:520;animation:hero-line-draw 1.3s .6s cubic-bezier(.22,1,.36,1) forwards}html:not(.motion-reduced) .portrait-project{animation:hero-project-enter 1s .65s both}}
+@keyframes hero-line-draw{to{stroke-dashoffset:0}}
+@keyframes hero-project-enter{from{opacity:0;translate:0 15px}to{opacity:1;translate:0 0}}
+.motion-reduced .hero-refined .hero-portrait{transform:none;will-change:auto}
+@media(min-width:761px) and (max-width:1100px){.hero-refined{gap:30px;padding-top:58px}.hero-refined h1{font-size:clamp(45px,6.3vw,70px)}.hero-refined .hero-description{font-size:14px}.hero-refined .portrait-stage{padding:30px 14px 65px 18px}.hero-refined .hero-portrait figcaption{padding:15px 10px}.hero-refined .hero-portrait figcaption strong{font-size:8px}.hero-refined .hero-portrait figcaption span{font-size:9px}.portrait-project{left:-18px;width:255px;gap:10px}.portrait-project strong{font-size:9px}.portrait-coordinate{right:10px;font-size:7px}}
+@media(max-width:760px){.hero-refined{padding-top:38px;row-gap:25px}.hero-refined:before{width:100%;height:430px;right:0;top:auto;bottom:60px}.hero-refined h1{font-size:clamp(41px,10.2vw,68px);line-height:1.1}.hero-refined h1 em{padding-bottom:10px}.hero-underline{height:16px;bottom:0}.hero-refined .hero-description{font-size:14px;line-height:1.85;margin-top:19px;margin-bottom:24px}.hero-refined .portrait-stage{width:290px;padding:28px 18px 68px 24px}.hero-refined .hero-portrait{max-width:248px;border-width:4px;will-change:auto}.hero-refined .hero-portrait img{aspect-ratio:4/4.25}.hero-refined .hero-portrait figcaption{padding:13px 10px}.hero-refined .hero-portrait figcaption strong{font-size:8px}.hero-refined .hero-portrait figcaption span{font-size:9px}.hero-refined .portrait-stage:before{inset:45px 8px 88px 20px}.hero-refined .portrait-orbit{inset:10px 0 65px 1px}.hero-refined .portrait-orbit-secondary{inset:24px -6px 76px 7px}.portrait-coordinate{right:10px;font-size:7px}.portrait-project{left:0;bottom:0;width:260px;padding:9px;gap:11px}.portrait-project strong{font-size:9px}.portrait-project>img{width:34px;height:42px}.hero-refined .hero-scroll{font-size:8px;letter-spacing:.08em}.hero-refined .hero-scroll-index{font-size:8px}}
+@media print{.hero-refined:before,.portrait-project{display:none}}
+@media(min-width:761px) and (max-width:1100px){.hero-refined .portrait-orbit{inset:16px 0 72px 8px;transform:rotate(5deg)}.hero-refined .portrait-orbit-secondary{inset:28px 0 83px 14px;transform:rotate(-5deg)}}

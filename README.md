@@ -91,7 +91,7 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Refonte éditoriale · octobre 2026
 
-Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et hero bleu d’origine « Donner du sens. Créer du lien. », avec portrait en arche, entrée animée et léger déplacement au défilement. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
+Direction noir végétal, ivoire et citron, grands titres, contraste typographique sans empattement / italique serif, et hero bleu d’origine « Donner du sens. Créer du lien. », avec portrait en arche, entrée animée et léger déplacement au défilement. Le hero affine cette base avec un soulignement tracé à l’entrée, un fond bleu diffus, un double filet autour du portrait et un lien direct vers L’Enjeu. Sur ordinateur, le portrait réagit légèrement au pointeur ; le mouvement se réinitialise à la sortie et respecte les préférences de réduction des animations. Les icônes sont des SVG pour éviter les différences de rendu des caractères et emojis. La navigation, la grille et le lecteur s’adaptent du mobile au grand écran, sans défilement imposé.
 
 Deux concepts personnels sont ajoutés : **Sillage**, étude d’identité pour une marque fictive de mobilité, et **Nocturne**, affiche manifeste pour un rendez-vous culturel fictif. Leurs affiches sont des SVG originaux ; les fiches décrivent l’intention et le livrable disponible sans revendiquer de commande ni de résultats. Les onze dossiers existants, galeries, ressources et attributions sont conservés.
 

@@ -171,12 +171,17 @@ const heroPortrait = document.querySelector('.hero-portrait');
 const originalHero = document.querySelector('.hero-original');
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 let portraitFrame = 0;
+let portraitPointer = null;
 function updatePortrait() {
   portraitFrame = 0;
   if (!heroPortrait) return;
   if (root.classList.contains('motion-reduced') || !finePointer.matches) {
     heroPortrait.style.removeProperty('--portrait-shift');
     return;
+  }
+  if (portraitPointer) {
+    heroPortrait.style.setProperty('--portrait-rx', (-portraitPointer.y * 3).toFixed(2) + 'deg');
+    heroPortrait.style.setProperty('--portrait-ry', (portraitPointer.x * 4).toFixed(2) + 'deg');
   }
   if (originalHero.getBoundingClientRect().bottom > 0) {
     heroPortrait.style.setProperty('--portrait-shift', Math.min(window.scrollY * .065, 26) + 'px');
@@ -191,3 +196,20 @@ system.addEventListener('change', requestPortraitUpdate);
 finePointer.addEventListener('change', requestPortraitUpdate);
 motion.addEventListener('click', requestPortraitUpdate);
 requestPortraitUpdate();
+
+// A slight pointer response on desktop, with one update per frame.
+function resetPortraitTilt() {
+  portraitPointer = null;
+  heroPortrait?.style.removeProperty('--portrait-rx');
+  heroPortrait?.style.removeProperty('--portrait-ry');
+}
+originalHero?.addEventListener('pointermove', event => {
+  if (!finePointer.matches || root.classList.contains('motion-reduced')) return;
+  const bounds = originalHero.getBoundingClientRect();
+  portraitPointer = {x: (event.clientX - bounds.left) / bounds.width - .5, y: (event.clientY - bounds.top) / bounds.height - .5};
+  requestPortraitUpdate();
+}, {passive:true});
+originalHero?.addEventListener('pointerleave', resetPortraitTilt);
+system.addEventListener('change', resetPortraitTilt);
+finePointer.addEventListener('change', resetPortraitTilt);
+motion.addEventListener('click', resetPortraitTilt);
