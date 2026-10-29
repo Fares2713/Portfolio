@@ -94,15 +94,14 @@ html:not(.motion-reduced) .reveal-ready{opacity:1;transform:none}
 .project-grid:not(.is-compact) .project[data-priority=primary] .project-actions>details{flex:1;min-width:128px}
 .project-grid:not(.is-compact) .project[data-priority=primary] .project-actions>details>summary{background:transparent;color:var(--ink);padding:12px 0;margin:0;border-radius:0;min-height:54px}
 .project-grid:not(.is-compact) .project[data-priority=primary] summary>span{color:var(--blue)}
-.project-grid:not(.is-compact)>#projet-lenjeu{display:grid;grid-column:1/-1;grid-template-columns:1.15fr 1fr;background:#f0f3fc}
-.project-grid:not(.is-compact) #projet-lenjeu .project-visual{display:flex;flex-direction:column;background:#e6ebf8}
-.project-grid:not(.is-compact) #projet-lenjeu .project-image-link{padding:28px;flex:1;display:flex;align-items:center}
-.project-grid:not(.is-compact) #projet-lenjeu .project-visual img{object-fit:contain}
-.project-grid:not(.is-compact) #projet-lenjeu .project-body{padding:30px 32px 0}
-.project-grid:not(.is-compact) #projet-lenjeu h3{font-size:34px}
-.project-grid:not(.is-compact) #projet-1 .project-visual img{object-fit:contain;padding:20px}
-@media(max-width:1050px){.hero-copy>h1,.hero h1{font-size:clamp(40px,5vw,58px)}.hero .hero-role{font-size:17px}.project-grid:not(.is-compact) #projet-lenjeu h3{font-size:28px}}
-@media(max-width:760px){.hero-copy>h1,.hero h1{font-size:clamp(36px,7.4vw,54px);line-height:1.13}.hero .hero-role{font-size:16px}.hero .portrait-stage{justify-self:center}.hero .hero-portrait img{aspect-ratio:1.2}.project-grid:not(.is-compact)>#projet-lenjeu{display:flex}.project-grid:not(.is-compact) #projet-lenjeu .project-image-link{display:block;padding:20px}.project-grid:not(.is-compact) .project[data-priority=primary] .project-body{padding:22px 22px 0}.project-grid:not(.is-compact) .project[data-priority=primary] h3{font-size:26px}}
+.project-grid:not(.is-compact)>#projet-1{display:grid;grid-column:1/-1;grid-template-columns:1.15fr 1fr;background:#f0f3fc}
+.project-grid:not(.is-compact) #projet-1 .project-visual{display:flex;flex-direction:column;background:#e6ebf8}
+.project-grid:not(.is-compact) #projet-1 .project-image-link{padding:28px;flex:1;display:flex;align-items:center}
+.project-grid:not(.is-compact) #projet-1 .project-visual img{object-fit:contain}
+.project-grid:not(.is-compact) #projet-1 .project-body{padding:30px 32px 0}
+.project-grid:not(.is-compact) #projet-1 h3{font-size:34px}
+@media(max-width:1050px){.hero-copy>h1,.hero h1{font-size:clamp(40px,5vw,58px)}.hero .hero-role{font-size:17px}.project-grid:not(.is-compact) #projet-1 h3{font-size:28px}}
+@media(max-width:760px){.hero-copy>h1,.hero h1{font-size:clamp(36px,7.4vw,54px);line-height:1.13}.hero .hero-role{font-size:16px}.hero .portrait-stage{justify-self:center}.hero .hero-portrait img{aspect-ratio:1.2}.project-grid:not(.is-compact)>#projet-1{display:flex}.project-grid:not(.is-compact) #projet-1 .project-image-link{display:block;padding:20px}.project-grid:not(.is-compact) .project[data-priority=primary] .project-body{padding:22px 22px 0}.project-grid:not(.is-compact) .project[data-priority=primary] h3{font-size:26px}}
 }
 @media screen {
 .credentials{color:var(--ink)}.credentials-inner>p>span,.credentials-inner>div>span{color:var(--muted)}.credentials-inner>div{border-color:var(--line)}
