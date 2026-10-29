@@ -237,6 +237,6 @@ Les liens restent natifs sans JavaScript : ils rejoignent la section complète d
 
 ## Refonte du 29 octobre 2026
 
-Ouverture claire « Des idées claires. Des projets concrets. », portrait sobre et introduction présentant tous les domaines sans citer d’entreprise. La feuille `refresh.css` harmonise les couleurs et les espacements. Les contenus et fonctionnalités de la version distante sont conservés, avec « Inria en récits — une série d’entretiens filmés » en tête de sélection. Le hero utilise une photographie, sans vidéo décorative.
+Ouverture claire « Créer des contenus. Faire vivre les projets. », portrait sobre et introduction présentant tous les domaines sans citer d’entreprise. La feuille `refresh.css` harmonise les couleurs et les espacements. Les contenus et fonctionnalités de la version distante sont conservés, avec « Inria en récits : une série d’entretiens filmés » en tête de sélection. Le hero utilise une photographie, sans vidéo décorative.
 
 La disposition des réalisations est définie dans `project-cards.css` : projet audiovisuel en tête, puis cartes alignées avec le visuel avant le texte. Les aperçus conservent un ratio commun et ne sont plus inclinés ; les rôles et résultats sont plus lisibles.
