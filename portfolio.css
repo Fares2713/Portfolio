@@ -150,8 +150,8 @@
   .project-reading > p { font-size: 11px; }
   .project-views button { font-size: 11px; padding-inline: 16px; }
   .project-grid:not(.is-compact) > .project[data-priority=primary] { display: flex; flex-direction: column; margin-bottom: 8px; border-radius: 8px; }
-  .project-grid:not(.is-compact) .project[data-priority=primary] .project-visual { min-height: 0; order: 0 !important; }
-  .project-grid:not(.is-compact) .project[data-priority=primary] .project-image-link { min-height: 220px; padding: 48px 24px 24px !important; }
+  .project-grid:not(.is-compact) .project[data-priority=primary] .project-visual { min-height: 0; order: 0; }
+  .project-grid:not(.is-compact) .project[data-priority=primary] .project-image-link { min-height: 220px; padding: 48px 24px 24px; }
   .project-grid:not(.is-compact) .project[data-priority=primary] .project-visual img { max-height: 280px; }
   .project-grid:not(.is-compact) .project[data-priority=primary] .project-visual::after { top: 18px; left: 24px; font-size: 8px; }
   .project-grid:not(.is-compact) .project[data-priority=primary] .project-visual figcaption { padding: 12px 20px; font-size: 9px; }

@@ -1,0 +1,60 @@
+/* One predictable reading order for the project gallery, independent of project identity. */
+@media screen {
+#projets .project-grid:not(.is-compact){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:stretch}
+#projets .project-grid:not(.is-compact)>.project{display:flex;flex-direction:column;grid-column:auto;min-width:0;margin:0;border:1px solid var(--line);border-radius:12px;background:white;overflow:hidden}
+#projets .project-grid:not(.is-compact) .project .project-visual{display:block;order:0;flex:none;min-height:0;min-width:0;padding:0;border:0;border-bottom:1px solid var(--line);background:#edf0f5;color:var(--muted);overflow:hidden}
+#projets .project-grid:not(.is-compact) .project .project-visual::before,
+#projets .project-grid:not(.is-compact) .project .project-visual::after{display:none}
+#projets .project-grid:not(.is-compact) .project .project-image-link{display:block;min-height:0;padding:0;background:transparent}
+#projets .project-grid:not(.is-compact) .project .project-visual img{display:block;width:100%;height:auto;aspect-ratio:16/10;max-height:none;min-height:0;padding:0;border:0;border-radius:0;object-fit:cover;object-position:center;transform:none;box-shadow:none}
+#projets .project-grid:not(.is-compact) .project[data-visual-kind=web] .project-visual img{object-position:top}
+#projets .project-grid:not(.is-compact) .project .project-image-link:hover img{transform:scale(1.02)}
+#projets .project-grid:not(.is-compact) .project .project-visual figcaption{position:static;display:block;clip-path:none;white-space:normal;width:auto;height:auto;margin:0;min-height:0;padding:11px 20px;border:0;background:#f4f5f7;color:var(--muted);font-size:11px;line-height:1.6}
+#projets .project-grid:not(.is-compact) .project .project-number{position:absolute;display:grid;top:16px;left:16px;width:34px;height:34px;padding:0;border:1px solid #18253b12;border-radius:7px;background:#fffffff2;color:var(--ink);font:600 11px var(--sans);z-index:1}
+#projets .project-grid:not(.is-compact) .project .project-body{display:flex;flex-direction:column;order:1;flex:1;min-width:0;padding:26px 26px 0}
+#projets .project-grid:not(.is-compact) .project .project-body>.eyebrow{font-size:11px;line-height:1.6;margin:0 0 12px}
+#projets .project-grid:not(.is-compact) .project h3{font-size:28px;line-height:1.25;letter-spacing:-.035em;margin:0 0 12px;font-weight:600}
+#projets .project-grid:not(.is-compact) .project .project-subtitle{display:block;max-width:none;font-size:14px;line-height:1.8;margin:0;color:var(--muted)}
+#projets .project-grid:not(.is-compact) .project .project-contribution{margin-top:22px;padding-top:16px}
+#projets .project-grid:not(.is-compact) .project .project-contribution>span{font-size:10px;margin-bottom:7px}
+#projets .project-grid:not(.is-compact) .project .project-contribution strong{font-size:14px;line-height:1.65;font-weight:600}
+#projets .project-grid:not(.is-compact) .project .project-outcome{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:18px;padding:18px 0}
+#projets .project-grid:not(.is-compact) .project .project-outcome strong{font-family:var(--sans);font-size:26px;font-weight:600;line-height:1.25}
+#projets .project-grid:not(.is-compact) .project .project-outcome>span{font-size:12px;line-height:1.7}
+#projets .project-grid:not(.is-compact) .project .project-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 18px;margin-top:auto;padding:8px 0;border-top:1px solid var(--line)}
+#projets .project-grid:not(.is-compact) .project .project-actions>.text-link{min-height:48px;padding:10px 0;font-size:12px;line-height:1.6}
+#projets .project-grid:not(.is-compact) .project .project-actions>details{flex:1 0 150px;min-width:0;border:0}
+#projets .project-grid:not(.is-compact) .project .project-actions>details>summary{min-height:48px;margin:0;padding:10px 0;border-radius:0;background:transparent;color:var(--ink);font-size:12px;line-height:1.6}
+#projets .project-grid:not(.is-compact) .project summary>span{color:var(--blue)}
+#projets .project-grid:not(.is-compact) .project .project-actions>details[open]{flex-basis:100%}
+/* The lead story keeps its emphasis while the following cards share one structure. */
+#projets .project-grid:not(.is-compact)>#projet-1{display:grid;grid-template-columns:1.1fr 1fr;grid-column:1/-1;background:#f0f3fc;border-color:#d5dced}
+#projets .project-grid:not(.is-compact) #projet-1 .project-visual{display:flex;flex-direction:column;background:#e6ebf8;border:0;border-right:1px solid #d5dced}
+#projets .project-grid:not(.is-compact) #projet-1 .project-image-link{display:flex;align-items:center;flex:1;padding:26px}
+#projets .project-grid:not(.is-compact) #projet-1 .project-visual img{object-fit:contain;aspect-ratio:16/10;background:transparent}
+#projets .project-grid:not(.is-compact) #projet-1 .project-body{padding:32px 32px 0}
+#projets .project-grid:not(.is-compact) #projet-1 h3{font-size:34px}
+/* The summary view uses thumbnails on the left, with the same visual-first order. */
+#projets .project-grid.is-compact .project{grid-column:auto;margin:0}
+#projets .project-grid.is-compact .project .project-visual{order:0;min-width:0}
+#projets .project-grid.is-compact .project .project-body{order:1;min-width:0}
+#projets .project-grid.is-compact .project .project-visual img{border:0;border-radius:4px;transform:none;box-shadow:none}
+@media(max-width:1050px){
+#projets .project-grid:not(.is-compact){gap:24px}
+#projets .project-grid:not(.is-compact) .project h3{font-size:25px}
+#projets .project-grid:not(.is-compact) #projet-1 h3{font-size:29px}
+#projets .project-grid:not(.is-compact) #projet-1 .project-body{padding:24px 24px 0}
+}
+@media(max-width:760px){
+#projets .project-grid:not(.is-compact){grid-template-columns:1fr;gap:24px}
+#projets .project-grid:not(.is-compact)>#projet-1{display:flex;grid-column:auto}
+#projets .project-grid:not(.is-compact) #projet-1 .project-visual{border-right:0;border-bottom:1px solid var(--line)}
+#projets .project-grid:not(.is-compact) .project .project-body,
+#projets .project-grid:not(.is-compact) #projet-1 .project-body{padding:22px 22px 0}
+#projets .project-grid:not(.is-compact) .project h3,
+#projets .project-grid:not(.is-compact) #projet-1 h3{font-size:26px}
+#projets .project-grid:not(.is-compact) .project .project-visual figcaption{padding-inline:18px;font-size:10px}
+#projets .project-grid:not(.is-compact) #projet-1 .project-image-link{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){#projets .project-grid .project .project-image-link:hover img{transform:none}}
+}

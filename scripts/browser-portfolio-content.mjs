@@ -14,7 +14,22 @@ try{
   assert.match(await page.locator('h1').innerText(),/Des idées claires.[\s\S]*Des projets concrets./);assert.equal(await page.locator('.credentials strong').count(),3);assert.ok(await page.locator('.credentials').isVisible());assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   assert.equal(await page.locator('.project').count(),10);assert.equal(await page.locator('.project[data-priority=primary]').count(),4);assert.equal(await page.locator('#project-index li').count(),10);assert.equal(await page.locator('#supports,.portfolio-supports').count(),0,'Removed editorial-support section stays absent from the home page');
   assert.equal(await page.locator('#decisions,.methods-section,.method-card,a[href="#decisions"]').count(),0,'Removed method section and links stay absent');
+
+  assert.equal(await page.locator('.project-grid>.project').first().getAttribute('id'),'projet-1','Interview series leads the selection');
+  for(const card of await page.locator('.project-grid>.project').all()){
+   const visual=await card.locator('.project-visual').boundingBox(),body=await card.locator('.project-body').boundingBox();
+   assert.ok(visual.y<=body.y,'Every card begins with its own visual');
+   if(width<=760||await card.getAttribute('id')!=='projet-1')assert.ok(visual.y+visual.height<=body.y+1,'Image and caption precede project text');
+   assert.ok(await card.locator('.project-contribution strong').evaluate(el=>parseFloat(getComputedStyle(el).fontSize)>=14),'Role remains readable');
+  }
+  if(width>760){
+   const media=await page.locator('#projet-lenjeu').boundingBox(),events=await page.locator('#projet-2').boundingBox();
+   assert.ok(Math.abs(media.y-events.y)<1,'Neighboring cards start on the same row');
+   assert.ok(Math.abs(media.height-events.height)<1,'Neighboring cards share a clear lower boundary');
+  }
+
   await page.screenshot({path:out+'/hero-'+width+'.png'});await page.locator('#projets').scrollIntoViewIfNeeded();await page.screenshot({path:out+'/projects-'+width+'.png'});
+  await page.locator('#projet-lenjeu').scrollIntoViewIfNeeded();await page.screenshot({path:out+'/cards-'+width+'.png'});
   const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
   await page.goto(origin+'/#projet-conferences',{waitUntil:'networkidle'});assert.ok(await page.locator('#projet-2 details').evaluate(el=>el.open));assert.equal(await page.locator('.project#projet-conferences').count(),0);assert.ok(await page.locator('#projet-conferences h5').isVisible());
   for(const app of ['dossier-decisions','atelier-editorial']){await page.goto(origin+'/'+app+'/');assert.match(await page.locator('h1').innerText(),app==='dossier-decisions'?/dossier de décisions/:/atelier éditorial/);assert.match(await page.locator('.state').innerText(),/Temporairement indisponible/);assert.equal(await page.locator('script,input,textarea,video').count(),0);const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>v.id),[])}
