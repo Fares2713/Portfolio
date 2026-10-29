@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:01.510 --> 00:00:04.130
+01 / Charger un exemple documenté : la vue d’ensemble indique les prochaines actions utiles.
+
+2
+00:00:04.130 --> 00:00:07.002
+02 / Revoir une source et consigner le périmètre contrôlé. La vérification reste humaine.
+
+3
+00:00:07.002 --> 00:00:10.089
+03 / Organiser les supports par public et affecter un responsable à la version de travail.
+
+4
+00:00:10.089 --> 00:00:14.380
+04 / Une décision explicite valide une version précise ; ce n’est pas une signature authentifiée.
+
+5
+00:00:14.380 --> 00:00:17.628
+05 / Modifier le texte retire la validation. La comparaison montre exactement ce qui change.
+
+6
+00:00:17.628 --> 00:00:21.477
+06 / Prévisualiser un calendrier avant de l’appliquer. Les dates ne déclenchent aucune publication.
+
+7
+00:00:21.477 --> 00:00:23.436
+07 / Exporter les supports, les dates et les versions. La validation précédente reste conservée dans le dossier.
+
+8
+00:00:23.436 --> 00:00:26.287
+Conception : Farès Benamar. Prototype local, décisions déclaratives. Aucun gain de temps mesuré.

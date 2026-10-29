@@ -32,14 +32,14 @@ try{
   assert.equal(await page.locator('.experience-row').count(),4,'Two employment experiences and two independent projects');
   assert.match(await page.locator('.experience-row').first().innerText(),/FNK Location/);
   assert.equal(await page.locator('a[download][href*="cv-fares"]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
-  assert.equal(await page.locator('.project-contribution').count(),11,'Exact role visible on each selected project');
+  assert.equal(await page.locator('.project-contribution').count(),10,'Exact role visible on each selected project');
   assert.ok(await page.locator('#projet-fnk').isVisible(),'FNK mission added without fabricated visuals');
   assert.equal(await page.locator('#projet-fnk .project-visual img').getAttribute('src'),'assets/fnk-agence.jpg','FNK agency visual');
   assert.equal(await page.locator('#projet-fnk .project-image-link').getAttribute('href'),'https://fnklocation.com');
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.webp');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
-  assert.equal(await page.locator('.menu-toggle').isVisible(),width<=760);
-  if(width<=760){
+  assert.equal(await page.locator('.menu-toggle').isVisible(),width<=960);
+  if(width<=960){
    await page.locator('.menu-toggle').focus();
    await page.keyboard.press('Enter');
    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'true');
@@ -50,12 +50,12 @@ try{
   assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=341);
   const portraitImage=await page.locator('.hero-portrait img').boundingBox();
   assert.ok(portraitImage.height<=portraitImage.width*1.25,'Portrait keeps a natural crop');
-  for(const image of await page.locator('.project:not(.project-featured) .project-visual img').all()) {
+  for(const image of await page.locator('.project[data-priority=secondary] .project-visual img').all()) {
    const bounds=await image.boundingBox();
    assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
   }
   await page.screenshot({path:'screenshots/hero-'+width+'.png'});
-  for(const [filter,expected] of [['communication',5],['evenementiel',5],['audiovisuel',1],['digital',5],['all',11]]){
+  for(const [filter,expected] of [['communication',6],['evenementiel',3],['audiovisuel',1],['digital',5],['all',10]]){
    await page.locator('[data-filter="'+filter+'"]').click();
    assert.equal(await page.locator('.project:visible').count(),expected);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
@@ -90,20 +90,21 @@ try{
   assert.ok(await media.evaluate(el=>el===document.activeElement),'Gallery restores focus');
   await page.locator('#projet-petites-mains .project-image-link').click();
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/petites-mains-equipe.jpg');
+  await dialog.locator('.dialog-media img').evaluate(img=>img.decode());
   assert.ok(await dialog.locator('.dialog-media img').evaluate(img=>img.complete&&img.naturalWidth===1240),'Original team photo loads in the gallery');
   await page.keyboard.press('Escape');
   await page.locator('#projet-fnk .project-media-action').click();
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/fnk-agence.jpg');
   await page.keyboard.press('Escape');
   await page.locator('#projet-fnk summary').click();
-  assert.match(await dialog.innerText(),/visuel présenté provient du site public/);
+  assert.match(await dialog.innerText(),/Photographie de présentation de l’agence issue du site public/);
   assert.equal(await dialog.locator('.case-content > ul > li').count(),6,'All FNK missions are represented');
   await page.mouse.click(3,3);
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
   assert.ok(await page.locator('#projet-3').isVisible());
   assert.ok(await page.locator('#projet-7').isVisible());
   await page.locator('#projet-lenjeu summary').click();
-  assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Contexte & objectif','Case starts with context');
+  assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Le besoin','Case starts with context');
   assert.ok(await dialog.locator('.case-content').evaluate(el=>{
     const result=[...el.querySelectorAll(':scope > h4')].find(h=>h.textContent==='Résultats & périmètre');
     return Boolean(result.compareDocumentPosition(el.querySelector('.editorial-carousel'))&Node.DOCUMENT_POSITION_FOLLOWING);
@@ -135,7 +136,7 @@ try{
 
   await page.locator('#projet-rencontres-enjeu summary').click();
   assert.match(await dialog.innerText(),/avril 2027/);
-  assert.match(await dialog.innerText(),/hypothèses de travail/);
+  assert.match(await dialog.innerText(),/Objectifs de conception : 80 participants, enveloppe prévisionnelle/);
   const resourcesAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
   assert.deepEqual(resourcesAudit.violations.map(x=>x.id),[],'Accessible project documents');
   const [download]=await Promise.all([page.waitForEvent('download'),dialog.locator('a[download="01-dossier-conception.pdf"]').click()]);
@@ -148,6 +149,13 @@ try{
   const pack=await context.request.get(origin+'/assets/rencontres-enjeu/dossier-complet.zip');
   assert.equal(pack.status(),200);
   assert.equal((await pack.body()).subarray(0,2).toString(),'PK','Valid archive response');
+  await page.locator('#projet-memoire summary').click();
+  assert.match(await dialog.innerText(),/11 entretiens semi-directifs/);
+  assert.match(await dialog.innerText(),/18\/20/);
+  assert.match(await dialog.innerText(),/présentation orale de 30 minutes/);
+  const [memoireDownload]=await Promise.all([page.waitForEvent('download'),dialog.locator('a[download="Memoire_M2MCO_Fares_Benamar.pdf"]').click()]);
+  assert.ok((await readFile(await memoireDownload.path())).subarray(0,5).toString()==='%PDF-','Full research PDF can be downloaded');
+  await page.keyboard.press('Escape');
   await page.locator('.earlier-experience>summary').click();
   assert.equal(await page.locator('.earlier-grid article:visible').count(),3);
   // Force lazy images to load before validating and capturing the whole page.
@@ -169,7 +177,7 @@ try{
  const plain=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await plain.goto(origin);
  assert.ok(await plain.locator('#navigation').isVisible());
- assert.equal(await plain.locator('.project:visible').count(),11);
+ assert.equal(await plain.locator('.project:visible').count(),10);
  await plain.locator('.project summary').first().click();
  assert.ok(await plain.locator('.project .case-content').first().isVisible());
  await plain.locator('#projet-fnk summary').click();

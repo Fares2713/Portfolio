@@ -31,7 +31,7 @@ function element() {
  };
 }
 const menu = element(), navigation = element(), filterGroup = element(), status = element();
-const cardList = ['audiovisuel', 'evenementiel', 'digital', 'digital', 'communication digital', 'communication digital', 'communication', 'evenementiel', 'evenementiel', 'evenementiel communication digital', 'evenementiel communication'].map(category => {
+const cardList = ['audiovisuel', 'evenementiel', 'digital', 'digital', 'communication digital', 'communication digital', 'communication', 'evenementiel communication digital', 'evenementiel communication', 'communication'].map(category => {
  const item = element(); item.dataset.category = category; return item;
 });
 const filterButtons = ['all', 'communication', 'evenementiel', 'audiovisuel', 'digital'].map(filter => {
@@ -54,7 +54,7 @@ navigation.handlers.click({target:{closest: () => ({})}});
 check(menu.getAttribute('aria-expanded') === 'false', 'Navigation closes menu');
 filterButtons.forEach(button => {
  filterGroup.handlers.click({target:{closest: () => button}});
- const expected = {all:11, communication:5, evenementiel:5, audiovisuel:1, digital:5}[button.dataset.filter];
+ const expected = {all:10, communication:6, evenementiel:3, audiovisuel:1, digital:5}[button.dataset.filter];
  check(cardList.filter(card => !card.hidden).length === expected, 'Filter result count: ' + button.dataset.filter);
  check(filterButtons.filter(item => item.getAttribute('aria-pressed') === 'true').length === 1, 'Exclusive filter state');
  check(status.textContent.startsWith(String(expected)), 'Announced result count');

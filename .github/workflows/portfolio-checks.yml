@@ -15,4 +15,11 @@ jobs:
       - name: Check syntax and portfolio behavior
         run: |
           node --check script.js
+          node --check hero-motion.js
+          node --check editorial.js
           node scripts/check.mjs
+          node --check dossier-decisions/interface.js
+          node scripts/check-decisions.mjs
+          node scripts/check-atelier.mjs
+          node --check atelier-editorial/atelier.js
+          node --check atelier-editorial/experience.js

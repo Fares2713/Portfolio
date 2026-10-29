@@ -1,0 +1,434 @@
+{
+  "version": "2.0",
+  "author": "Farès Benamar",
+  "notice": "Exercice de conception personnel. La Maison des services Les Rives, les situations, les pièces de référence et les contenus sont fictifs. Aucun mandat, déploiement, résultat de campagne ou validation réelle n’est revendiqué.",
+  "organization": "Maison des services Les Rives",
+  "audiences": {
+    "usagers": {
+      "label": "Les usagers",
+      "need": "Comprendre ce qui change pour moi et savoir quoi faire.",
+      "action": "Donner une marche à suivre courte et une possibilité de contact humain.",
+      "closing": "Pour être accompagné, adressez-vous à l’accueil de la Maison des services Les Rives.",
+      "internal": "Préparer l’accueil avant toute diffusion aux usagers.",
+      "measure": "Compréhension de la prochaine étape par un petit test de reformulation auprès d’usagers volontaires."
+    },
+    "agents": {
+      "label": "Les agents d’accueil",
+      "need": "Répondre de manière fiable, y compris lorsque je ne sais pas encore.",
+      "action": "Fournir une réponse commune et une consigne d’escalade vers le responsable de service.",
+      "closing": "Si une question dépasse cette réponse, transmettez-la au responsable de service ; ne complétez pas les informations par supposition.",
+      "internal": "Faire relire la réponse par le responsable de service puis la partager à l’accueil.",
+      "measure": "Capacité des agents à répondre à trois questions types sans divergence avec la fiche de référence."
+    },
+    "partenaires": {
+      "label": "Les partenaires relais",
+      "need": "Relayer une information à jour, sans réécrire une promesse.",
+      "action": "Transmettre un bloc validé, sa version et la consigne de ne pas compléter les éléments en attente.",
+      "closing": "Reprenez uniquement ce texte de référence. Pour toute adaptation, contactez le responsable de service de la Maison des services Les Rives.",
+      "internal": "Informer l’accueil, puis adresser aux relais la même version du message.",
+      "measure": "Conformité des reprises des partenaires au texte de référence ; relever et corriger chaque divergence observée."
+    }
+  },
+  "channels": {
+    "email": {
+      "label": "Un e-mail",
+      "benefit": "Une information adressée à des destinataires identifiés, avec un message que l’on peut conserver.",
+      "limit": "Un e-mail n’atteint que les personnes dont l’adresse est disponible et utilisable pour cet envoi.",
+      "guard": "Vérifier la pertinence de la liste et le cadre de l’envoi avec le responsable du traitement ; ne pas réutiliser des adresses collectées pour un autre usage sans vérification.",
+      "format": "E-mail prêt à adapter",
+      "role": "Diffusion ciblée"
+    },
+    "social": {
+      "label": "Les réseaux sociaux",
+      "benefit": "Un format court, utile pour orienter et répondre là où une question est déjà posée.",
+      "limit": "Un réseau social n’est ni un registre officiel ni un canal qui touche tous les usagers.",
+      "guard": "Ne pas communiquer de données personnelles en commentaire ; proposer un échange à l’accueil pour les situations individuelles.",
+      "format": "Publication ou réponse courte",
+      "role": "Point d’entrée vers la référence"
+    },
+    "affiche": {
+      "label": "Un affichage sur place",
+      "benefit": "Une information visible au moment du passage, sans compte ni adresse électronique.",
+      "limit": "Une affiche ne joint pas les personnes qui ne viennent pas sur place et se périme facilement.",
+      "guard": "Dater la version, désigner la personne chargée de son retrait et proposer un accès humain ; un QR code seul ne suffit pas.",
+      "format": "Affiche textuelle",
+      "role": "Repère sur le lieu concerné"
+    }
+  },
+  "constraints": {
+    "urgence": {
+      "label": "Deux heures pour agir",
+      "short": "Temps limité",
+      "principle": "Réduire le nombre de supports, jamais le niveau de vérification.",
+      "action": "Préparer une seule référence, un message court et une réponse d’accueil ; différer les formats secondaires.",
+      "tradeoff": "Je renonce à une campagne multicanale complète pour sécuriser une première réponse utile.",
+      "timing": [
+        "0–30 min · Vérifier",
+        "30–60 min · Aligner",
+        "60–120 min · Diffuser",
+        "À J+1 · Relire"
+      ]
+    },
+    "incomplet": {
+      "label": "Une information reste à confirmer",
+      "short": "Validation manquante",
+      "principle": "Nommer ce qui est établi, réserver ce qui ne l’est pas.",
+      "action": "Séparer les faits du point en attente ; demander sa validation au responsable identifié avant toute promesse.",
+      "tradeoff": "Je préfère une information partielle explicite à une annonce qui devra être démentie.",
+      "timing": [
+        "D’abord · Délimiter",
+        "Ensuite · Faire valider",
+        "Après accord · Diffuser",
+        "À l’échéance · Mettre à jour"
+      ]
+    },
+    "accessibilite": {
+      "label": "Une partie du public est peu à l’aise avec le numérique",
+      "short": "Accès au message",
+      "principle": "Prévoir une voie réellement utilisable sans outil numérique.",
+      "action": "Prévoir un repère sur place et une réponse orale équivalente ; tester la compréhension avant de multiplier les formats.",
+      "tradeoff": "Je privilégie l’accès à l’information et une prochaine étape claire plutôt qu’un support uniquement numérique.",
+      "timing": [
+        "D’abord · Tester les mots",
+        "Ensuite · Outiller l’accueil",
+        "Puis · Relayer",
+        "Après diffusion · Observer"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "service",
+      "number": "01",
+      "title": "Annoncer un nouveau service",
+      "tag": "Faire comprendre, puis faire agir",
+      "context": "La Maison des services Les Rives prépare des permanences gratuites d’accompagnement aux démarches numériques. L’enjeu : expliquer à quoi elles servent et comment venir, sans promettre que toutes les démarches seront résolues.",
+      "problem": "Faire connaître une offre utile sans créer d’attentes que le service ne peut pas tenir.",
+      "question": "Que faut-il savoir avant de se déplacer ?",
+      "facts": [
+        {
+          "item": "Périmètre et gratuité de l’accompagnement",
+          "source": "Fiche de service S-01",
+          "owner": "Responsable du service",
+          "state": "Établi dans le scénario",
+          "detail": "Accompagnement aux démarches numériques, sans garantie de décision par les organismes concernés."
+        },
+        {
+          "item": "Ouverture et modalités d’accueil",
+          "source": "Planning d’accueil P-01",
+          "owner": "Responsable de l’accueil",
+          "state": "Établi, sauf variante « validation manquante »",
+          "detail": "À partir du 4 mai 2027, le mardi de 14 h à 17 h, sur rendez-vous pris à l’accueil."
+        },
+        {
+          "item": "Capacité, documents à apporter et besoins d’adaptation",
+          "source": "Brief de préparation B-01",
+          "owner": "Équipe d’accueil",
+          "state": "À vérifier avant diffusion",
+          "detail": "Ne pas publier de nombre de places, de délai garanti ou de liste de documents non validés."
+        }
+      ],
+      "message": "Un accompagnement gratuit pour vos démarches numériques ouvre le 4 mai 2027, le mardi de 14 h à 17 h. Prenez rendez-vous à l’accueil de la Maison des services Les Rives. L’accompagnement ne garantit pas l’issue de votre démarche auprès de l’organisme concerné.",
+      "pendingMessage": "Un accompagnement gratuit aux démarches numériques est en préparation à la Maison des services Les Rives. La date d’ouverture et les modalités d’accueil restent à confirmer. Aucune prise de rendez-vous n’est ouverte à ce stade. L’accueil pourra vous renseigner après validation du planning.",
+      "pending": "La date d’ouverture et les modalités de rendez-vous ne sont pas validées dans ce parcours.",
+      "decision": "Annoncer une offre concrète, avec une prochaine étape claire.",
+      "pendingDecision": "Différer l’annonce d’ouverture et la prise de rendez-vous.",
+      "reason": "L’utilité, les conditions d’accès et la limite du service doivent être comprises avant de chercher à attirer davantage de visiteurs.",
+      "pendingReason": "Une date incertaine ne devient pas une promesse parce que le délai de communication est court. Je prépare les supports, mais je ne lance pas l’appel à prendre rendez-vous.",
+      "refuse": "Promettre « toutes vos démarches réglées » ou publier un créneau non confirmé.",
+      "gate": "Feu vert du responsable de service sur le périmètre et du responsable d’accueil sur le planning ; contrôle de la réponse donnée sur place.",
+      "pendingGate": "Publication de l’annonce d’ouverture uniquement après validation écrite du planning et des modalités par le responsable d’accueil.",
+      "headline": "Un coup de main pour vos démarches numériques",
+      "pendingHeadline": "Un nouveau service en préparation",
+      "sequence": [
+        "Valider une fiche de référence : utilité, gratuité, modalités, limites et contact.",
+        "Donner à l’accueil la réponse commune et les questions à faire remonter.",
+        "Diffuser le support choisi puis vérifier que le point de contact répond correctement.",
+        "Recueillir les questions récurrentes et corriger la fiche avant la vague suivante."
+      ],
+      "pendingSequence": [
+        "Isoler le planning non confirmé ; préparer la fiche sans date ni appel à réserver.",
+        "Demander au responsable d’accueil une validation explicite des modalités.",
+        "Répondre seulement aux demandes déjà reçues avec le message d’attente ; après accord, reprendre l’annonce complète.",
+        "Mettre à jour la référence et les supports ; supprimer les versions de préparation."
+      ],
+      "questions": [
+        {
+          "q": "Est-ce gratuit ?",
+          "a": "Oui, l’accompagnement est gratuit. Cela ne signifie pas que tous les frais éventuels d’une démarche externe sont supprimés."
+        },
+        {
+          "q": "Est-ce que ma démarche sera acceptée ?",
+          "a": "L’équipe vous accompagne. La décision reste celle de l’organisme qui instruit votre demande."
+        }
+      ],
+      "metrics": [
+        {
+          "name": "Compréhension des modalités",
+          "method": "Faire reformuler le lieu, la gratuité et la prochaine étape à cinq lecteurs volontaires. Échantillon de test, pas résultat représentatif.",
+          "rule": "Si une erreur revient, réécrire le passage avant diffusion."
+        },
+        {
+          "name": "Demandes arrivées au mauvais endroit",
+          "method": "Pendant la première semaine fictive, catégoriser les questions reçues sans données personnelles.",
+          "rule": "Si une confusion se répète, adapter la référence et le support concerné."
+        }
+      ],
+      "learning": "Transformer une offre de service en information pratique, avec un périmètre explicite.",
+      "options": [
+        {
+          "label": "Lancer une campagne large",
+          "benefit": "Rendre le service rapidement visible.",
+          "risk": "Générer des demandes avant que l’accueil soit prêt.",
+          "condition": "À envisager après validation du service et des modalités."
+        },
+        {
+          "label": "Annoncer avec une marche à suivre",
+          "benefit": "Relier l’utilité du service à une action réalisable.",
+          "risk": "Laisser une ambiguïté si les limites ne sont pas écrites.",
+          "condition": "Périmètre et planning confirmés ; réponse d’accueil prête."
+        },
+        {
+          "label": "Préparer sans annoncer l’ouverture",
+          "benefit": "Éviter de transformer une hypothèse en promesse.",
+          "risk": "Laisser une demande sans réponse si l’on garde le silence.",
+          "condition": "Répondre aux demandes reçues et demander la validation manquante."
+        }
+      ],
+      "owners": [
+        "Responsable de service",
+        "Responsable de l’accueil",
+        "Communication",
+        "Accueil et communication"
+      ],
+      "deliverables": [
+        "Une fiche de référence validée",
+        "Une réponse d’accueil commune",
+        "Le support et le point de contact opérationnels",
+        "Une liste des confusions à corriger"
+      ]
+    },
+    {
+      "id": "controverse",
+      "number": "02",
+      "title": "Expliquer un sujet controversé",
+      "tag": "Clarifier sans prétendre convaincre tout le monde",
+      "context": "Une réduction de l’ouverture du jeudi soir est à l’étude. Des usagers craignent de ne plus pouvoir venir après leur journée de travail. La proposition n’est pas une décision ; les horaires actuels restent applicables.",
+      "problem": "Expliquer une proposition contestée tout en reconnaissant une difficulté d’accès réelle et en laissant la consultation ouverte.",
+      "question": "Qu’est-ce qui est décidé, proposé ou encore discutable ?",
+      "facts": [
+        {
+          "item": "Statut de la proposition et horaires actuels",
+          "source": "Note de consultation C-01",
+          "owner": "Direction du site",
+          "state": "Établi dans le scénario",
+          "detail": "Aucune réduction n’est actée ; les horaires actuels restent applicables."
+        },
+        {
+          "item": "Objet et voie de contribution",
+          "source": "Cadre de consultation C-02",
+          "owner": "Responsable de la consultation",
+          "state": "Établi dans le scénario",
+          "detail": "Les usagers peuvent signaler leurs contraintes et proposer des alternatives à l’accueil ; ces contributions doivent être consignées."
+        },
+        {
+          "item": "Justification détaillée et calendrier de décision",
+          "source": "Annexe d’impact C-03",
+          "owner": "Direction du site",
+          "state": "À vérifier ; non confirmé dans la variante correspondante",
+          "detail": "Ne pas annoncer de gain chiffré ni de date de décision sans pièce validée."
+        }
+      ],
+      "message": "Une réduction de l’ouverture du jeudi soir est à l’étude ; elle n’est pas décidée. Les horaires actuels restent applicables. Si cette proposition complique vos démarches, vous pouvez signaler vos contraintes et proposer des alternatives à l’accueil. Les contributions seront transmises à la direction avant arbitrage.",
+      "pendingMessage": "Une modification de l’ouverture du jeudi soir est à l’étude. Aucune réduction n’est décidée et les horaires actuels restent applicables. La justification détaillée et le calendrier de décision ne sont pas encore confirmés. Vous pouvez dès maintenant faire consigner vos contraintes à l’accueil ; nous communiquerons ces éléments après validation par la direction.",
+      "pending": "La justification détaillée et le calendrier de décision restent en attente de validation.",
+      "decision": "Ouvrir l’explication et le recueil des contraintes avant de défendre une solution.",
+      "pendingDecision": "Expliquer le statut de la proposition sans inventer sa justification.",
+      "reason": "Une difficulté d’accès n’est pas un simple problème de perception. Le message doit laisser une place à ce qui pourrait modifier la décision.",
+      "pendingReason": "Je peux expliquer que rien n’est décidé et recueillir les besoins. Je ne peux pas attribuer à la direction des motifs, des économies ou une échéance qu’elle n’a pas validés.",
+      "refuse": "Présenter la consultation comme un vote, promettre que tout avis sera retenu ou annoncer la mesure comme déjà actée.",
+      "gate": "Validation par la direction du statut de la proposition et du circuit réel de traitement des contributions avant l’appel à participer.",
+      "pendingGate": "La direction doit confirmer le statut non décidé et le circuit des contributions ; réserver toute justification chiffrée ou date tant qu’elle ne les a pas validées.",
+      "headline": "Horaires du jeudi : une proposition, des besoins à écouter",
+      "pendingHeadline": "Horaires du jeudi : ce que nous savons à ce stade",
+      "sequence": [
+        "Établir une référence distinguant proposition, horaires en vigueur et points ouverts.",
+        "Briefer l’accueil sur les objections et sur la manière de consigner une contribution.",
+        "Expliquer la proposition avec le canal choisi ; ouvrir le recueil des contraintes sans promettre une décision collective.",
+        "Prévoir une restitution des thèmes recueillis et une explication de l’arbitrage une fois celui-ci rendu."
+      ],
+      "pendingSequence": [
+        "Séparer le statut confirmé des motifs et du calendrier encore en attente.",
+        "Faire confirmer par la direction le recueil effectif des contributions ; briefer l’accueil.",
+        "Diffuser uniquement les éléments établis, le point d’incertitude et la façon de contribuer.",
+        "Faire suivre la réponse validée, puis la décision et ses motifs quand ils existent."
+      ],
+      "questions": [
+        {
+          "q": "Est-ce déjà décidé ?",
+          "a": "Non. Il s’agit d’une proposition. Les horaires actuels restent applicables jusqu’à une décision formelle communiquée."
+        },
+        {
+          "q": "Mon avis changera-t-il forcément la décision ?",
+          "a": "Nous ne pouvons pas le garantir. Les contraintes exprimées seront transmises à la direction ; l’arbitrage et ses motifs devront être expliqués."
+        }
+      ],
+      "metrics": [
+        {
+          "name": "Statut compris",
+          "method": "Demander à cinq lecteurs de distinguer proposition et décision, puis d’identifier le moyen de contribuer.",
+          "rule": "Toute confusion entre consultation et mesure actée appelle une réécriture."
+        },
+        {
+          "name": "Qualité de la restitution",
+          "method": "Vérifier que chaque thème recueilli figure dans une synthèse et reçoit une réponse motivée après arbitrage.",
+          "rule": "Un thème sans réponse reste explicitement ouvert ; ne pas le compter comme résolu."
+        }
+      ],
+      "learning": "Traiter un désaccord comme une information sur les usages et rendre le processus de décision lisible.",
+      "options": [
+        {
+          "label": "Défendre immédiatement la réduction",
+          "benefit": "Présenter les arguments de la direction.",
+          "risk": "Faire croire qu’une consultation est déjà tranchée.",
+          "condition": "Ne convient pas au statut non décidé de ce cas."
+        },
+        {
+          "label": "Expliquer et recueillir les contraintes",
+          "benefit": "Clarifier ce qui reste ouvert et faire remonter les usages.",
+          "risk": "Créer une fausse attente si le circuit de traitement des avis n’existe pas.",
+          "condition": "La direction confirme le recueil effectif et sa prise en compte dans l’arbitrage."
+        },
+        {
+          "label": "Attendre une justification complète",
+          "benefit": "Éviter d’avancer des motifs non validés.",
+          "risk": "Laisser croire que les horaires ont déjà changé.",
+          "condition": "Même en attente, rappeler le statut de proposition et les horaires actuels."
+        }
+      ],
+      "owners": [
+        "Direction du site",
+        "Responsable de la consultation",
+        "Communication et accueil",
+        "Direction du site"
+      ],
+      "deliverables": [
+        "Une note séparant proposition et décision",
+        "Un circuit pour consigner les contributions",
+        "Une explication et une voie de contribution",
+        "Une synthèse et une réponse aux thèmes soulevés"
+      ]
+    },
+    {
+      "id": "rectification",
+      "number": "03",
+      "title": "Corriger une information erronée",
+      "tag": "Rétablir un fait sans amplifier la rumeur",
+      "context": "Dans un groupe local, un message affirme que l’accompagnement numérique de la Maison des services devient payant. Le barème fictif de référence prévoit sa gratuité. La circulation observée reste limitée à ce groupe : aucune audience globale n’est supposée.",
+      "problem": "Corriger une information dans son lieu de circulation, avec une preuve et un point de contact, sans lui donner une portée artificielle.",
+      "question": "Que peut-on corriger avec certitude, et auprès de qui ?",
+      "facts": [
+        {
+          "item": "Gratuité du service et périmètre exact",
+          "source": "Barème de référence T-01",
+          "owner": "Responsable de service",
+          "state": "Établi, sauf variante « validation manquante »",
+          "detail": "L’accompagnement numérique est gratuit ; distinguer ce service des frais éventuels facturés par des organismes tiers."
+        },
+        {
+          "item": "Origine, formulation et circulation observée",
+          "source": "Relevé de veille V-01",
+          "owner": "Responsable communication",
+          "state": "À vérifier avant réponse",
+          "detail": "Vérifier le message initial et son contexte sans republier de capture nominative ni supposer sa viralité."
+        },
+        {
+          "item": "Version de la réponse et suivi des corrections",
+          "source": "Registre de rectification R-01",
+          "owner": "Communication et accueil",
+          "state": "À préparer",
+          "detail": "Consigner la référence, le lieu de réponse et les mises à jour, sans données personnelles inutiles."
+        }
+      ],
+      "message": "L’accompagnement aux démarches numériques de la Maison des services Les Rives est gratuit. Cette gratuité concerne notre accompagnement ; les frais éventuels d’une démarche auprès d’un organisme tiers restent distincts. Cette information correspond au barème de référence du service, consultable à l’accueil.",
+      "pendingMessage": "Nous vérifions actuellement les conditions tarifaires de l’accompagnement numérique auprès du responsable de service. À ce stade, nous ne pouvons pas confirmer une modification. La réponse vérifiée sera ajoutée au même endroit après validation ; l’accueil sera informé en parallèle.",
+      "pending": "La version actuelle du barème n’a pas encore été confirmée par le responsable de service.",
+      "decision": "Corriger dans le périmètre où l’information circule déjà.",
+      "pendingDecision": "Accuser réception et vérifier avant de qualifier l’information de fausse.",
+      "reason": "Une correction utile commence par le fait établi et sa référence. Une nouvelle campagne générale pourrait exposer à la rumeur des personnes qui ne l’avaient jamais vue.",
+      "pendingReason": "Sans barème confirmé, le démenti serait une seconde affirmation non étayée. Je prépare une réponse d’attente, puis je reviens sur le même fil avec le fait vérifié.",
+      "refuse": "Reprendre la rumeur en grand titre, identifier son auteur ou parler de désinformation sans établir une intention.",
+      "gate": "Confirmation du barème actuel par le responsable de service et vérification du contexte de circulation par la communication.",
+      "pendingGate": "Le responsable de service confirme le barème ; la communication vérifie l’origine avant tout démenti. Si la vérification tarde, indiquer ce retard sur le même fil.",
+      "headline": "Accompagnement numérique : les conditions du service",
+      "pendingHeadline": "Conditions du service : vérification en cours",
+      "sequence": [
+        "Vérifier le barème et le message initial ; définir le périmètre réellement observé.",
+        "Aligner l’accueil et préparer une réponse factuelle avec la référence consultable.",
+        "Répondre dans l’espace concerné, sans relancer une diffusion générale non justifiée.",
+        "Vérifier que la réponse est visible ; mettre à jour la même référence et garder la trace des corrections."
+      ],
+      "pendingSequence": [
+        "Demander la version actuelle du barème au responsable de service.",
+        "Informer l’accueil qu’une vérification est en cours ; ne pas improviser un démenti.",
+        "Si une réponse est nécessaire, accuser réception dans l’espace concerné et annoncer le retour après validation.",
+        "Ajouter le fait confirmé au même endroit ; signaler toute prolongation de la vérification."
+      ],
+      "questions": [
+        {
+          "q": "Où vérifier les conditions ?",
+          "a": "Le barème de référence du service est consultable à l’accueil. En cas de doute, l’accueil sollicite le responsable de service."
+        },
+        {
+          "q": "Pourquoi ne pas répondre partout ?",
+          "a": "La réponse vise d’abord les personnes exposées au message. Une diffusion plus large se justifierait par une circulation plus large effectivement constatée."
+        }
+      ],
+      "metrics": [
+        {
+          "name": "Correction accessible",
+          "method": "Vérifier dans chaque espace effectivement concerné que la réponse est visible et renvoie à la même référence.",
+          "rule": "Un espace sans correction visible reste à traiter ; la simple publication ne suffit pas."
+        },
+        {
+          "name": "Persistance de la confusion",
+          "method": "Relever les questions récurrentes sur la gratuité après réponse, sans identifier les personnes.",
+          "rule": "Si la confusion persiste, clarifier le périmètre gratuit avant d’augmenter la diffusion."
+        }
+      ],
+      "learning": "Distinguer vitesse de réaction, preuve disponible et proportionnalité de la diffusion.",
+      "options": [
+        {
+          "label": "Démentir partout",
+          "benefit": "Donner rapidement une réponse très visible.",
+          "risk": "Faire découvrir la rumeur à des publics qui ne l’avaient pas vue.",
+          "condition": "Une diffusion plus large se justifie par une circulation plus large constatée."
+        },
+        {
+          "label": "Corriger dans l’espace concerné",
+          "benefit": "Atteindre les personnes exposées avec un fait vérifiable.",
+          "risk": "Laisser un autre espace sans réponse si la veille est incomplète.",
+          "condition": "Barème confirmé et périmètre observé de la circulation vérifié."
+        },
+        {
+          "label": "Accuser réception puis vérifier",
+          "benefit": "Reconnaître la demande sans improviser un démenti.",
+          "risk": "Entretenir le doute si l’on ne revient pas avec la réponse.",
+          "condition": "Donner une suite dans le même espace après confirmation du barème."
+        }
+      ],
+      "owners": [
+        "Responsable de service",
+        "Communication et accueil",
+        "Communication",
+        "Communication"
+      ],
+      "deliverables": [
+        "Un barème confirmé et un périmètre observé",
+        "Une réponse de référence cohérente",
+        "Une correction visible dans l’espace concerné",
+        "Une trace des corrections et des questions restantes"
+      ]
+    }
+  ]
+}

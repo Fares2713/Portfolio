@@ -1,0 +1,35 @@
+{
+  "provider": "Google Fonts",
+  "licence": "SIL Open Font License 1.1; full licence for each family included",
+  "downloaded": "2026-10-25",
+  "files": [
+    {
+      "file": "Manrope-Variable.woff",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+      "bytes": 67912,
+      "conversion": "WOFF lossless compression using FontTools; glyphs and names unchanged"
+    },
+    {
+      "file": "Manrope-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt",
+      "bytes": 4387
+    },
+    {
+      "file": "InstrumentSerif-Regular.woff",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/InstrumentSerif-Regular.ttf",
+      "bytes": 35244,
+      "conversion": "WOFF lossless compression using FontTools; glyphs and names unchanged"
+    },
+    {
+      "file": "InstrumentSerif-Italic.woff",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/InstrumentSerif-Italic.ttf",
+      "bytes": 35700,
+      "conversion": "WOFF lossless compression using FontTools; glyphs and names unchanged"
+    },
+    {
+      "file": "InstrumentSerif-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/OFL.txt",
+      "bytes": 4405
+    }
+  ]
+}
