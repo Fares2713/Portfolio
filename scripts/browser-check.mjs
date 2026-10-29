@@ -67,7 +67,7 @@ try{
   await page.locator('.expertise-grid a[href="#projet-1"]').click();
   assert.ok(await page.locator('#projet-1').isVisible());
   assert.equal(await page.locator('[data-filter="all"]').getAttribute('aria-pressed'),'true');
-  const firstSummary=page.locator('.project summary').first();
+  const firstSummary=page.locator('#projet-1 summary');
   await firstSummary.focus();
   await page.keyboard.press('Enter');
   const dialog=page.locator('#project-dialog');

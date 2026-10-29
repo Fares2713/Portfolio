@@ -91,9 +91,9 @@ Deux séries supplémentaires créées le 14 octobre 2026 : « Péages : où va 
 
 ## Direction visuelle et animations
 
-L’ouverture éditoriale « Donner du sens. Créer du lien. » accompagne le rôle professionnel existant. Le bleu, le papier clair et les accents vert profond structurent la visite : introduction, réalisations, parcours, compétences et contact. Les réalisations conservent leurs contenus, leurs attributions et leurs ressources.
+L’ouverture « Des idées claires. Des projets concrets. » présente directement Farès et sa pratique. La refonte du 29 octobre 2026 utilise un fond ivoire, du bleu et un portrait rectangulaire discret. L’Enjeu ouvre la sélection, suivi des autres réalisations, avec une numérotation correspondant à l’ordre affiché. Les cartes alignées, les filtres et les études de cas facilitent une lecture progressive. Les contenus, attributions et ressources sont conservés.
 
-Les animations utilisent principalement `transform` et `opacity` : entrée des éléments, apparitions au défilement via IntersectionObserver, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
+Les animations utilisent principalement `transform` et `opacity` : entrée de l’introduction, léger déplacement du portrait sur ordinateur, survols des aperçus et ouverture des fenêtres de détail. Les contenus restent immédiatement visibles pendant le défilement. Une barre indique la progression de lecture. Aucun défilement forcé ni bibliothèque d’animation externe n’est nécessaire.
 
 Le réglage « Réduire les animations » en bas de page est conservé localement quand le stockage est disponible. La préférence système `prefers-reduced-motion` reste prioritaire, y compris lorsqu’elle change pendant la visite. Sans JavaScript, le contenu et les liens restent disponibles. L’impression conserve sa mise en page dédiée.
 
