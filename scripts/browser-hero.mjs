@@ -16,10 +16,10 @@ try {
   page.on('request',r=>{if(r.url().endsWith('.mp4'))videoRequests.push(r.url())});
   await page.goto(origin,{waitUntil:'networkidle'});
   await page.evaluate(()=>document.fonts.ready);
-  assert.match(await page.locator('h1').innerText(),/Communication, création[\s\S]*et coordination de projets\./);
+  assert.match(await page.locator('h1').innerText(),/Des idées claires\.[\s\S]*Des projets[\s\S]*qui prennent vie\./);
   const intro=await page.locator('.hero-description').innerText();
   assert.doesNotMatch(intro,/Inria|FNK/);
-  for(const topic of ['audiovisuels','réseaux sociaux','événements','prestataires','budgets','développement commercial'])assert.ok(intro.includes(topic),topic);
+  for(const topic of ['audiovisuels','réseaux sociaux','événementiel','prestataires','budgets','développement commercial'])assert.ok(intro.includes(topic),topic);
   assert.equal(await page.locator('.hero-actions a').count(),2);
   assert.equal(await page.locator('.hero video').count(),0);
   assert.deepEqual(videoRequests,[],'No decorative video download');
@@ -35,7 +35,7 @@ try {
  const animated=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
  await animated.goto(origin,{waitUntil:'networkidle'});
  await animated.evaluate(()=>document.fonts.ready);
- await animated.locator('.hero-title-ink').first().evaluate(e=>Promise.all(e.getAnimations().map(a=>a.finished)));
+ await animated.locator('#hero-title').evaluate(e=>Promise.all(e.getAnimations().map(a=>a.finished)));
  assert.equal(await animated.locator('.hero-project').count(),3,'Three direct routes into actual projects');
  const heroBounds=await animated.locator('.hero-atelier').boundingBox();
  await animated.mouse.move(heroBounds.x+heroBounds.width*.8,heroBounds.y+heroBounds.height*.6);

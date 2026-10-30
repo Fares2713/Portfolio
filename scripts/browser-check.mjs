@@ -47,7 +47,7 @@ try{
    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');
    assert.ok(await page.locator('.menu-toggle').evaluate(el=>el===document.activeElement),'Escape restores menu focus');
   }else assert.ok(await page.locator('#navigation').isVisible());
-  assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=341);
+  assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=400,'Portrait stays within its editorial column');
   const portraitImage=await page.locator('.hero-portrait img').boundingBox();
   assert.ok(portraitImage.height<=portraitImage.width*1.25,'Portrait keeps a natural crop');
   for(const image of await page.locator('.project[data-priority=secondary] .project-visual img').all()) {

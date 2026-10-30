@@ -1,0 +1,64 @@
+/* Hero: an editorial cover, with a clear typographic and photographic focus. */
+@media screen {
+#accueil{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:64px;row-gap:30px;padding-block:64px 30px;min-height:0;color:#19263b}
+.hero-kicker{margin:0 0 30px;font-size:10px;letter-spacing:.13em}
+#accueil #hero-title{font-size:clamp(44px,5.65vw,80px);line-height:1.08;letter-spacing:-.06em;margin:0;font-weight:500}
+#accueil #hero-title>span,#accueil #hero-title>em{display:block;white-space:normal}
+#accueil #hero-title>em{margin-top:4px;letter-spacing:-.065em;white-space:nowrap}
+.hero-description{max-width:440px;font-size:15px;line-height:1.8;margin:28px 0}
+.hero-actions{align-items:center;gap:24px}
+.hero-contact{display:inline-flex;align-items:center;gap:12px;font-size:12px;padding-block:14px;text-decoration:underline;text-decoration-color:#19263b40;text-underline-offset:6px}
+.hero-contact:hover{color:var(--blue);text-decoration-color:currentColor}
+.hero-location{margin-top:24px}
+#accueil .portrait-stage{width:min(100%,420px);padding:0 20px 20px 0;justify-self:end}
+#accueil .portrait-stage::before{inset:24px 0 0 24px;border:0;background:var(--blue);border-radius:0;transform:none}
+#accueil .portrait-orbit{display:none}
+#accueil .hero-portrait{max-width:none;width:100%;border-radius:2px;box-shadow:0 16px 40px #19263b12;transform:none}
+#accueil .hero-portrait img{aspect-ratio:4/4.8;object-position:center;filter:saturate(.85)}
+#accueil .hero-portrait figcaption{padding:18px 20px;background:#fffef9}
+#accueil .hero-portrait figcaption strong{font-size:15px;font-weight:600;letter-spacing:-.02em}
+#accueil .hero-portrait figcaption span{font-size:10px;margin-top:4px}
+.hero-scroll{margin-top:10px;padding-top:20px}
+}
+@media screen and (min-width:761px) and (max-width:1100px){
+#accueil{column-gap:32px;padding-top:48px}
+#accueil #hero-title{font-size:clamp(38px,5.6vw,62px)}
+.hero-actions{gap:10px 18px}
+.hero-kicker{font-size:9px;letter-spacing:.08em}
+}
+@media screen and (max-width:760px){
+#accueil{grid-template-columns:1fr;gap:36px;padding-block:36px 24px}
+.hero-kicker{font-size:9px;letter-spacing:.08em;margin-bottom:26px}
+#accueil #hero-title{font-size:clamp(37px,8.7vw,64px);line-height:1.1}
+.hero-description{font-size:14px;max-width:460px;margin-block:22px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:8px 20px;width:auto}
+.hero-actions .button{width:auto}
+.hero-contact{font-size:11px}
+#accueil .portrait-stage{width:min(100%,360px);justify-self:center;padding:0 16px 16px 0}
+#accueil .portrait-stage::before{inset:20px 0 0 20px}
+#accueil .hero-portrait img{aspect-ratio:1.05}
+#accueil .hero-portrait figcaption{padding:15px 18px}
+.hero-scroll{margin-top:0;font-size:8px;letter-spacing:.08em}
+}
+
+@media screen {
+#accueil{align-items:center;max-width:1280px;font-family:'Avenir Next','Segoe UI',Arial,sans-serif}
+#accueil .hero-copy{max-width:none;padding:0;grid-column:auto}
+#accueil #hero-title{grid-column:auto;padding:0;text-wrap:initial}
+#accueil #hero-title>em{font-family:Georgia,'Times New Roman',serif;font-size:1em;line-height:1.08;padding-left:0;font-style:italic}
+#accueil .hero-kicker{margin:0 0 30px;font-size:10px;letter-spacing:.13em}
+#accueil .hero-description{font-size:15px;line-height:1.8;max-width:440px;margin:28px 0}
+#accueil .portrait-stage{max-width:420px;align-self:center;margin:0}
+#accueil .hero-portrait figcaption{display:block;border:0;border-radius:0}
+#accueil .hero-portrait figcaption strong{display:block}
+#accueil .hero-portrait figcaption span{display:block;max-width:none;text-align:left;margin-top:4px}
+#accueil .hero-actions{gap:24px;align-items:center}
+#accueil .hero-actions .button{border-radius:28px;min-height:54px;padding:16px 23px}
+#accueil .hero-selection{margin-top:10px}
+}
+@media screen and (max-width:760px){
+#accueil .hero-kicker{font-size:9px;letter-spacing:.08em;margin-bottom:26px}
+#accueil .hero-description{font-size:14px;margin-block:22px}
+#accueil .hero-actions{gap:8px 20px}
+#accueil .hero-actions .button{min-height:50px;padding:14px 17px}
+}
