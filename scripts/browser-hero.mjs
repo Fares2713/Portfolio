@@ -32,6 +32,21 @@ try {
   assert.deepEqual(errors,[]);await context.close();
   console.log('PASS '+width+'px: introduction, no company names, project action, reflow and axe');
  }
+ const animated=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
+ await animated.goto(origin,{waitUntil:'networkidle'});
+ await animated.evaluate(()=>document.fonts.ready);
+ await animated.locator('.hero-title-ink').first().evaluate(e=>Promise.all(e.getAnimations().map(a=>a.finished)));
+ assert.equal(await animated.locator('.hero-project').count(),3,'Three direct routes into actual projects');
+ const heroBounds=await animated.locator('.hero-atelier').boundingBox();
+ await animated.mouse.move(heroBounds.x+heroBounds.width*.8,heroBounds.y+heroBounds.height*.6);
+ await animated.waitForFunction(()=>document.querySelector('.portrait-stage').style.getPropertyValue('--portrait-ry')!=='');
+ await animated.emulateMedia({reducedMotion:'reduce'});
+ await animated.waitForFunction(()=>document.querySelector('.portrait-stage').style.getPropertyValue('--portrait-ry')==='');
+ assert.equal(await animated.locator('.hero-portrait').evaluate(e=>getComputedStyle(e).transform),'none');
+ await animated.emulateMedia({reducedMotion:'no-preference'});
+ await animated.locator('.hero-project[href="#projet-1"]').click();
+ assert.ok(await animated.locator('#projet-1 h3').evaluate(e=>e===document.activeElement),'Project preview follows accessible anchor navigation');
+ console.log('PASS editorial hero: direct project routes, bounded pointer response and live reduced-motion reset');
  const page=await browser.newPage({javaScriptEnabled:false,viewport:{width:360,height:1000}});
  await page.goto(origin);
  assert.ok(await page.locator('h1').isVisible());

@@ -244,3 +244,7 @@ La disposition des réalisations est définie dans `project-cards.css` : projet 
 ## Navigation des projets
 
 Une barre de catégories persistante remplace le sommaire et les deux modes de présentation. Les études de cas proposent une bande de miniatures respectant le filtre actif, un état sélectionné et un compteur. Le défilement des miniatures reste indépendant de celui de la fenêtre. La fermeture replace le focus sur le projet consulté. Les liens directs et les accordéons sans JavaScript sont conservés. Les styles de navigation sont dans `project-navigation.css`.
+
+## Composition éditoriale
+
+Le hero conserve la formulation professionnelle et le texte validés. Le titre occupe la largeur de la grille, avec une seconde ligne serif décalée, un portrait à cadre fin et trois accès directs aux projets réels. `atelier.css` contient la composition responsive et les transitions ; `atelier.js` limite la réaction du portrait au pointeur précis et respecte les réglages de réduction des animations. Aucun moteur de défilement, vidéo ou dépendance supplémentaire n’est ajouté.
