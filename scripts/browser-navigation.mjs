@@ -5,11 +5,43 @@ const browser=await chromium.launch(process.env.PORTFOLIO_CHROMIUM_PATH?{executa
 try{
  for(const width of [320,768,1280]){const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(origin+'/#parcours');assert.ok(await page.locator('#experience-title').evaluate(e=>e===document.activeElement));await page.goto(origin);assert.ok(await page.locator('.project-grid').evaluate(e=>!e.classList.contains('is-compact')));assert.equal(await page.locator('.project:visible').count(),10);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  if(width<=960){await page.locator('.menu-toggle').click();await page.locator('#navigation a[href="#parcours"]').click();assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');assert.ok(await page.locator('#experience-title').evaluate(e=>e===document.activeElement));assert.ok((await page.locator('#experience-title').boundingBox()).y>=(await page.locator('.site-header').boundingBox()).height-2);}
- await page.locator('[data-filter=digital]').click();await page.locator('#project-index>summary').click();await page.locator('#project-index a[href="#projet-1"]').click();assert.ok(await page.locator('#projet-1').isVisible());assert.ok(await page.locator('#projet-1 h3').evaluate(e=>e===document.activeElement));assert.equal(await page.locator('[data-filter=all]').getAttribute('aria-pressed'),'true');
- await page.locator('[data-filter=audiovisuel]').click();await page.locator('#projet-1 summary').click();assert.equal(await page.locator('#dialog-position').innerText(),'1 sur 1');assert.ok(await page.locator('[data-case-direction="1"]').isDisabled());assert.ok(await page.locator('html').evaluate(e=>e.classList.contains('dialog-open')));await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.documentElement.classList.contains('dialog-open'));
+ await page.locator('[data-filter=digital]').click();await page.locator('.expertise-grid a[href="#projet-1"]').click();assert.ok(await page.locator('#projet-1').isVisible());assert.ok(await page.locator('#projet-1 h3').evaluate(e=>e===document.activeElement));assert.equal(await page.locator('[data-filter=all]').getAttribute('aria-pressed'),'true');
+ await page.locator('[data-filter=audiovisuel]').click();await page.locator('#projet-1 summary').click();assert.equal(await page.locator('#dialog-position').innerText(),'1 sur 1');assert.equal(await page.locator('.case-rail-track button').count(),1);assert.ok(await page.locator('[data-case-direction="1"]').isDisabled());assert.ok(await page.locator('html').evaluate(e=>e.classList.contains('dialog-open')));await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.documentElement.classList.contains('dialog-open'));
  await page.locator('[data-filter=communication]').click();const first=page.locator('.project:visible').first();await first.locator('summary').click();const firstTitle=await page.locator('#project-dialog-title').innerText();await page.locator('[data-case-direction="1"]').click();assert.notEqual(await page.locator('#project-dialog-title').innerText(),firstTitle);assert.ok(await page.locator('#project-dialog-title').evaluate(e=>e===document.activeElement));await page.keyboard.press('Escape');assert.ok(await page.evaluate(()=>document.activeElement.closest('.project')?.hidden===false));
- await page.locator('[data-filter=all]').click();await page.locator('[data-project-view=visual]').click();await page.reload();assert.ok(!(await page.locator('.project-grid').evaluate(e=>e.classList.contains('is-compact'))));await page.locator('[data-project-view=compact]').click();await page.locator('#projets').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));await page.screenshot({path:out+'/synthese-'+width+'.png'});
- const audit=await new AxeBuilder({page}).include('.site-header').include('#projets').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);assert.deepEqual(errors,[]);await context.close();console.log('PASS navigation '+width+'px: overview, anchors, focus, filters, case browsing, modal scroll lock, persistence, reflow and axe');}
+ await page.locator('[data-filter=all]').click();
+ assert.equal(await page.locator('#project-index,.project-views').count(),0);
+ // A stale density preference never changes the new single gallery layout.
+ await page.evaluate(()=>localStorage.setItem('portfolio-project-layout-v2','compact'));await page.reload();
+ assert.ok(!(await page.locator('.project-grid').evaluate(e=>e.classList.contains('is-compact'))));
+ await page.locator('#projet-1 summary').click();
+ assert.equal(await page.locator('.case-rail-track button').count(),10);
+ assert.equal(await page.locator('.case-rail-track [aria-current=true]').getAttribute('data-case-target'),'projet-1');
+ assert.equal(await page.locator('#case-rail-position').innerText(),'01 / 10');
+ assert.ok(await page.locator('[data-rail-step="-1"]').isDisabled());
+ await page.locator('[data-rail-step="1"]').click();
+ await page.waitForFunction(()=>document.querySelector('.case-rail-track').scrollLeft>0);
+ assert.equal(await page.locator('#case-rail-position').innerText(),'01 / 10','Scrolling thumbnails keeps the current case');
+
+ await page.locator('.case-rail-track button').last().click();
+ assert.equal(await page.locator('#case-rail-position').innerText(),'10 / 10');
+ assert.equal(await page.locator('.case-rail-track [aria-current=true]').getAttribute('data-case-target'),'projet-memoire');
+ assert.ok(await page.locator('[data-case-direction="1"]').isDisabled());
+ assert.ok(await page.locator('#project-dialog-title').evaluate(e=>e===document.activeElement));
+ assert.ok(await page.locator('.case-rail-track').evaluate(e=>e.scrollLeft>0));
+ assert.equal(await page.locator('#project-dialog').evaluate(e=>e.scrollTop),0);
+ const dialogAudit=await new AxeBuilder({page}).include('#project-dialog').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+ assert.deepEqual(dialogAudit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
+ await page.screenshot({path:out+'/case-navigation-'+width+'.png'});
+ await page.keyboard.press('Escape');
+ await page.waitForFunction(()=>!document.documentElement.classList.contains('dialog-open'));
+ assert.ok(await page.locator('#projet-memoire summary').evaluate(e=>e===document.activeElement));
+ await page.locator('#projet-2').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+ const header=await page.locator('.site-header').boundingBox(),toolbar=await page.locator('.project-toolbar').boundingBox();
+ assert.ok(toolbar.y>=header.height-1&&toolbar.y<=header.height+3,'Category bar follows the fixed header');
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ await page.screenshot({path:out+'/categories-'+width+'.png'});
+
+ const audit=await new AxeBuilder({page}).include('.site-header').include('#projets').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();assert.deepEqual(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);assert.deepEqual(errors,[]);await context.close();console.log('PASS navigation '+width+'px: sticky categories, thumbnails, filtered cases, focus restoration, legacy preference, reflow and axe');}
  if(JSON.parse(await readFile('tools-availability.json','utf8')).paused){console.log('PASS tools are paused; maintenance routes covered separately')}else{
  const context=await browser.newContext({viewport:{width:1280,height:1000},reducedMotion:'reduce'}),page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());await page.goto(origin+'/atelier-editorial/');await page.locator('#editor').waitFor({state:'visible'});await page.locator('#load-demo').click();await page.waitForFunction(()=>document.getElementById('feedback').textContent.includes('Exemple chargé')||document.getElementById('feedback').classList.contains('error'));await page.locator('.production-card').first().waitFor({state:'attached'});assert.equal(await page.locator('.production-card').count(),3);
  await page.locator('[data-workspace-step=sources]').click();const source=page.locator('#form-source-w3c');await source.locator('..').locator('summary').click();await source.locator('[name=note]').fill('Section et périmètre revus dans le cadre du test.');await source.locator('[name=checked]').check();await source.getByRole('button',{name:'Enregistrer la revue'}).click();

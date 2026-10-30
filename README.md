@@ -240,3 +240,7 @@ Les liens restent natifs sans JavaScript : ils rejoignent la section complète d
 Ouverture claire « Communication, création et coordination de projets. », portrait sobre et introduction présentant tous les domaines sans citer d’entreprise. La feuille `refresh.css` harmonise les couleurs et les espacements. Les contenus et fonctionnalités de la version distante sont conservés, avec « Inria en récits : une série d’entretiens filmés » en tête de sélection. Le hero utilise une photographie, sans vidéo décorative.
 
 La disposition des réalisations est définie dans `project-cards.css` : projet audiovisuel en tête, puis cartes alignées avec le visuel avant le texte. Les aperçus conservent un ratio commun et ne sont plus inclinés ; les rôles et résultats sont plus lisibles.
+
+## Navigation des projets
+
+Une barre de catégories persistante remplace le sommaire et les deux modes de présentation. Les études de cas proposent une bande de miniatures respectant le filtre actif, un état sélectionné et un compteur. Le défilement des miniatures reste indépendant de celui de la fenêtre. La fermeture replace le focus sur le projet consulté. Les liens directs et les accordéons sans JavaScript sont conservés. Les styles de navigation sont dans `project-navigation.css`.

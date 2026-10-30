@@ -40,7 +40,7 @@ function applyFilter(filter) {
     card.hidden = !visible;
     if (visible) count++;
   });
-  filterStatus.textContent = count + (count > 1 ? ' études de projet affichées.' : ' étude de projet affichée.');
+  filterStatus.textContent = count + (count > 1 ? ' projets à explorer' : ' projet à explorer');
   const secondaryHeading = document.querySelector('[data-secondary-heading]');
   if (secondaryHeading) secondaryHeading.hidden = !cards.some(card => !card.hidden && card.dataset.priority === 'secondary');
 }
@@ -49,26 +49,6 @@ document.querySelectorAll('[data-project-filter]').forEach(link => {
   const count = link.querySelector('[data-project-count]');
   if (count) count.textContent = cards.filter(card => card.dataset.category.split(' ').includes(link.dataset.projectFilter)).length;
 });
-// Density is a reading preference; no project or filter result is removed.
-const projectViews = document.querySelector('.project-views');
-const projectGrid = document.querySelector('.project-grid');
-if (projectViews && projectGrid) {
-  let savedView = 'visual';
-  try { if (localStorage.getItem('portfolio-project-layout-v2') === 'compact') savedView = 'compact'; } catch {}
-  function setProjectView(view) {
-    projectGrid.classList.toggle('is-compact', view === 'compact');
-    projectViews.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.projectView === view)));
-  }
-  projectViews.hidden = false;
-  setProjectView(savedView);
-  projectViews.addEventListener('click', event => {
-    const button = event.target.closest('[data-project-view]');
-    if (button) {
-      setProjectView(button.dataset.projectView);
-      try { localStorage.setItem('portfolio-project-layout-v2', button.dataset.projectView); } catch {}
-    }
-  });
-}
 filters.addEventListener('click', event => {
   const button = event.target.closest('button[data-filter]');
   if (button) applyFilter(button.dataset.filter);
@@ -98,7 +78,9 @@ function focusHashTarget(hash) {
 function scrollHashTarget(target, instant = false) {
   const heading = target.matches('.case-example') ? target : target.closest('.project') ? target.closest('.project') : target.matches('h1,h2,h3') ? target : target.querySelector('h1,h2,h3') || target;
   const header = document.querySelector('.site-header');
-  const top = heading.getBoundingClientRect().top + window.scrollY - header.getBoundingClientRect().height - 24;
+  const categoryBar = document.querySelector('.project-toolbar');
+  const categoryOffset = heading.closest('.project') && categoryBar ? categoryBar.getBoundingClientRect().height + 16 : 0;
+  const top = heading.getBoundingClientRect().top + window.scrollY - header.getBoundingClientRect().height - categoryOffset - 24;
   const reduced = document.documentElement.classList.contains('motion-reduced');
   window.scrollTo({top:Math.max(0,top),behavior:instant || reduced ? 'instant' : 'smooth'});
 }
@@ -160,11 +142,59 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   let dialogTrigger = null;
   let currentCard = null;
   const caseNavigation = projectDialog.querySelector('.dialog-navigation');
+  const caseRail = projectDialog.querySelector('.case-rail');
+  const railTrack = caseRail.querySelector('.case-rail-track');
+  function updateRailControls() {
+    caseRail.querySelector('[data-rail-step="-1"]').disabled = railTrack.scrollLeft <= 1;
+    caseRail.querySelector('[data-rail-step="1"]').disabled = railTrack.scrollLeft + railTrack.clientWidth >= railTrack.scrollWidth - 1;
+  }
+  railTrack.addEventListener('scroll', updateRailControls, {passive:true});
+  if ('ResizeObserver' in window) new ResizeObserver(updateRailControls).observe(railTrack);
+  function switchCase(card) {
+    openProjectDialog(card, card.querySelector('summary'), false);
+    dialogTitle.setAttribute('tabindex', '-1');
+    dialogTitle.focus({preventScroll:true});
+  }
+  caseRail.addEventListener('click', event => {
+    const step = event.target.closest('[data-rail-step]');
+    if (step) {
+      const reduced = document.documentElement.classList.contains('motion-reduced');
+      railTrack.scrollBy({left:Number(step.dataset.railStep) * railTrack.clientWidth * .75, behavior:reduced ? 'auto' : 'smooth'});
+      return;
+    }
+    const button = event.target.closest('[data-case-target]');
+    if (!button) return;
+    const card = cards.find(item => item.id === button.dataset.caseTarget);
+    if (card && card !== currentCard && !card.hidden) switchCase(card);
+  });
   function updateCaseNavigation(media) {
     if (!caseNavigation) return;
     caseNavigation.hidden = Boolean(media);
     const visible = cards.filter(card => !card.hidden);
     const index = visible.indexOf(currentCard);
+    caseRail.hidden = Boolean(media);
+    railTrack.replaceChildren();
+    if (media) return;
+    document.querySelector('#case-rail-position').textContent = String(index + 1).padStart(2, '0') + ' / ' + String(visible.length).padStart(2, '0');
+    for (const card of visible) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.caseTarget = card.id;
+      const title = card.querySelector('h3').textContent;
+      button.setAttribute('aria-label', 'Découvrir le projet : ' + title);
+      if (card === currentCard) button.setAttribute('aria-current', 'true');
+      const img = card.querySelector('.project-visual img').cloneNode();
+      img.alt = '';
+      img.loading = 'eager';
+      const label = document.createElement('span');
+      label.textContent = title;
+      button.append(img, label);
+      railTrack.append(button);
+    }
+    // Scroll only the thumbnail strip, preserving the dialog and page positions.
+    const active = railTrack.querySelector('[aria-current]');
+    if (active) railTrack.scrollLeft = Math.max(0, active.offsetLeft - railTrack.offsetLeft - (railTrack.clientWidth - active.offsetWidth) / 2);
+    updateRailControls();
     caseNavigation.querySelector('[data-case-direction="-1"]').disabled = index <= 0;
     caseNavigation.querySelector('[data-case-direction="1"]').disabled = index >= visible.length - 1;
     document.querySelector('#dialog-position').textContent = (index + 1) + ' sur ' + visible.length;
@@ -174,7 +204,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
     if (!button || button.disabled) return;
     const visible = cards.filter(card => !card.hidden);
     const next = visible[visible.indexOf(currentCard) + Number(button.dataset.caseDirection)];
-    if (next) { openProjectDialog(next,next.querySelector('summary'),false); dialogTitle.setAttribute('tabindex','-1'); dialogTitle.focus({preventScroll:true}); }
+    if (next) switchCase(next);
   });
   function openProjectDialog(card, trigger, media) {
     dialogTrigger = trigger;
@@ -228,7 +258,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       if (gallery) {
         const bar = projectDialog.querySelector('.dialog-bar');
         projectDialog.scrollTop = gallery.getBoundingClientRect().top - projectDialog.getBoundingClientRect().top
-          + projectDialog.scrollTop - bar.getBoundingClientRect().height - 24;
+          + projectDialog.scrollTop - bar.getBoundingClientRect().height - caseRail.getBoundingClientRect().height - 24;
       }
     }
     document.dispatchEvent(new CustomEvent('portfolio:caseopen', {detail:{card, dialog:projectDialog, carousel}}));
@@ -287,6 +317,7 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
   projectDialog.addEventListener('close', () => {
     document.documentElement.classList.remove('dialog-open');
     dialogContent.replaceChildren();
+    railTrack.replaceChildren();
     if (dialogTrigger) dialogTrigger.focus();
   });
 }

@@ -1,0 +1,36 @@
+/* A single category bar and a visual route between case studies. */
+@media screen {
+#projets .project-toolbar{position:sticky;top:calc(var(--header-height,100px) - 16px);z-index:10;display:flex;align-items:center;flex-wrap:nowrap;gap:24px;padding:14px 0;margin-bottom:28px;border-block:1px solid var(--line);background:var(--paper);box-shadow:0 10px 18px var(--paper)}
+#projets #filter-status{flex:none;font-size:12px;color:var(--muted)}
+#projets .filters{display:flex;flex:1;justify-content:flex-end;flex-wrap:nowrap;overflow-x:auto;min-width:0;gap:6px;padding:3px;scrollbar-width:thin;scrollbar-color:#c1cadc transparent;scroll-padding-inline:3px}
+#projets .filters button{flex:none;white-space:nowrap;padding-inline:17px;border-radius:24px;font-size:12px;transition:background .2s,color .2s,border-color .2s}
+#projets .filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:white}
+#projets .project-grid>.project{scroll-margin-top:100px}
+#projets .project-secondary-heading{padding-top:24px}
+.project-dialog{--case-bar-height:70px}
+.project-dialog .dialog-bar{position:sticky;top:-28px;z-index:5;margin-bottom:0;background:var(--white);min-height:var(--case-bar-height);box-sizing:border-box}
+.project-dialog .case-rail{display:block;position:sticky;top:calc(var(--case-bar-height) - 28px);z-index:4;padding:12px 0 14px;margin-bottom:28px;background:var(--white);border-bottom:1px solid var(--line)}
+.case-rail-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+#case-rail-position{font-variant-numeric:tabular-nums;color:var(--blue);font-weight:650;white-space:nowrap}
+.case-rail-track{position:relative;display:flex;gap:10px;overflow-x:auto;overscroll-behavior-inline:contain;padding:4px 3px 10px;scrollbar-width:thin;scrollbar-color:#bdc7df transparent;scroll-padding-inline:3px}
+.case-rail-track>button{display:flex;align-items:center;flex:0 0 190px;gap:10px;text-align:left;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--muted);min-height:62px;transition:background .2s,border-color .2s}
+.case-rail-track>button>img{width:66px;height:46px;flex:none;object-fit:cover;object-position:top;border-radius:4px;background:#edf0f5}
+.case-rail-track>button>span{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:11px;line-height:1.5;font-weight:500}
+.case-rail-track>button:hover{border-color:#8da2d8;color:var(--ink);background:#f4f6fc}
+.case-rail-track>button[aria-current=true]{border-color:var(--blue);background:#eef2ff;color:var(--ink);box-shadow:inset 0 -2px var(--blue)}
+.project-dialog .dialog-navigation{padding-top:20px;margin-top:32px}
+@media(max-width:1050px){#projets .project-toolbar{gap:14px}#projets .filters{justify-content:flex-start}#projets .filters button{font-size:11px;padding-inline:14px}}
+@media(max-width:760px){
+#projets .project-toolbar{display:block;padding:10px 0;margin-bottom:22px}#projets #filter-status{font-size:10px;margin-bottom:6px}#projets .filters{width:100%;gap:6px}#projets .filters button{font-size:11px;padding-inline:14px;min-height:42px}
+.project-dialog{--case-bar-height:66px}.project-dialog .dialog-bar{top:-20px}.project-dialog .case-rail{top:calc(var(--case-bar-height) - 20px);padding-block:9px 10px;margin-bottom:22px}.case-rail-heading{font-size:9px;margin-bottom:5px}.case-rail-track{gap:8px;padding-bottom:7px}.case-rail-track>button{flex-basis:165px;min-height:54px;gap:8px;padding:5px}.case-rail-track>button>img{width:52px;height:40px}.case-rail-track>button>span{font-size:10px}
+.project-dialog h2{scroll-margin-top:180px}
+}
+@media(prefers-reduced-motion:reduce){.case-rail-track>button,#projets .filters button{transition:none}}
+}
+@media print{.case-rail{display:none!important}}
+@media screen{
+.case-rail-controls{display:flex;align-items:center;gap:6px}.case-rail-controls>span{margin-right:8px}
+.case-rail-controls>button{display:grid;place-items:center;width:36px;height:36px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink);font-size:17px;line-height:1}
+.case-rail-controls>button:hover{border-color:var(--blue);color:var(--blue)}.case-rail-controls>button:disabled{opacity:.35;cursor:default}
+@media(max-width:760px){.case-rail-controls>button{width:32px;height:32px}.case-rail-controls>span{margin-right:4px}}
+}

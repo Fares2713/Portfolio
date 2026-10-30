@@ -18,7 +18,7 @@ try{
   assert.match(await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily),/Manrope/);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Fonts preserve responsive hero');
   await page.locator('.portrait-stage').evaluate(el=>Promise.all(el.getAnimations().map(a=>a.finished)));await settle(page);await page.screenshot({path:out+'/hero-'+width+'.png'});
-  await page.locator('[data-project-view=visual]').click();await topOf(page,'#projets');await page.locator('#projet-1 img').evaluate(img=>img.decode());await settle(page);await page.screenshot({path:out+'/realisations-'+width+'.png'});
+  await topOf(page,'#projets');await page.locator('#projet-1 img').evaluate(img=>img.decode());await settle(page);await page.screenshot({path:out+'/realisations-'+width+'.png'});
   const source=page.locator('#projet-2');await topOf(page,'#projet-2');await source.locator('img').evaluate(img=>img.decode());
   // Opening from a visible thumbnail produces a bounded visual flight in the native dialog.
   await source.locator('summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('#project-dialog').isVisible());assert.equal(await page.locator('.case-cover img').getAttribute('src'),'assets/inria-evenement.webp');assert.equal(await page.locator('.case-snapshot dd').count(),2);assert.match(await page.locator('.case-snapshot').innerText(),/Coordination événementielle/);
