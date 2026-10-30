@@ -1,11 +1,11 @@
 /* Hero: an editorial cover, with a clear typographic and photographic focus. */
 @media screen {
-#accueil{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:64px;row-gap:30px;padding-block:64px 30px;min-height:0;color:#19263b}
+#accueil{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:64px;row-gap:48px;padding-block:72px 40px;min-height:0;color:#19263b}
 .hero-kicker{margin:0 0 30px;font-size:10px;letter-spacing:.13em}
 #accueil #hero-title{font-size:clamp(44px,5.65vw,80px);line-height:1.08;letter-spacing:-.06em;margin:0;font-weight:500}
 #accueil #hero-title>span,#accueil #hero-title>em{display:block;white-space:normal}
 #accueil #hero-title>em{margin-top:4px;letter-spacing:-.065em;white-space:nowrap}
-.hero-description{max-width:440px;font-size:15px;line-height:1.8;margin:28px 0}
+.hero-description{max-width:440px;font-size:15px;line-height:1.8;margin:36px 0}
 .hero-actions{align-items:center;gap:24px}
 .hero-contact{display:inline-flex;align-items:center;gap:12px;font-size:12px;padding-block:14px;text-decoration:underline;text-decoration-color:#19263b40;text-underline-offset:6px}
 .hero-contact:hover{color:var(--blue);text-decoration-color:currentColor}
@@ -47,18 +47,25 @@
 #accueil #hero-title{grid-column:auto;padding:0;text-wrap:initial}
 #accueil #hero-title>em{font-family:Georgia,'Times New Roman',serif;font-size:1em;line-height:1.08;padding-left:0;font-style:italic}
 #accueil .hero-kicker{margin:0 0 30px;font-size:10px;letter-spacing:.13em}
-#accueil .hero-description{font-size:15px;line-height:1.8;max-width:440px;margin:28px 0}
+#accueil .hero-description{font-size:15px;line-height:1.8;max-width:440px;margin:36px 0}
 #accueil .portrait-stage{max-width:420px;align-self:center;margin:0}
 #accueil .hero-portrait figcaption{display:block;border:0;border-radius:0}
 #accueil .hero-portrait figcaption strong{display:block}
 #accueil .hero-portrait figcaption span{display:block;max-width:none;text-align:left;margin-top:4px}
-#accueil .hero-actions{gap:24px;align-items:center}
+#accueil .hero-actions{gap:32px;align-items:center}
 #accueil .hero-actions .button{border-radius:28px;min-height:54px;padding:16px 23px}
-#accueil .hero-selection{margin-top:10px}
+#accueil .hero-selection{margin-top:24px;padding-block:32px}
+#accueil .hero-project{gap:18px;padding-block:18px}
+#accueil .hero-location{margin-top:32px}
+#accueil + .credentials .credentials-inner{padding-block:44px}
 }
 @media screen and (max-width:760px){
 #accueil .hero-kicker{font-size:9px;letter-spacing:.08em;margin-bottom:26px}
-#accueil .hero-description{font-size:14px;margin-block:22px}
+#accueil .hero-description{font-size:14px;margin-block:28px}
+#accueil .hero-selection{margin-top:16px;padding-block:24px}
+#accueil .hero-project{padding-block:20px}
+#accueil .hero-location{margin-top:26px}
+#accueil + .credentials .credentials-inner{padding-block:32px}
 #accueil .hero-actions{gap:8px 20px}
 #accueil .hero-actions .button{min-height:50px;padding:14px 17px}
 }
