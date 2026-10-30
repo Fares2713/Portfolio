@@ -16,7 +16,7 @@ try {
   page.on('request',r=>{if(r.url().endsWith('.mp4'))videoRequests.push(r.url())});
   await page.goto(origin,{waitUntil:'networkidle'});
   await page.evaluate(()=>document.fonts.ready);
-  assert.match(await page.locator('h1').innerText(),/Créer des contenus.[\s\S]*Faire vivre les projets./);
+  assert.match(await page.locator('h1').innerText(),/Communication, création[\s\S]*et coordination de projets\./);
   const intro=await page.locator('.hero-description').innerText();
   assert.doesNotMatch(intro,/Inria|FNK/);
   for(const topic of ['audiovisuels','réseaux sociaux','événements','prestataires','budgets','développement commercial'])assert.ok(intro.includes(topic),topic);
