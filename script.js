@@ -61,6 +61,7 @@ function revealAnchor(hash) {
   if (!target) return;
   const project = target.closest('.project');
   if (project && project.hidden) applyFilter('all');
+  if (project) document.dispatchEvent(new CustomEvent('portfolio:projectselect', {detail:{card:project}}));
   // Reveal any case hidden by the active skill filter.
   for (let parent = target.parentElement; parent; parent = parent.parentElement) {
     if (parent.tagName === 'DETAILS') parent.open = true;

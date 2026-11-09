@@ -33,7 +33,7 @@ try{
   assert.match(await page.locator('.experience-row').first().innerText(),/FNK Location/);
   assert.equal(await page.locator('a[download][href*="cv-fares"]').count(),0,'Outdated CV is preserved on disk, not offered as a current download');
   assert.equal(await page.locator('.project-contribution').count(),10,'Exact role visible on each selected project');
-  assert.ok(await page.locator('#projet-fnk').isVisible(),'FNK mission added without fabricated visuals');
+  assert.ok(await page.locator('[aria-controls=projet-fnk]').isVisible(),'FNK is available in the visual index');
   assert.equal(await page.locator('#projet-fnk .project-visual img').getAttribute('src'),'assets/fnk-agence.jpg','FNK agency visual');
   assert.equal(await page.locator('#projet-fnk .project-image-link').getAttribute('href'),'https://fnklocation.com');
   assert.equal(await page.locator('.hero-portrait img').getAttribute('src'),'assets/portrait-fares-benamar.webp');
@@ -50,14 +50,18 @@ try{
   assert.ok((await page.locator('.hero-portrait').boundingBox()).width<=400,'Portrait stays within its editorial column');
   const portraitImage=await page.locator('.hero-portrait img').boundingBox();
   assert.ok(portraitImage.height<=portraitImage.width*1.25,'Portrait keeps a natural crop');
-  for(const image of await page.locator('.project[data-priority=secondary] .project-visual img').all()) {
+  for(const image of await page.locator('.project-choice>img').all()) {
    const bounds=await image.boundingBox();
-   assert.ok(Math.abs(bounds.width/bounds.height-1.6)<0.02,'Project previews keep a consistent ratio');
+   assert.ok(bounds.width>40&&bounds.height>30,'Readable project thumbnails');
+  }
+  async function chooseProject(id) {
+   const button=page.locator('.project-choice[aria-controls="'+id+'"]');
+   if(await button.getAttribute('aria-expanded')!=='true') await button.click();
   }
   await page.screenshot({path:'screenshots/hero-'+width+'.png'});
   for(const [filter,expected] of [['communication',6],['evenementiel',3],['audiovisuel',1],['digital',5],['all',10]]){
    await page.locator('[data-filter="'+filter+'"]').click();
-   assert.equal(await page.locator('.project:visible').count(),expected);
+   assert.equal(await page.locator('.project-choice:visible').count(),expected);
    assert.equal(await page.locator('.filters [aria-pressed="true"]').count(),1);
    assert.match(await page.locator('#filter-status').innerText(),new RegExp('^'+expected));
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Filtered layout');
@@ -88,11 +92,13 @@ try{
   assert.deepEqual(mediaAudit.violations.map(x=>x.id),[],'Accessible image dialog');
   await dialog.locator('.dialog-close').click();
   assert.ok(await media.evaluate(el=>el===document.activeElement),'Gallery restores focus');
+  await chooseProject('projet-petites-mains');
   await page.locator('#projet-petites-mains .project-image-link').click();
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/petites-mains-equipe.jpg');
   await dialog.locator('.dialog-media img').evaluate(img=>img.decode());
   assert.ok(await dialog.locator('.dialog-media img').evaluate(img=>img.complete&&img.naturalWidth===1240),'Original team photo loads in the gallery');
   await page.keyboard.press('Escape');
+  await chooseProject('projet-fnk');
   await page.locator('#projet-fnk .project-media-action').click();
   assert.equal(await dialog.locator('.dialog-media img').getAttribute('src'),'assets/fnk-agence.jpg');
   await page.keyboard.press('Escape');
@@ -101,8 +107,9 @@ try{
   assert.equal(await dialog.locator('.case-content > ul > li').count(),6,'All FNK missions are represented');
   await page.mouse.click(3,3);
   assert.ok(!(await dialog.isVisible()),'Backdrop closes the modal');
-  assert.ok(await page.locator('#projet-3').isVisible());
-  assert.ok(await page.locator('#projet-7').isVisible());
+  assert.ok(await page.locator('[aria-controls=projet-3]').isVisible());
+  assert.ok(await page.locator('[aria-controls=projet-7]').isVisible());
+  await chooseProject('projet-lenjeu');
   await page.locator('#projet-lenjeu summary').click();
   assert.equal(await dialog.locator('.case-content > h4').first().innerText(),'Le besoin','Case starts with context');
   assert.ok(await dialog.locator('.case-content').evaluate(el=>{
@@ -134,6 +141,7 @@ try{
   const spacePdf=await context.request.get(origin+'/assets/lenjeu-iss-carrousel/carrousel.pdf');
   assert.equal((await spacePdf.body()).subarray(0,4).toString(),'%PDF');
 
+  await chooseProject('projet-rencontres-enjeu');
   await page.locator('#projet-rencontres-enjeu summary').click();
   assert.match(await dialog.innerText(),/avril 2027/);
   assert.match(await dialog.innerText(),/Objectifs de conception : 80 participants, enveloppe prévisionnelle/);
@@ -149,6 +157,7 @@ try{
   const pack=await context.request.get(origin+'/assets/rencontres-enjeu/dossier-complet.zip');
   assert.equal(pack.status(),200);
   assert.equal((await pack.body()).subarray(0,2).toString(),'PK','Valid archive response');
+  await chooseProject('projet-memoire');
   await page.locator('#projet-memoire summary').click();
   assert.match(await dialog.innerText(),/11 entretiens semi-directifs/);
   assert.match(await dialog.innerText(),/18\/20/);
@@ -160,7 +169,7 @@ try{
   assert.equal(await page.locator('.earlier-grid article:visible').count(),3);
   // Force lazy images to load before validating and capturing the whole page.
   await page.evaluate(()=>[...document.images].forEach(image=>{image.loading='eager';}));
-  for(const image of await page.locator('img').all()) await image.scrollIntoViewIfNeeded();
+  for(const image of await page.locator('img:visible').all()) await image.scrollIntoViewIfNeeded();
   await page.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
   const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
   assert.deepEqual(audit.violations.map(x=>({id:x.id,impact:x.impact,nodes:x.nodes.map(n=>n.target)})),[],'Accessibility including color contrast');

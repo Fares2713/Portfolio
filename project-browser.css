@@ -1,0 +1,54 @@
+/* Click-driven visual index. The unenhanced cards remain the no-script and print fallback. */
+@media screen {
+#projets .project-grid.project-browser:not(.is-compact)>.project-secondary-heading{display:none!important}
+#projets .project-grid.project-browser{display:grid;grid-template-columns:minmax(320px,.95fr) minmax(0,1.45fr);gap:0 44px;align-items:start;isolation:isolate}
+.project-browser>.project-entry{display:contents}
+.project-choice{grid-column:1;grid-row:var(--project-row);display:grid;grid-template-columns:20px 62px minmax(0,1fr) 18px;gap:12px;align-items:center;text-align:left;width:100%;min-height:68px;padding:10px 10px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);transition:background .2s,color .2s}
+.project-choice:hover{background:#eef1fa}
+.project-choice[aria-expanded=true]{background:#eaf0ff;box-shadow:inset 3px 0 var(--blue)}
+.choice-number{font-size:10px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.project-choice>img{width:62px;height:44px;object-fit:cover;object-position:top;border-radius:3px;background:#edf0f5}
+.choice-copy{min-width:0}.choice-title{display:block;font-size:13px;font-weight:600;line-height:1.45;letter-spacing:-.02em}.choice-category{display:block;font-size:9px;line-height:1.6;color:var(--muted);margin-top:4px}
+.choice-arrow{color:var(--muted);transition:transform .2s}.choice-arrow svg{width:15px;height:15px}.project-choice[aria-expanded=true] .choice-arrow{color:var(--blue);transform:rotate(45deg)}
+#projets .project-grid.project-browser:not(.is-compact) .project-entry>.project{display:none!important}
+#projets .project-grid.project-browser:not(.is-compact) .project-entry.is-selected>.project{display:block!important;grid-column:2;grid-row:1/span var(--project-rows,10);position:sticky;top:calc(var(--header-height,100px) + 82px);align-self:start;margin:0;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:white;box-shadow:0 10px 36px #18253b08;animation:project-preview-in .3s ease both;transform:none;opacity:1}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual{display:block;min-height:0;position:relative;border:0;border-bottom:1px solid var(--line);background:#edf0f5;overflow:hidden}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual::after,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual::before{display:none}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-image-link{display:block;height:280px;min-height:0;padding:0;aspect-ratio:auto}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual img{width:100%;height:100%;max-height:280px;aspect-ratio:auto;object-fit:cover;object-position:center;border-radius:0;box-shadow:none;padding:0;transform:none}
+#projets .project-grid.project-browser:not(.is-compact) #projet-1 .project-image-link{padding:18px}
+#projets .project-grid.project-browser:not(.is-compact) #projet-1 .project-visual img{object-fit:contain;background:transparent}
+#projets .project-grid.project-browser:not(.is-compact) .project[data-visual-kind=web] .project-image-link{display:flex;align-items:center;padding:22px 30px;background:var(--web-preview-bg,#edf0fa)}
+#projets .project-grid.project-browser:not(.is-compact) .project[data-visual-kind=web] .project-visual img{height:auto;max-height:236px;object-fit:contain;border:5px solid white;border-top-width:12px;border-radius:5px;box-shadow:0 10px 24px #18253b20}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-number{display:none}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual figcaption{position:static;display:block;padding:9px 22px;margin:0;width:auto;height:auto;clip-path:none;white-space:normal;font-size:10px;line-height:1.6;background:#f4f5f7;color:var(--muted)}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-body{display:grid;grid-template-columns:1fr 1fr;gap:0 22px;padding:22px 26px 0}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-body>.eyebrow,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) h3,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-subtitle,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-actions{grid-column:1/-1}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-body>.eyebrow{font-size:10px;margin-bottom:10px}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) h3{font-size:27px;line-height:1.2;margin:0 0 12px}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-subtitle{display:block;font-size:13px;line-height:1.75}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-contribution,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-outcome{margin:18px 0 0;padding:13px 0 18px;border-top:1px solid var(--line)}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-contribution strong{font-size:12px;line-height:1.6}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-outcome{display:block}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-outcome strong{display:block;font-size:23px;line-height:1.3}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-outcome>span{display:block;font-size:10px;line-height:1.6;margin-top:5px}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-actions{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;padding:5px 0}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-actions>.text-link,#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) summary{font-size:11px;min-height:48px;line-height:1.5;padding-block:12px}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-actions>details{flex:1 0 100%;border:0}
+@keyframes project-preview-in{from{opacity:.3;translate:0 5px}to{opacity:1;translate:0 0}}
+@media(max-width:999px){
+#projets .project-grid.project-browser{display:block}
+.project-browser>.project-entry{display:block;border-bottom:1px solid var(--line)}
+.project-choice{min-height:88px;grid-template-columns:24px 76px minmax(0,1fr) 18px;padding:14px 12px;gap:14px;border:0}.project-choice>img{width:76px;height:52px}.choice-title{font-size:15px}.choice-category{font-size:10px}
+#projets .project-grid.project-browser:not(.is-compact) .project-entry.is-selected>.project{position:static;margin:12px 0 22px;animation:none}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-image-link{height:auto;aspect-ratio:16/10;max-height:360px}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-visual img{max-height:360px;height:100%;aspect-ratio:16/10}
+#projets .project-grid.project-browser:not(.is-compact) .project[data-visual-kind=web] .project-image-link{aspect-ratio:16/10;height:auto}
+#projets .project-grid.project-browser:not(.is-compact) .project[data-visual-kind=web] .project-visual img{height:auto;max-height:320px;aspect-ratio:16/10}
+#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-body{padding-inline:22px}
+}
+@media(max-width:480px){.project-choice{grid-template-columns:18px 58px minmax(0,1fr) 16px;gap:10px;padding-inline:8px}.project-choice>img{width:58px;height:44px}.choice-title{font-size:13px}.choice-category{font-size:9px}#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-body{display:block;padding-inline:20px}#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) h3{font-size:25px}#projets .project-grid.project-browser:not(.is-compact) :is(.project,#projet-1) .project-outcome{margin-top:0;padding-top:14px}#projets .project-grid.project-browser:not(.is-compact) .project[data-visual-kind=web] .project-image-link{padding:16px}}
+@media(prefers-reduced-motion:reduce){#projets .project-grid.project-browser:not(.is-compact) .project-entry.is-selected>.project{animation:none}.project-choice,.choice-arrow{transition:none}}
+html.motion-reduced #projets .project-grid.project-browser:not(.is-compact) .project-entry.is-selected>.project{animation:none}
+}
+@media print{.project-choice{display:none!important}.project-entry{display:contents}.project-browser :is(.project,#projet-1){display:block!important}}
