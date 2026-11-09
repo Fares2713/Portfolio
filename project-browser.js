@@ -24,6 +24,7 @@
  const labels={communication:'Communication',evenementiel:'Événementiel',audiovisuel:'Audiovisuel',digital:'Digital'};
  const entries=cards.map((card,index)=>{
   const entry=document.createElement('div');entry.className='project-entry';
+  if(card.id==='projet-1')entry.classList.add('project-entry-featured');
   const button=document.createElement('button');button.type='button';button.className='project-choice';
   button.id='choose-'+card.id;button.setAttribute('aria-controls',card.id);
   const number=document.createElement('span');number.className='choice-number';number.textContent=String(index+1).padStart(2,'0');

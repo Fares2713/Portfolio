@@ -58,7 +58,7 @@ html.motion-reduced #projets .project-grid.project-browser:not(.is-compact) .pro
 .project-view-options button{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;min-height:44px;border:0;border-radius:20px;background:transparent;color:var(--muted);font-size:11px;white-space:nowrap}
 .project-view-options button[aria-pressed=true]{background:var(--blue);color:white}
 .project-view-options button:hover:not([aria-pressed=true]){background:#edf0fa;color:var(--ink)}
-#projets .project-grid.project-browser.is-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
+#projets .project-grid.project-browser.is-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
 .project-browser.is-overview>.project-entry{display:flex;min-width:0}
 .is-overview .project-choice{display:none}
 #projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry>:is(.project,#projet-1){display:flex!important;flex-direction:column;position:static;grid-column:auto;grid-row:auto;width:100%;margin:0;animation:none;box-shadow:none}
@@ -78,3 +78,26 @@ html.motion-reduced #projets .project-grid.project-browser:not(.is-compact) .pro
 @media(max-width:540px){#projets .project-grid.project-browser.is-overview{grid-template-columns:1fr}}
 }
 @media print{.project-view-options{display:none!important}.project-entry[hidden]{display:contents!important}}
+
+/* Overview: one leading story, followed by paired projects. */
+@media screen {
+.project-browser.is-overview>.project-entry-featured{grid-column:1/-1}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) :is(.project,#projet-1) .project-image-link{height:auto;aspect-ratio:16/10}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) :is(.project,#projet-1) .project-visual img{height:auto;max-height:none;aspect-ratio:16/10}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project[data-visual-kind=web] .project-visual img{height:auto;max-height:100%;aspect-ratio:16/10}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1{display:grid!important;grid-template-columns:1.15fr 1fr;background:#f0f3fc;border-color:#d5dced}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-visual{display:flex;flex-direction:column;background:#e6ebf8;border-bottom:0;border-right:1px solid #d5dced}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-image-link{display:flex;align-items:center;flex:1;height:auto;min-height:280px;padding:26px;aspect-ratio:auto}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-visual img{object-fit:contain;aspect-ratio:16/10;height:auto}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-body{padding:30px 30px 0}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 h3{font-size:30px}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-subtitle{display:block;margin-bottom:16px}
+@media(max-width:760px){
+#projets .project-grid.project-browser.is-overview{grid-template-columns:1fr}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1{display:flex!important;flex-direction:column}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-visual{border-right:0;border-bottom:1px solid #d5dced}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-image-link{min-height:0;aspect-ratio:16/10;padding:20px}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 .project-body{padding:22px 22px 0}
+#projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 h3{font-size:26px}
+}
+}
