@@ -8,13 +8,14 @@
  let selected=null;
  let view='detail';
  try{if(localStorage.getItem('portfolio-project-view')==='overview')view='overview'}catch{}
- const viewControls=document.createElement('div');viewControls.className='project-view-options';viewControls.setAttribute('role','group');viewControls.setAttribute('aria-label','Affichage des projets');
- for(const [value,label,path] of [['detail','Vue détaillée','M3 5h6v14H3zM13 5h8M13 12h8M13 19h8'],['overview','Vue d’ensemble','M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z']]){
-  const button=document.createElement('button');button.type='button';button.dataset.projectView=value;
-  button.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="'+path+'"/></svg>';
-  button.append(label);button.addEventListener('click',()=>{setView(value);try{localStorage.setItem('portfolio-project-view',value)}catch{}});viewControls.append(button);
- }
- document.querySelector('#filter-status').after(viewControls);
+ const viewControls=document.querySelector('.project-view-options');
+ viewControls.hidden=false;
+ viewControls.querySelectorAll('[data-project-view]').forEach(button=>{
+  button.addEventListener('click',()=>{
+   setView(button.dataset.projectView);
+   try{localStorage.setItem('portfolio-project-view',button.dataset.projectView)}catch{}
+  });
+ });
  function setView(value){
   view=value;grid.classList.toggle('is-overview',view==='overview');
   viewControls.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.projectView===view)));
