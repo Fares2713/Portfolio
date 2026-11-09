@@ -6,6 +6,20 @@
  const cards=[...grid.querySelectorAll('.project')];
  const desktop=matchMedia('(min-width:1000px)');
  let selected=null;
+ let view='detail';
+ try{if(localStorage.getItem('portfolio-project-view')==='overview')view='overview'}catch{}
+ const viewControls=document.createElement('div');viewControls.className='project-view-options';viewControls.setAttribute('role','group');viewControls.setAttribute('aria-label','Affichage des projets');
+ for(const [value,label,path] of [['detail','Vue détaillée','M3 5h6v14H3zM13 5h8M13 12h8M13 19h8'],['overview','Vue d’ensemble','M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z']]){
+  const button=document.createElement('button');button.type='button';button.dataset.projectView=value;
+  button.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="'+path+'"/></svg>';
+  button.append(label);button.addEventListener('click',()=>{setView(value);try{localStorage.setItem('portfolio-project-view',value)}catch{}});viewControls.append(button);
+ }
+ document.querySelector('#filter-status').after(viewControls);
+ function setView(value){
+  view=value;grid.classList.toggle('is-overview',view==='overview');
+  viewControls.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.projectView===view)));
+  if(view==='overview')cards.forEach(card=>card.classList.add('is-revealed'));
+ }
  const labels={communication:'Communication',evenementiel:'Événementiel',audiovisuel:'Audiovisuel',digital:'Digital'};
  const entries=cards.map((card,index)=>{
   const entry=document.createElement('div');entry.className='project-entry';
@@ -44,6 +58,7 @@
  document.addEventListener('portfolio:caseopen',event=>{if(cards.includes(event.detail.card))select(event.detail.card)});
  desktop.addEventListener('change',()=>{if(desktop.matches&&!selected)select(cards.find(card=>!card.hidden));else select(selected)});
  grid.classList.add('project-browser');
+ setView(view);
  const note=document.querySelector('.projects-heading>p');
  if(note)note.textContent='Dix projets à parcourir. Choisissez une réalisation pour découvrir mon rôle, les supports et les résultats.';
  let initial=null;
