@@ -80,7 +80,7 @@ function scrollHashTarget(target, instant = false) {
   const heading = target.matches('.case-example') ? target : target.closest('.project') ? target.closest('.project') : target.matches('h1,h2,h3') ? target : target.querySelector('h1,h2,h3') || target;
   const header = document.querySelector('.site-header');
   const categoryBar = document.querySelector('.project-toolbar');
-  const categoryOffset = heading.closest('.project') && categoryBar ? categoryBar.getBoundingClientRect().height + 16 : 0;
+  const categoryOffset = heading.closest('.project') && categoryBar && getComputedStyle(categoryBar).position === 'sticky' ? categoryBar.getBoundingClientRect().height + 16 : 0;
   const top = heading.getBoundingClientRect().top + window.scrollY - header.getBoundingClientRect().height - categoryOffset - 24;
   const reduced = document.documentElement.classList.contains('motion-reduced');
   window.scrollTo({top:Math.max(0,top),behavior:instant || reduced ? 'instant' : 'smooth'});
@@ -89,7 +89,7 @@ document.addEventListener('click', event => {
   const step = event.target.closest('[data-carousel-step]');
   if (step) {
     const track = step.closest('.editorial-carousel').querySelector('.carousel-track');
-    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = document.documentElement.classList.contains('motion-reduced') || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     track.scrollBy({left: Number(step.dataset.carouselStep) * track.clientWidth, behavior: reduced ? 'auto' : 'smooth'});
   }
   if (!event.target.closest('.site-header')) closeMenu();
@@ -258,8 +258,9 @@ if (projectDialog && typeof projectDialog.showModal === 'function') {
       const gallery = dialogContent.querySelector('.editorial-carousel');
       if (gallery) {
         const bar = projectDialog.querySelector('.dialog-bar');
+        const railOffset = getComputedStyle(caseRail).position === 'sticky' ? caseRail.offsetHeight : 0;
         projectDialog.scrollTop = gallery.getBoundingClientRect().top - projectDialog.getBoundingClientRect().top
-          + projectDialog.scrollTop - bar.getBoundingClientRect().height - caseRail.getBoundingClientRect().height - 24;
+          + projectDialog.scrollTop - bar.offsetHeight - railOffset - 24;
       }
     }
     document.dispatchEvent(new CustomEvent('portfolio:caseopen', {detail:{card, dialog:projectDialog, carousel}}));

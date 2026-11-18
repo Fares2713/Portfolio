@@ -101,3 +101,82 @@ html.motion-reduced #projets .project-grid.project-browser:not(.is-compact) .pro
 #projets .project-grid.project-browser.is-overview:not(.is-compact) .project-entry-featured>#projet-1 h3{font-size:26px}
 }
 }
+
+/* Put the case-study action first, with a generous target independent of secondary links. */
+@media screen {
+  #projets .project-grid.project-browser:not(.is-compact) .project .project-actions {
+    padding-block: 12px;
+    gap: 4px 18px;
+  }
+
+  #projets .project-grid.project-browser:not(.is-compact) .project .project-actions > details > summary {
+    min-height: 48px;
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 13px;
+    transition: background .16s ease-out;
+  }
+
+  #projets .project-grid.project-browser:not(.is-compact) .project .project-actions > details > summary:hover {
+    background: #1736a1;
+  }
+
+  #projets .project-grid.project-browser:not(.is-compact) .project .project-actions > details > summary > span {
+    color: inherit;
+  }
+
+  .project-choice:focus-visible,
+  #projets .project-grid.project-browser:not(.is-compact) .project summary:focus-visible {
+    outline-offset: -4px;
+  }
+
+  #projets .project-grid.project-browser:not(.is-compact) .project summary:focus-visible {
+    outline-color: white;
+  }
+
+  #projets .project-grid.project-browser:not(.is-compact) .project-entry.is-selected > .project {
+    animation-duration: .2s;
+    animation-timing-function: var(--ease, ease-out);
+  }
+
+  .project-dialog .case-rail-controls > button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Let filters wrap on touch layouts and keep the reading area clear. */
+@media screen and (max-width: 760px) {
+  .js #projets .project-toolbar {
+    position: static;
+    box-shadow: none;
+  }
+
+  #projets .project-toolbar .filters {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  #projets .filters button {
+    min-height: 44px;
+    padding-inline: 12px;
+  }
+
+  .project-dialog .case-rail {
+    position: static;
+  }
+
+  .project-dialog h2 {
+    scroll-margin-top: var(--case-bar-height);
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  html:not(.motion-reduced) .project-choice:active .choice-arrow,
+  html:not(.motion-reduced) .project-view-options button:active svg {
+    translate: 2px 0;
+  }
+}

@@ -31,7 +31,12 @@ try {
   await page.screenshot({path:`screenshots/project-browser-${width}.png`});
   for(let i=0;i<10;i++){
    const button=page.locator('.project-choice').nth(i);
-   if(i===1){await button.focus();await page.keyboard.press('Enter')}else await button.click();
+   if(i===1){
+    await page.locator('.project-choice').first().focus();
+    await page.keyboard.press('ArrowDown');
+    assert.ok(await button.evaluate(element=>element===document.activeElement),'ArrowDown moves focus to the next project');
+    await page.keyboard.press('Enter');
+   }else await button.click();
    assert.equal(await page.locator('.project:visible').count(),1);
    assert.equal(await button.getAttribute('aria-expanded'),'true');
    await page.locator('.project:visible summary').click();

@@ -27,6 +27,7 @@
   if(card.id==='projet-1')entry.classList.add('project-entry-featured');
   const button=document.createElement('button');button.type='button';button.className='project-choice';
   button.id='choose-'+card.id;button.setAttribute('aria-controls',card.id);
+  button.setAttribute('aria-keyshortcuts', 'ArrowUp ArrowDown Home End');
   const number=document.createElement('span');number.className='choice-number';number.textContent=String(index+1).padStart(2,'0');
   const image=card.querySelector('.project-visual img').cloneNode();image.alt='';image.loading='lazy';
   const copy=document.createElement('span');copy.className='choice-copy';
@@ -34,6 +35,10 @@
   const category=document.createElement('span');category.className='choice-category';category.textContent=card.dataset.category.split(' ').map(key=>labels[key]||key).join(' · ');
   const icon=document.querySelector('.hero-actions .direction-icon').cloneNode(true);icon.classList.add('choice-arrow');
   copy.append(title,category);button.append(number,image,copy,icon);
+  const actions = card.querySelector('.project-actions');
+  const details = actions?.querySelector('details');
+  if (details) actions.prepend(details);
+
   grid.insertBefore(entry,card);entry.append(button,card);
   button.addEventListener('click',()=>select(!desktop.matches&&selected===card?null:card));
   return {entry,button,card};
@@ -54,6 +59,26 @@
   grid.style.setProperty('--project-rows',row);
   if(!selected||selected.hidden)select(desktop.matches?cards.find(card=>!card.hidden):null);
  }
+ // Arrow keys browse the available choices. Enter or Space confirms the preview.
+ grid.addEventListener('keydown', event => {
+  const choice = event.target.closest('.project-choice');
+  if (!choice || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  const choices = entries.filter(item => !item.entry.hidden).map(item => item.button);
+  const index = choices.indexOf(choice);
+  const targets = {ArrowUp: index - 1, ArrowDown: index + 1, Home: 0, End: choices.length - 1};
+  if (!Object.hasOwn(targets, event.key)) return;
+  event.preventDefault();
+  choices[Math.max(0, Math.min(choices.length - 1, targets[event.key]))]?.focus();
+ });
+
+ const toolbar = document.querySelector('.project-toolbar');
+ toolbar.addEventListener('click', event => {
+  if (!event.target.closest('[data-filter], [data-project-view]')) return;
+  const toolbarBottom = toolbar.getBoundingClientRect().bottom;
+  const gridTop = grid.getBoundingClientRect().top;
+  if (gridTop < toolbarBottom) window.scrollBy({top: gridTop - toolbarBottom - 16, behavior: 'instant'});
+ });
+
  // The existing filter controller is still responsible for which projects belong to the selection.
  new MutationObserver(sync).observe(grid,{subtree:true,attributes:true,attributeFilter:['hidden']});
  document.addEventListener('portfolio:projectselect',event=>{const card=event.detail.card;if(cards.includes(card)){sync();select(card)}});
